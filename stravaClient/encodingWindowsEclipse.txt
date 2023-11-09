@@ -1,0 +1,11 @@
+Windows standard code page: 850
+Special symbols are activated with code command: cp1252
+UTF-8 code page is activated with command: cp 65001
+
+
+In Windows console 
+* enter in the prompt > chcp 1252
+
+Changes of encoding on Eclipse
+Preferences \ General \Workspace - and change the encoding.
+Default encoding = cp1252

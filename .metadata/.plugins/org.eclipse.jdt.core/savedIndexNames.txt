@@ -1,0 +1,4 @@
+INDEX VERSION 1.134+C:\SoftLabs\SD\sd-lab-23-24\stravaWorkspace\.metadata\.plugins\org.eclipse.jdt.core
+2469581850.index
+236651961.index
+1865797976.index

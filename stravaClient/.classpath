@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" output="bin" path="src"/>
+	<classpathentry kind="var" path="JRE_LIB" sourcepath="JRE_SRC"/>
+	<classpathentry kind="lib" path="C:/SoftLabs/SD/sd-lab-23-24/stravaWorkspace/stravaClient/lib/commons-codec-1.15.jar"/>
+	<classpathentry kind="lib" path="C:/SoftLabs/SD/sd-lab-23-24/stravaWorkspace/stravaClient/lib/strava.jar"/>
+	<classpathentry kind="con" path="C:/SoftLabs/SD/sd-lab-23-24/stravaWorkspace/stravaClient/bin"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
