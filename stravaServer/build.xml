@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<project basedir="." default="4.server" name="4_eAuctions_Server_v1">    
+<project basedir="." default="4.server" name="stravaServer">    
 	<property name="src.dir" location="src"/>
    	<property name="bin.dir" location="bin"/>
 	<property name="dist.dir" location="dist"/>
