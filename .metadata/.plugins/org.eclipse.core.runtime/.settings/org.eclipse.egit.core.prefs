@@ -1,4 +1,5 @@
-GitRepositoriesView.GitDirectories=
-GitRepositoriesView.GitDirectories.relative=
+GitRepositoriesView.GitDirectories=C\:\\SoftLabs\\SD\\sd-lab-23-24\\stravaWorkspace\\.git;
+GitRepositoriesView.GitDirectories.relative=.git;
+RepositorySearchDialogSearchPath=C\:\\SoftLabs\\SD\\sd-lab-23-24\\stravaWorkspace
 core_autoIgnoreDerivedResources=false
 eclipse.preferences.version=1
