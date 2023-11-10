@@ -1,0 +1,29 @@
+package es.deusto.ingenieria.sd.auctions.server.data.dto;
+
+import es.deusto.ingenieria.sd.auctions.server.data.domain.User;
+
+public class UserAssembler {
+    private static UserAssembler instance;
+
+    private UserAssembler() {}
+
+    public static UserAssembler getInstance() {
+        if (instance == null) {
+            instance = new UserAssembler();
+        }
+        return instance;
+    }
+
+    public UserDTO userToDTO(User user) {
+    	UserDTO dto = new UserDTO();
+		
+		dto.setTitle(session.getTitle());
+		dto.setSport(session.getSports());
+		dto.setDistance(session.getDistance());
+		dto.setStartDate(session.getStartDate());
+		dto.setStartTime(session.getStartTime());
+		dto.setDuration(session.getDuration());
+				
+		return dto;
+    }
+}

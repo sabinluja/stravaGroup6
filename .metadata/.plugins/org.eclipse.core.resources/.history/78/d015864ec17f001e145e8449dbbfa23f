@@ -1,0 +1,42 @@
+package es.deusto.ingenieria.sd.auctions.server.data.dto;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import es.deusto.ingenieria.sd.auctions.server.data.domain.Challenge;
+
+public class ChallengeAssembler {
+    private static ChallengeAssembler instance;
+
+    private ChallengeAssembler() {}
+
+    public static ChallengeAssembler getInstance() {
+        if (instance == null) {
+            instance = new ChallengeAssembler();
+        }
+        return instance;
+    }
+
+    public ChallengeDTO challengeToDTO(Challenge challenge) {
+ArticleDTO dto = new ArticleDTO();
+		
+		dto.setNumber(article.getNumber());
+		dto.setTitle(article.getTitle());
+		dto.setAuctionEnd(article.getAuctionEnd());
+		dto.setInitialPrice(article.getInitialPrice());
+		dto.setActualPrice(article.getActualPrice());
+		dto.setTotalBids(article.getBids().size());
+				
+		return dto;
+    }
+
+    public List<ChallengeDTO> challengeToDTO(List<Challenge> challenges) {
+    	List<Challenge> dtos = new ArrayList<>();
+		
+		for (Challenge article : challenges) {
+			dtos.add(this.challengeToDTO(article));
+		}
+		
+		return dtos;
+    }
+}
