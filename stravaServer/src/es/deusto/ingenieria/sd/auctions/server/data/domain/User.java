@@ -1,89 +1,95 @@
 package es.deusto.ingenieria.sd.auctions.server.data.domain;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class User {	
-	private String nickname;
-	private String password;
+public class User {
+	private String name;
 	private String email;
-	private List<Bid> bids = new ArrayList<>();
-	private List<Article> articles = new ArrayList<>();
+	private String birthDate;
+	private float weight;
+	private int height;
+	private int maxHeartRate;
+	private int restHeartRate;
 		
-	public String getNickname() {
-		return nickname;
+	
+	// Constructor, getters and setters
+	
+	public User(String name, String email, String birthDate, float weight, int height, int maxHeartRate,
+			int restHeartRate) {
+		super();
+		this.name = name;
+		this.email = email;
+		this.birthDate = birthDate;
+		this.weight = weight;
+		this.height = height;
+		this.maxHeartRate = maxHeartRate;
+		this.restHeartRate = restHeartRate;
 	}
 	
-	public void setNickname(String nickname) {
-		this.nickname = nickname;
+	public User() {}
+
+	public String getName() {
+		return name;
 	}
-	
-	public boolean checkPassword(String password) {
-		return this.password.equals(password);
+
+	public void setName(String name) {
+		this.name = name;
 	}
-	
-	public void setPassword(String password) {
-		this.password = password;
-	}
-	
+
 	public String getEmail() {
 		return email;
 	}
-	
+
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	
-	public List<Bid> getBids() {
-		return bids;
+
+	public String getBirthDate() {
+		return birthDate;
 	}
-	
-	public void setBids(List<Bid> bids) {
-		this.bids = bids;
+
+	public void setBirthDate(String birthDate) {
+		this.birthDate = birthDate;
 	}
-	
-	public void addBid(Bid bid) {
-		if (bid != null && !this.bids.contains(bid)) {
-			this.bids.add(bid);
-		}
+
+	public float getWeight() {
+		return weight;
 	}
-	
-	public List<Article> getArticles() {
-		return articles;
+
+	public void setWeight(float weight) {
+		this.weight = weight;
 	}
-	
-	public void setArticles(List<Article> articles) {
-		this.articles = articles;
+
+	public int getHeight() {
+		return height;
 	}
-	
-	public void addArticle(Article article) {
-		if (article != null && !this.articles.contains(article)) {
-			this.articles.add(article);
-		}
+
+	public void setHeight(int height) {
+		this.height = height;
 	}
-		
-	@Override
+
+	public int getMaxHeartRate() {
+		return maxHeartRate;
+	}
+
+	public void setMaxHeartRate(int maxHeartRate) {
+		this.maxHeartRate = maxHeartRate;
+	}
+
+	public int getRestHeartRate() {
+		return restHeartRate;
+	}
+
+	public void setRestHeartRate(int restHeartRate) {
+		this.restHeartRate = restHeartRate;
+	}
+
+	
+	// Methods: (toString)
+	
 	public String toString() {
-		StringBuffer result = new StringBuffer();
-		
-		result.append(this.nickname);
-		result.append(" - ");
-		result.append(this.email);
-		result.append(" - (");
-		result.append(this.articles.size());
-		result.append(" articles) - (");
-		result.append(this.bids.size());
-		result.append(" bids)");
-		
-		return result.toString();
+		return "User [name=" + name + ", email=" + email + ", birthDate=" + birthDate + ", weight=" + weight
+				+ ", height=" + height + ", maxHeartRate=" + maxHeartRate + ", restHeartRate=" + restHeartRate + "]";
 	}
 	
-	@Override
-	public boolean equals(Object obj) {
-		if (this.getClass().getName().equals(obj.getClass().getName())) {
-			return this.email.equals(((User)obj).email);
-		}
-		
-		return false;
-	}
+	
+	// Additional methods: 
 }
