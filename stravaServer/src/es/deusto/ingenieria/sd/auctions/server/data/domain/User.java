@@ -1,5 +1,7 @@
 package es.deusto.ingenieria.sd.auctions.server.data.domain;
 
+import java.util.List;
+
 public class User {
 	private String name;
 	private String email;
@@ -8,12 +10,14 @@ public class User {
 	private int height;
 	private int maxHeartRate;
 	private int restHeartRate;
+	private List<Session> sessionList;
+	private List<Challenge> challengeList;
 		
 	
 	// Constructor, getters and setters
 	
 	public User(String name, String email, String birthDate, float weight, int height, int maxHeartRate,
-			int restHeartRate) {
+			int restHeartRate, List<Session> sessionList, List<Challenge> challengeList) {
 		super();
 		this.name = name;
 		this.email = email;
@@ -22,6 +26,8 @@ public class User {
 		this.height = height;
 		this.maxHeartRate = maxHeartRate;
 		this.restHeartRate = restHeartRate;
+		this.sessionList = sessionList;
+		this.challengeList = challengeList;
 	}
 	
 	public User() {}
@@ -82,12 +88,29 @@ public class User {
 		this.restHeartRate = restHeartRate;
 	}
 
+	public List<Session> getSessionList() {
+		return sessionList;
+	}
+
+	public void setSessionList(List<Session> sessionList) {
+		this.sessionList = sessionList;
+	}
+
+	public List<Challenge> getChallengeList() {
+		return challengeList;
+	}
+
+	public void setChallengeList(List<Challenge> challengeList) {
+		this.challengeList = challengeList;
+	}
+	
 	
 	// Methods: (toString)
 	
 	public String toString() {
 		return "User [name=" + name + ", email=" + email + ", birthDate=" + birthDate + ", weight=" + weight
-				+ ", height=" + height + ", maxHeartRate=" + maxHeartRate + ", restHeartRate=" + restHeartRate + "]";
+				+ ", height=" + height + ", maxHeartRate=" + maxHeartRate + ", restHeartRate=" + restHeartRate
+				+ ", sessionList=" + sessionList + ", challengeList=" + challengeList + "]";
 	}
 	
 	
@@ -96,7 +119,7 @@ public class User {
 	public void addSession(Session session) {
 		
 	}
-	
+
 	public void addChallenge(Challenge challenge) {
 		
 	}
