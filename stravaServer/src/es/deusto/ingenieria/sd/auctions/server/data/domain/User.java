@@ -5,6 +5,7 @@ import java.util.List;
 public class User {
 	private String name;
 	private String email;
+	private String password;
 	private String birthDate;
 	private float weight;
 	private int height;
@@ -16,11 +17,12 @@ public class User {
 	
 	// Constructor, getters and setters
 	
-	public User(String name, String email, String birthDate, float weight, int height, int maxHeartRate,
-			int restHeartRate, List<Session> sessionList, List<Challenge> challengeList) {
+	public User(String name, String email, String password, String birthDate, float weight, int height,
+			int maxHeartRate, int restHeartRate, List<Session> sessionList, List<Challenge> challengeList) {
 		super();
 		this.name = name;
 		this.email = email;
+		this.password = password;
 		this.birthDate = birthDate;
 		this.weight = weight;
 		this.height = height;
@@ -105,7 +107,7 @@ public class User {
 	}
 	
 	
-	// Methods: (toString)
+	// Methods: (toString -- equals)
 	
 	public String toString() {
 		return "User [name=" + name + ", email=" + email + ", birthDate=" + birthDate + ", weight=" + weight
@@ -113,18 +115,37 @@ public class User {
 				+ ", sessionList=" + sessionList + ", challengeList=" + challengeList + "]";
 	}
 	
+	public boolean equals(Object obj) {
+		if (this.getClass().getName().equals(obj.getClass().getName())) {
+			return this.email.equals(((User)obj).email);
+		}
+		return false;
+	}
+	
 	
 	// Additional methods: 
 	
 	public void addSession(Session session) {
-		
+		if (session != null && !this.sessionList.contains(session)) {
+			this.sessionList.add(session);
+		}
 	}
 
 	public void addChallenge(Challenge challenge) {
-		
+		if (challenge != null && !this.challengeList.contains(challenge)) {
+			this.challengeList.add(challenge);
+		}
 	}
 	
 	public boolean checkPassword(String password) {
-		return true;
+		return this.password.equals(password);
+	}
+	
+	public String getPassword() {
+		return password;
+	}
+	
+	public void setPassword(String password) {
+		this.password = password;
 	}
 }
