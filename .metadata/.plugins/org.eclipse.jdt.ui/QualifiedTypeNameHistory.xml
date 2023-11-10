@@ -1,2 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<qualifiedTypeNameHistroy/>
+<qualifiedTypeNameHistroy>
+    <fullyQualifiedTypeName name="es.deusto.ingenieria.sd.auctions.server.data.domain.Session"/>
+    <fullyQualifiedTypeName name="es.deusto.ingenieria.sd.auctions.server.data.domain.Challenge"/>
+    <fullyQualifiedTypeName name="java.util.List"/>
+</qualifiedTypeNameHistroy>

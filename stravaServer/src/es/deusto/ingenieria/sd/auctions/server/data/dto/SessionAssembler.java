@@ -1,7 +1,9 @@
 package es.deusto.ingenieria.sd.auctions.server.data.dto;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import es.deusto.ingenieria.sd.auctions.server.data.domain.Challenge;
 import es.deusto.ingenieria.sd.auctions.server.data.domain.Session;
 
 public class SessionAssembler {
@@ -17,16 +19,25 @@ public class SessionAssembler {
     }
 
     public SessionDTO sessionToDTO(Session session) {
-        // Conversion logic from Session to SessionDTO
-        // Implement conversion here
-    	
-    	return null;
+    	SessionDTO dto = new SessionDTO();
+		
+		dto.setTitle(session.getTitle());
+		dto.setSport(session.getSports());
+		dto.setDistance(session.getDistance());
+		dto.setStartDate(session.getStartDate());
+		dto.setStartTime(session.getStartTime());
+		dto.setDuration(session.getDuration());
+				
+		return dto;
     }
 
     public List<SessionDTO> sessionToDTO(List<Session> sessions) {
-        // Conversion logic from List<Session> to List<SessionDTO>
-        // Implement conversion here
-    	
-    	return null;
+    	List<SessionDTO> dtos = new ArrayList<>();
+		
+		for (Session session : sessions) {
+			dtos.add(this.sessionToDTO(session));
+		}
+		
+		return dtos;
     }
 }

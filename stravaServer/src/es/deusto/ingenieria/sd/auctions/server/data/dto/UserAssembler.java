@@ -15,9 +15,16 @@ public class UserAssembler {
     }
 
     public UserDTO userToDTO(User user) {
-        // Conversion logic from User to UserDTO
-        // Implement conversion here
-    	
-    	return null;
+    	UserDTO dto = new UserDTO();
+		
+		dto.setName(user.getName());
+		dto.setEmail(user.getEmail());
+		dto.setBirthDate(user.getBirthDate());
+		dto.setWeight(user.getWeight());
+		dto.setHeight(user.getHeight());
+		dto.setMaxHeartRate(user.getMaxHeartRate());
+		dto.setRestHeartRate(user.getRestHeartRate());
+				
+		return dto;
     }
 }
