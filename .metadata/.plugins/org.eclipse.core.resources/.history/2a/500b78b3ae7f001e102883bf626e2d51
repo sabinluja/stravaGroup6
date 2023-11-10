@@ -1,0 +1,10 @@
+package es.deusto.ingenieria.sd.auctions.server.data.dto;
+
+public class SessionDTO {
+    private String title;
+    private String sport;
+    private float distance;
+    private String startDate;
+    private long startTime;
+    private int duration;
+}
