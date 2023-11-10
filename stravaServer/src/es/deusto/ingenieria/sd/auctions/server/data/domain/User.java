@@ -92,4 +92,16 @@ public class User {
 	
 	
 	// Additional methods: 
+	
+	public void addSession(Session session) {
+		
+	}
+	
+	public void addChallenge(Challenge challenge) {
+		
+	}
+	
+	public boolean checkPassword(String password) {
+		return true;
+	}
 }
