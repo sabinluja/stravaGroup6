@@ -34,6 +34,25 @@ public class User {
 		this.acceptedChallengeList = acceptedChallengeList;
 	}
 	
+	public User(String name, String email, String birthDate, float weight, int height,
+			int maxHeartRate, int restHeartRate) {
+		super();
+		this.name = name;
+		this.email = email;
+		this.birthDate = birthDate;
+		this.weight = weight;
+		this.height = height;
+		this.maxHeartRate = maxHeartRate;
+		this.restHeartRate = restHeartRate;
+	}
+	
+	public User(String name, String email, String birthDate) {
+		super();
+		this.name = name;
+		this.email = email;
+		this.birthDate = birthDate;
+	}
+	
 	public User() {}
 
 	public String getName() {

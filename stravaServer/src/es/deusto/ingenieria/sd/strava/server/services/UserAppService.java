@@ -1,33 +1,53 @@
 package es.deusto.ingenieria.sd.strava.server.services;
 
+import java.util.List;
+
 import es.deusto.ingenieria.sd.strava.server.data.domain.User;
 
 public class UserAppService {
 	
 	public UserAppService() {}
 	
+	private List<User> registeredUsers;
+	
 	// Mandatory arguments for registration
 	
 	public boolean registerGoogle(String email, String name, String birthDate) {
-		
-		return false;
+		try {
+			User registerGoogleMandatory = new User(name, email, birthDate);
+			registeredUsers.add(registerGoogleMandatory);
+			
+			return true;
+	    } catch (Exception e) {e.printStackTrace(); return false;}
 	}
 	
 	public boolean registerFacebook(String email, String name, String birthDate) {
-		
-		return false;
+		try {
+			User registerGoogleMandatory = new User(name, email, birthDate);
+			registeredUsers.add(registerGoogleMandatory);
+			
+			return true;
+	    } catch (Exception e) {e.printStackTrace(); return false;}
 	}
 	
 	// Mandatory + optional arguments for registration
 	
 	public boolean registerGoogle(String email, String name, String birthDate, float weight, int height, int maxHeartRate, int restHeartRate) {
-		
-		return false;
+		try {
+			User registerGoogleMandatory = new User(name, email, birthDate, weight, height, maxHeartRate, restHeartRate);
+			registeredUsers.add(registerGoogleMandatory);
+			
+			return true;
+	    } catch (Exception e) {e.printStackTrace(); return false;}
 	}
 	
 	public boolean registerFacebook(String email, String name, String birthDate, float weight, int height, int maxHeartRate, int restHeartRate) {
-		
-		return false;
+		try {
+			User registerGoogleMandatory = new User(name, email, birthDate, weight, height, maxHeartRate, restHeartRate);
+			registeredUsers.add(registerGoogleMandatory);
+			
+			return true;
+	    } catch (Exception e) {e.printStackTrace(); return false;}
 	}
 	
 	public User login(String email, String password) {
@@ -43,6 +63,6 @@ public class UserAppService {
 			return user;
 		} else {
 			return null;
-		}	
+		}
 	}
 }
