@@ -80,11 +80,12 @@ public class RemoteFacade extends UnicastRemoteObject implements IRemoteFacade {
     public List<ChallengeDTO> getActiveChallenges(String token, String date) throws RemoteException {
         // Implementation based on ChallengeAppService
     	
-        System.out.println(" * RemoteFacade getActiveChallenges ('" + token + "')");
+        System.out.println(" * RemoteFacade getActiveChallenges: \"'"  + date + "')");
         List<Challenge> activeChallenges = challengeService.getActiveChallenges(getUserByToken(token), date);
 		
-		if (token != null) {
-			return ChallengeAssembler.getInstance().challengeToDTO(activeChallenges);	
+		if (activeChallenges != null) {
+			//Convert domain object to DTO
+	        return ChallengeAssembler.getInstance().challengeToDTO(activeChallenges);
 		} else {
 			throw new RemoteException("getActiveChallenges() fails!");
 		}
@@ -93,10 +94,11 @@ public class RemoteFacade extends UnicastRemoteObject implements IRemoteFacade {
     public List<ChallengeDTO> getAcceptedChallenges(String token) throws RemoteException {
         // Implementation based on ChallengeAppService
         
-        System.out.println(" * RemoteFacade getAcceptedChallenges ('" + token + "')");
+        System.out.println(" * RemoteFacade getAcceptedChallenges: '"  + token + "')");
         List<Challenge> acceptedChallenges = challengeService.getAcceptedChallenges(getUserByToken(token));
 		
-		if (token != null) {
+		if (acceptedChallenges != null) {
+			//Convert domain object to DTO
 	        return ChallengeAssembler.getInstance().challengeToDTO(acceptedChallenges);
 		} else {
 			throw new RemoteException("getAcceptedChallenges() fails!");
@@ -129,24 +131,15 @@ public class RemoteFacade extends UnicastRemoteObject implements IRemoteFacade {
         return userService.registerFacebook(email, name, birthDate, weight, height, maxHeartRate, restHeartRate);
     }
     
-    @SuppressWarnings("unlikely-arg-type")
-	public boolean createSession(String token, String title, String sport, float distance,
-                                              String startDate, long startTime, int duration) throws RemoteException {
+    public boolean createSession(String token, String title, String sport, float distance,
+                                              String startDate, long startTime, int duration) {
         // Implementation based on SessionAppService
-		
-		System.out.println(" * RemoteFacade createSession");
-		
-		if (this.serverState.containsKey(token)) {						
-			//Make the bid using Bid Application Service
-			if (sessionService.createSession(getUserByToken(token), title, sport, distance, 
-					startDate, startTime, duration)) {
-				return true;
-			} else {
-				throw new RemoteException("createSession fails!");
-			}
-		} else {
-			throw new RemoteException("To create a session you must first log in");
-		}
+    	
+        try {
+			return sessionService.createSession(getUserByToken(token), title, sport, distance, startDate, startTime, duration);
+		} catch (RemoteException e) {e.printStackTrace();}
+        
+		return false;
     }
     
     public List<SessionDTO> getSessions(String token) throws RemoteException {
