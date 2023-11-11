@@ -26,14 +26,12 @@ public class MainProgram {
 		//args[2] = Service Name
 		serviceLocator.setService(args[0], args[1], args[2]);
 		
-		UserController userController = new UserController(serviceLocator);
-		UserWindow userWindow = new UserWindow(userController);			
 		ChallengeController challengeController = new ChallengeController(serviceLocator);			
 		ChallengeWindow challengeWindow = new ChallengeWindow(challengeController);
 		SessionController sessionController = new SessionController(serviceLocator);			
-		//SessionWindow sessionWindow = new SessionWindow(SessionController);
-		
-		
+		//SessionWindow sessionWindow = new SessionWindow(sessionController);
+		UserController userController = new UserController(serviceLocator);
+		UserWindow userWindow = new UserWindow(userController, challengeController, sessionController);			
 		
 		//Login
 		loginDialog.login();		
