@@ -10,7 +10,7 @@ import es.deusto.ingenieria.sd.strava.client.controller.ChallengeController;
 import es.deusto.ingenieria.sd.strava.client.controller.SessionController;
 import es.deusto.ingenieria.sd.strava.client.gui.UserWindow;
 import es.deusto.ingenieria.sd.strava.client.gui.ChallengeWindow;
-//import es.deusto.ingenieria.sd.strava.client.gui.SessionWindow;
+import es.deusto.ingenieria.sd.strava.client.gui.SessionWindow;
 import es.deusto.ingenieria.sd.strava.client.remote.ServiceLocator;
 
 public class MainProgram {
@@ -29,10 +29,13 @@ public class MainProgram {
 		ChallengeController challengeController = new ChallengeController(serviceLocator);			
 		ChallengeWindow challengeWindow = new ChallengeWindow(challengeController);
 		SessionController sessionController = new SessionController(serviceLocator);			
-		//SessionWindow sessionWindow = new SessionWindow(sessionController);
+		SessionWindow sessionWindow = new SessionWindow(sessionController);
 		UserController userController = new UserController(serviceLocator);
 		UserWindow userWindow = new UserWindow(userController, challengeController, sessionController);			
 		
+		
+		
+		/*
 		//Login
 		loginDialog.login();		
 		//Get Categories
@@ -49,6 +52,7 @@ public class MainProgram {
 		articles = bidWindow.getArticles(categories.get(0).getName());
 		//Logout
 		loginDialog.logout();
+		*/
 	}
 
 	public ChallengeController getChallengeController() {
