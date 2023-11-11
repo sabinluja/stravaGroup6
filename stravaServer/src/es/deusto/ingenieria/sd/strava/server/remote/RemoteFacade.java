@@ -9,7 +9,9 @@ import java.util.Map;
 import es.deusto.ingenieria.sd.strava.server.data.domain.Challenge;
 import es.deusto.ingenieria.sd.strava.server.data.domain.Session;
 import es.deusto.ingenieria.sd.strava.server.data.domain.User;
+import es.deusto.ingenieria.sd.strava.server.data.dto.ChallengeAssembler;
 import es.deusto.ingenieria.sd.strava.server.data.dto.ChallengeDTO;
+import es.deusto.ingenieria.sd.strava.server.data.dto.SessionAssembler;
 import es.deusto.ingenieria.sd.strava.server.data.dto.SessionDTO;
 import es.deusto.ingenieria.sd.strava.server.services.ChallengeAppService;
 import es.deusto.ingenieria.sd.strava.server.services.SessionAppService;
@@ -40,9 +42,10 @@ public class RemoteFacade extends UnicastRemoteObject implements IRemoteFacade {
 		return false;
     }
 
-    public List<Challenge> getChallenges() {
+    public List<ChallengeDTO> getChallenges() throws RemoteException {
         // Implementation based on ChallengeAppService
-        return challengeService.getChallenges();
+        List<Challenge> challenges = challengeService.getChallenges();
+        return ChallengeAssembler.getInstance().challengeToDTO(challenges);
     }
 
     public boolean acceptChallenge(String token, String challengeName) {
@@ -54,22 +57,16 @@ public class RemoteFacade extends UnicastRemoteObject implements IRemoteFacade {
 		return false;
     }
 
-    public List<Challenge> getActiveChallenges(String token, String date) {
+    public List<ChallengeDTO> getActiveChallenges(String token, String date) throws RemoteException {
         // Implementation based on ChallengeAppService
-        try {
-			return challengeService.getActiveChallenges(getUserByToken(token), date);
-		} catch (RemoteException e) {e.printStackTrace();}
-        
-		return null;
+        List<Challenge> activeChallenges = challengeService.getActiveChallenges(getUserByToken(token), date);
+        return ChallengeAssembler.getInstance().challengeToDTO(activeChallenges);
     }
 
-    public List<Challenge> getAcceptedChallenges(String token) {
+    public List<ChallengeDTO> getAcceptedChallenges(String token) throws RemoteException {
         // Implementation based on ChallengeAppService
-        try {
-			return challengeService.getAcceptedChallenges(getUserByToken(token));
-		} catch (RemoteException e) {e.printStackTrace();}
-        
-		return null;
+        List<Challenge> acceptedChallenges = challengeService.getAcceptedChallenges(getUserByToken(token));
+        return ChallengeAssembler.getInstance().challengeToDTO(acceptedChallenges);
     }
 
     public boolean registerGoogle(String email, String name, String birthDate) {
@@ -109,9 +106,10 @@ public class RemoteFacade extends UnicastRemoteObject implements IRemoteFacade {
 		return false;
     }
 
-    public List<SessionDTO> getSessions(String token) {
+    public List<SessionDTO> getSessions(String token) throws RemoteException {
         // Implementation based on SessionAppService
-        return sessionService.getSessions(getUserByToken(token));
+        List<Session> sessions = sessionService.getSessions(getUserByToken(token));
+        return SessionAssembler.getInstance().sessionToDTO(sessions);
     }
 
     public void logout(String token) throws RemoteException {
