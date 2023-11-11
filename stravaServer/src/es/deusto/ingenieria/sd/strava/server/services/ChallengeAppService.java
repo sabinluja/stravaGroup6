@@ -10,9 +10,9 @@ public class ChallengeAppService {
 	
 	private List<Challenge> challengeDTOList = new ArrayList<>();
 	
-	private ChallengeAppService() {}
+	public ChallengeAppService() {}
 
-	public boolean createChallengue(User user, String name, String startDate, String endDate, float targetDistance, 
+	public boolean createChallenge(User user, String name, String startDate, String endDate, float targetDistance, 
 			long targetTime, String sport) {
         Challenge newChallenge = new Challenge(name, startDate, endDate, targetTime, targetDistance, sport);
 
@@ -27,7 +27,7 @@ public class ChallengeAppService {
 		return this.challengeDTOList;
 	}
 	
-	public boolean acceptChallengue(User user, String challengeName) {
+	public boolean acceptChallenge(User user, String challengeName) {
 		if (user != null) {
             for (Challenge challenge : user.getChallengeList()) {
                 if (challenge.getName().equals(challengeName)) {
@@ -38,7 +38,7 @@ public class ChallengeAppService {
         return false; // Challenge not found or unable to accept
 	}
 	
-	public List<Challenge> getActiveChallengues(User user, String date) {
+	public List<Challenge> getActiveChallenges(User user, String date) {
 		List<Challenge> activeChallengesList = new ArrayList<>();
 
         if (user != null) {
@@ -52,12 +52,12 @@ public class ChallengeAppService {
         return activeChallengesList; // The list with the active challenges of that concrete user
 	}
 	
-	public List<Challenge> getAcceptedChallengues(User user) {
+	public List<Challenge> getAcceptedChallenges(User user) {
 		List<Challenge> acceptedChallengesList = new ArrayList<>();
 
         if (user != null) {
             for (Challenge challenge : user.getChallengeList()) {
-            	if (acceptChallengue(user, challenge.getName()))
+            	if (acceptChallenge(user, challenge.getName()))
             		acceptedChallengesList.add(challenge); 
             }
         }

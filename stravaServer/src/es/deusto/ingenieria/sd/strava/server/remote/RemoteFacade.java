@@ -2,140 +2,130 @@ package es.deusto.ingenieria.sd.strava.server.remote;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import es.deusto.ingenieria.sd.strava.server.data.domain.Article;
-import es.deusto.ingenieria.sd.strava.server.data.domain.Category;
+import es.deusto.ingenieria.sd.strava.server.data.domain.Challenge;
+import es.deusto.ingenieria.sd.strava.server.data.domain.Session;
 import es.deusto.ingenieria.sd.strava.server.data.domain.User;
-import es.deusto.ingenieria.sd.strava.server.data.dto.ArticleAssembler;
-import es.deusto.ingenieria.sd.strava.server.data.dto.ArticleDTO;
-import es.deusto.ingenieria.sd.strava.server.data.dto.CategoryAssembler;
-import es.deusto.ingenieria.sd.strava.server.data.dto.CategoryDTO;
-import es.deusto.ingenieria.sd.strava.server.services.BidAppService;
-import es.deusto.ingenieria.sd.strava.server.services.LoginAppService;
+import es.deusto.ingenieria.sd.strava.server.data.dto.ChallengeDTO;
+import es.deusto.ingenieria.sd.strava.server.data.dto.SessionDTO;
+import es.deusto.ingenieria.sd.strava.server.services.ChallengeAppService;
+import es.deusto.ingenieria.sd.strava.server.services.SessionAppService;
+import es.deusto.ingenieria.sd.strava.server.services.UserAppService;
 
-public class RemoteFacade extends UnicastRemoteObject implements IRemoteFacade {	
-	private static final long serialVersionUID = 1L;
+public class RemoteFacade extends UnicastRemoteObject implements IRemoteFacade {
 
-	//Data structure for manage Server State
-	private Map<Long, User> serverState = new HashMap<>();
-	
-	//TODO: Remove this instances when Singleton Pattern is implemented
-	private LoginAppService loginService = new LoginAppService();
-	private BidAppService bidService = new BidAppService();
+    private static final long serialVersionUID = 1L;
 
-	public RemoteFacade() throws RemoteException {
-		super();		
-	}
-	
-	@Override
-	public synchronized long login(String email, String password) throws RemoteException {
-		System.out.println(" * RemoteFacade login(): " + email + " / " + password);
-				
-		//Perform login() using LoginAppService
-		User user = loginService.login(email, password);
-			
-		//If login() success user is stored in the Server State
-		if (user != null) {
-			//If user is not logged in 
-			if (!this.serverState.values().contains(user)) {
-				Long token = Calendar.getInstance().getTimeInMillis();		
-				this.serverState.put(token, user);		
-				return(token);
-			} else {
-				throw new RemoteException("User is already logged in!");
-			}
-		} else {
-			throw new RemoteException("Login fails!");
-		}
-	}
-	
-	@Override
-	public synchronized void logout(long token) throws RemoteException {
-		System.out.println(" * RemoteFacade logout(): " + token);
-		
-		if (this.serverState.containsKey(token)) {
-			//Logout means remove the User from Server State
-			this.serverState.remove(token);
-		} else {
-			throw new RemoteException("User is not logged in!");
-		}
-	}
-	
-	@Override
-	public List<CategoryDTO> getCategories() throws RemoteException {
-		System.out.println(" * RemoteFacade getCategories()");
-		
-		//Get Categories using BidAppService
-		List<Category> categories = bidService.getCategories();
-		
-		if (categories != null) {
-			//Convert domain object to DTO
-			return CategoryAssembler.getInstance().categoryToDTO(categories);
-		} else {
-			throw new RemoteException("getCategories() fails!");
-		}
-	}
+    private Map<Long, User> serverState = new HashMap<>();
 
-	@Override
-	public List<ArticleDTO> getArticles(String category) throws RemoteException {
-		System.out.println(" * RemoteFacade getArticle('" + category + "')");
+    private ChallengeAppService challengeService = new ChallengeAppService();
+    private UserAppService userService = new UserAppService();
+    private SessionAppService sessionService = new SessionAppService();
 
-		//Get Articles using BidAppService
-		List<Article> articles = bidService.getArticles(category);
-		
-		if (articles != null) {
-			//Convert domain object to DTO
-			return ArticleAssembler.getInstance().articleToDTO(articles);
-		} else {
-			throw new RemoteException("getArticles() fails!");
-		}
-	}
-	
-	@Override
-	public boolean makeBid(long token, int article, float amount) throws RemoteException {		
-		System.out.println(" * RemoteFacade makeBid article : " + article + " / amount " + amount);
-		
-		if (this.serverState.containsKey(token)) {						
-			//Make the bid using Bid Application Service
-			if (bidService.makeBid(this.serverState.get(token), article, amount)) {
-				return true;
-			} else {
-				throw new RemoteException("makeBid() fails!");
-			}
-		} else {
-			throw new RemoteException("To place a bid you must first log in");
-		}
-	}
+    public RemoteFacade() throws RemoteException {
+        super();
+    }
 
-	@Override
-	public float getUSDRate() throws RemoteException {
-		System.out.println(" * RemoteFacade get USD rate");
+    public boolean createChallenge(String token, String name, String startDate,
+                                                 String endDate, float targetDistance,
+                                                 long targetTime, String sport) {
+        try {
+			return challengeService.createChallenge(getUserByToken(token), name, startDate, endDate,
+			        targetDistance, targetTime, sport);
+		} catch (RemoteException e) {e.printStackTrace();}
+        
+		return false;
+    }
 
-		//Get rate using BidAppService
-		float rate = bidService.getUSDRate();
-		
-		if (rate != -1) {
-			return rate;
-		} else {
-			throw new RemoteException("getUSDRate() fails!");
-		}
-	}
+    public List<Challenge> getChallenges() {
+        // Implementation based on ChallengeAppService
+        return challengeService.getChallenges();
+    }
 
-	@Override
-	public float getGBPRate() throws RemoteException {
-		System.out.println(" * RemoteFacade get GBP rate");
-		
-		//Get rate using BidAppService
-		float rate = bidService.getGBPRate();
-		
-		if (rate != -1) {
-			return rate;
-		} else {
-			throw new RemoteException("getGBPRate() fails!");
-		}
-	}
+    public boolean acceptChallenge(String token, String challengeName) {
+        // Implementation based on ChallengeAppService
+        try {
+			return challengeService.acceptChallenge(getUserByToken(token), challengeName);
+		} catch (RemoteException e) {e.printStackTrace();}
+        
+		return false;
+    }
+
+    public List<Challenge> getActiveChallenges(String token, String date) {
+        // Implementation based on ChallengeAppService
+        try {
+			return challengeService.getActiveChallenges(getUserByToken(token), date);
+		} catch (RemoteException e) {e.printStackTrace();}
+        
+		return null;
+    }
+
+    public List<Challenge> getAcceptedChallenges(String token) {
+        // Implementation based on ChallengeAppService
+        try {
+			return challengeService.getAcceptedChallenges(getUserByToken(token));
+		} catch (RemoteException e) {e.printStackTrace();}
+        
+		return null;
+    }
+
+    public boolean registerGoogle(String email, String name, String birthDate) {
+        // Implementation based on UserAppService
+        return userService.registerGoogle(email, name, birthDate);
+    }
+
+    public boolean registerFacebook(String email, String name, String birthDate) {
+        // Implementation based on UserAppService
+        return userService.registerFacebook(email, name, birthDate);
+    }
+
+    public boolean registerGoogle(String email, String name, String birthDate,
+                                  float weight, int height, int maxHeartRate, int restHeartRate) {
+        // Implementation based on UserAppService
+        return userService.registerGoogle(email, name, birthDate, weight, height, maxHeartRate, restHeartRate);
+    }
+
+    public boolean registerFacebook(String email, String name, String birthDate,
+                                    float weight, int height, int maxHeartRate, int restHeartRate) {
+        // Implementation based on UserAppService
+        return userService.registerFacebook(email, name, birthDate, weight, height, maxHeartRate, restHeartRate);
+    }
+
+    public User login(String email, String password) {
+        // Implementation based on LoginAppService
+        return userService.login(email, password);
+    }
+
+    public boolean createSession(String token, String title, String sport, float distance,
+                                              String startDate, long startTime, int duration) {
+        // Implementation based on SessionAppService
+        try {
+			return sessionService.createSession(getUserByToken(token), title, sport, distance, startDate, startTime, duration);
+		} catch (RemoteException e) {e.printStackTrace();}
+        
+		return false;
+    }
+
+    public List<SessionDTO> getSessions(String token) {
+        // Implementation based on SessionAppService
+        return sessionService.getSessions(getUserByToken(token));
+    }
+
+    public void logout(String token) throws RemoteException {
+        // Implementation of logout
+        Long tokenId = Long.parseLong(token);
+        if (serverState.containsKey(tokenId)) {
+            serverState.remove(tokenId);
+        } else {
+            throw new RemoteException("User is not logged in!");
+        }
+    }
+
+    public User getUserByToken(String token) throws RemoteException {
+        Long tokenId = Long.parseLong(token);
+        return serverState.get(tokenId);
+    }
 }

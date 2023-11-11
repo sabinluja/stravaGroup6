@@ -4,7 +4,7 @@ import es.deusto.ingenieria.sd.strava.server.data.domain.User;
 
 public class UserAppService {
 	
-	private UserAppService() {}
+	public UserAppService() {}
 	
 	// Mandatory arguments for registration
 	

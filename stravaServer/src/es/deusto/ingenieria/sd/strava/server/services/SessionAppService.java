@@ -8,7 +8,7 @@ import es.deusto.ingenieria.sd.strava.server.data.domain.User;
 
 public class SessionAppService {
 	
-	private SessionAppService() {}
+	public SessionAppService() {}
 	
 	public boolean createSession(User user, String title, String sport, float distance, String startDate, long startTime, int duration) {
 		Session newSession = new Session(title, sport, distance, startDate, startTime, duration);
