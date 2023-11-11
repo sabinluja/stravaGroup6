@@ -1,6 +1,7 @@
 package es.deusto.ingenieria.sd.strava.server;
 
 import java.rmi.Naming;
+import java.rmi.Remote;
 
 import es.deusto.ingenieria.sd.strava.server.remote.IRemoteFacade;
 import es.deusto.ingenieria.sd.strava.server.remote.RemoteFacade;
@@ -21,7 +22,7 @@ public class MainProgram {
 		//Bind remote facade instance to a sirvice name using RMIRegistry
 		try {
 			IRemoteFacade remoteFacade = new RemoteFacade();			
-			Naming.rebind(name, remoteFacade);
+			Naming.rebind(name, (Remote) remoteFacade);
 			System.out.println(" * eAuction Server v1 '" + name + "' started!!");
 		} catch (Exception ex) {
 			System.err.println(" # eAuction Server Exception: " + ex.getMessage());
