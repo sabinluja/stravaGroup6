@@ -34,6 +34,6 @@ public interface IRemoteFacade {
 
     List<SessionDTO> getSessions(String token)throws RemoteException;
 
-    void logout(String token) throws RemoteException;
+    void logout(String token) throws RemoteException; 
 }
 

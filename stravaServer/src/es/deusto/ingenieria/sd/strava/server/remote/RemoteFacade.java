@@ -47,7 +47,7 @@ public class RemoteFacade extends UnicastRemoteObject implements IRemoteFacade {
         List<Challenge> challenges = challengeService.getChallenges();
         return ChallengeAssembler.getInstance().challengeToDTO(challenges);
     }
-
+ 
     public boolean acceptChallenge(String token, String challengeName) {
         // Implementation based on ChallengeAppService
         try {
