@@ -11,8 +11,7 @@ public class Challenge {
 	
 	// Constructor, getters and setters
 	
-	public Challenge(String name, String startDate, String endDate, long targetTime, float targetDistance,
-			String sports) {
+	public Challenge(String name, String startDate, String endDate, long targetTime, float targetDistance, String sports) {
 		super();
 		this.name = name;
 		this.startDate = startDate;
