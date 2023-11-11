@@ -108,13 +108,22 @@ public class User {
 		this.challengeList = challengeList;
 	}
 	
+	public List<Challenge> getAcceptedChallengeList() {
+		return acceptedChallengeList;
+	}
+
+	public void setAcceptedChallengeList(List<Challenge> acceptedChallengeList) {
+		this.acceptedChallengeList = acceptedChallengeList;
+	}
+	
 	
 	// Methods: (toString -- equals)
-	
+
 	public String toString() {
-		return "User [name=" + name + ", email=" + email + ", birthDate=" + birthDate + ", weight=" + weight
-				+ ", height=" + height + ", maxHeartRate=" + maxHeartRate + ", restHeartRate=" + restHeartRate
-				+ ", sessionList=" + sessionList + ", challengeList=" + challengeList + "]";
+		return "User [name=" + name + ", email=" + email + ", password=" + password + ", birthDate=" + birthDate
+				+ ", weight=" + weight + ", height=" + height + ", maxHeartRate=" + maxHeartRate + ", restHeartRate="
+				+ restHeartRate + ", sessionList=" + sessionList + ", challengeList=" + challengeList
+				+ ", acceptedChallengeList=" + acceptedChallengeList + "]";
 	}
 	
 	public boolean equals(Object obj) {
@@ -126,7 +135,7 @@ public class User {
 	
 	
 	// Additional methods: 
-	
+
 	public void addSession(Session session) {
 		if (session != null && !this.sessionList.contains(session)) {
 			this.sessionList.add(session);
@@ -136,6 +145,12 @@ public class User {
 	public void addChallenge(Challenge challenge) {
 		if (challenge != null && !this.challengeList.contains(challenge)) {
 			this.challengeList.add(challenge);
+		}
+	}
+	
+	public void addAcceptedChallenge(Challenge challenge) {
+		if (challenge != null && !this.acceptedChallengeList.contains(challenge)) {
+			this.acceptedChallengeList.add(challenge);
 		}
 	}
 	
