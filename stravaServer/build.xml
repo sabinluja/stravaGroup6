@@ -4,11 +4,11 @@
    	<property name="bin.dir" location="bin"/>
 	<property name="dist.dir" location="dist"/>
 	<property name="lib.dir" location="lib"/>
-	<property name="export.file" value="eAuctions.jar"/>
+	<property name="export.file" value="strava.jar"/>
 	<property name="policy.file" location="security/java.policy"/>	
 	<property name="rmiregistry.IP" value="127.0.0.1"/> 
 	<property name="rmiregistry.port" value="1099"/> 
-	<property name="server.name" value="eAuctions"/>
+	<property name="server.name" value="strava"/>
 
 	<path id="classpath">
         <fileset dir="${lib.dir}">
@@ -30,7 +30,7 @@
 	</target>
 	
 	<target name="3.local.test" depends="1.build" description="Runs local repository test">
-		<java classname="es.deusto.ingenieria.sd.auctions.server.test.LocalTest" classpathref="classpath" fork="true">
+		<java classname="es.deusto.ingenieria.sd.strava.server.test.LocalTest" classpathref="classpath" fork="true">
 		</java>
     </target>
 	
