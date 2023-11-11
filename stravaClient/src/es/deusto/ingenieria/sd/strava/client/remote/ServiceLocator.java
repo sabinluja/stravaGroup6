@@ -2,7 +2,7 @@ package es.deusto.ingenieria.sd.strava.client.remote;
 
 import java.rmi.Naming;
 
-import es.deusto.ingenieria.sd.auctions.server.remote.IRemoteFacade;
+import es.deusto.ingenieria.sd.server.server.remote.IRemoteFacade;
 
 //This class implements Service Locator pattern
 public class ServiceLocator {

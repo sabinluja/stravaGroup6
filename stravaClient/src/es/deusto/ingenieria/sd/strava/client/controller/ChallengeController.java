@@ -3,7 +3,7 @@ package es.deusto.ingenieria.sd.strava.client.controller;
 import java.rmi.RemoteException;
 import java.util.List;
 
-import es.deusto.ingenieria.sd.auctions.server.data.dto.CategoryDTO;
+import es.deusto.ingenieria.sd.strava.server.data.dto.ChallengeDTO;
 import es.deusto.ingenieria.sd.strava.client.remote.ServiceLocator;
 
 public class ChallengeController {
