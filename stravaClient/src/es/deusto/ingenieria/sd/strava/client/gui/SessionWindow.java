@@ -1,16 +1,13 @@
 package es.deusto.ingenieria.sd.strava.client.gui;
-
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Vector;
 
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JList;
 import javax.swing.JScrollPane;
@@ -21,16 +18,14 @@ import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
 
-import es.deusto.ingenieria.sd.strava.client.controller.ChallengeController;
 import es.deusto.ingenieria.sd.strava.client.controller.SessionController;
-import es.deusto.ingenieria.sd.strava.client.controller.UserController;
 
-public class UserWindow extends JFrame {
+public class SessionWindow extends JFrame {
     private static final long serialVersionUID = 1L;
 
-    public UserWindow(UserController controller, ChallengeController chc, SessionController sc) { // Change constructor parameter
+    public SessionWindow(SessionController controller) { // Change constructor parameter
         // Obtain the methods of the controller using reflection
-        List<Method> methods = Arrays.asList(UserController.class.getMethods()); // Change here
+        List<Method> methods = Arrays.asList(SessionController.class.getMethods()); // Change here
 
         Vector<String> methodNames = new Vector<>();
         methods.forEach(method -> {
@@ -42,7 +37,6 @@ public class UserWindow extends JFrame {
         Collections.sort(methodNames);
 
         JList<String> endpointsJList = new JList<>(methodNames);
-        endpointsJList.setBounds(-5, 0, 200, 561);
         endpointsJList.setBorder(new TitledBorder("Endpoints"));
         endpointsJList.setSelectedIndex(-1);
         endpointsJList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -52,7 +46,6 @@ public class UserWindow extends JFrame {
         endpointResults.setBackground(new Color(0, 40, 51));
         endpointResults.setEditable(false);
         JScrollPane scrollPane = new JScrollPane(endpointResults);
-        scrollPane.setBounds(205, 0, 803, 561);
         scrollPane.setBorder(new TitledBorder("Server responses"));
 
         SimpleAttributeSet orangeText = new SimpleAttributeSet();
@@ -65,7 +58,7 @@ public class UserWindow extends JFrame {
         StyleConstants.setForeground(grayText, new Color(131, 148, 149));
         StyleConstants.setBold(grayText, true);
 
-        // Update the lister for the JList to use UserController
+        // Update the lister for the JList to use SessionController
         endpointsJList.addListSelectionListener(e -> {
             String selectedValue = endpointsJList.getSelectedValue();
 
@@ -75,9 +68,9 @@ public class UserWindow extends JFrame {
                 try {
                     resultsDoc.insertString(resultsDoc.getLength(), selectedValue + "\n", grayText);
 
-                    Class<? extends UserController> userControllerClass = controller.getClass();
+                    Class<? extends SessionController> SessionControllerClass = controller.getClass();
                     // Getting method by name
-                    Method method = userControllerClass.getMethod(selectedValue);
+                    Method method = SessionControllerClass.getMethod(selectedValue);
                     // Method invocation using reflection
                     Object result = method.invoke(controller);
 
@@ -96,35 +89,10 @@ public class UserWindow extends JFrame {
         });
 
         this.setTitle("SpringBoot Client Application GUI");
+        this.setLayout(new BorderLayout(5, 5));
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        getContentPane().setLayout(null);
-        
-
-        JButton challenge = new JButton("Challenge");
-        challenge.setBackground(new Color(0, 0, 0));
-        challenge.setBounds(10, 470, 89, 23);
-        challenge.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                ChallengeWindow challengeWindow = new ChallengeWindow(chc);
-                challengeWindow.setVisible(true);
-            }
-        });
-        getContentPane().add(challenge);
-
-        JButton session = new JButton("Session");
-        session.setBackground(Color.BLACK);
-        session.setBounds(10, 504, 89, 23);
-        session.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                SessionWindow sessionWindow = new SessionWindow(sc); // Cambia esto por la instancia real
-                sessionWindow.setVisible(true);
-            }
-        });
-        getContentPane().add(session);
-        
-        getContentPane().add(session);
-        getContentPane().add(endpointsJList);
-        getContentPane().add(scrollPane);
+        this.add(endpointsJList, BorderLayout.WEST);
+        this.add(scrollPane, BorderLayout.CENTER);
 
         this.setSize(1024, 600);
         this.setLocationRelativeTo(null);
