@@ -13,12 +13,13 @@ public class User {
 	private int restHeartRate;
 	private List<Session> sessionList;
 	private List<Challenge> challengeList;
+	private List<Challenge> acceptedChallengeList;
 		
 	
 	// Constructor, getters and setters
 	
 	public User(String name, String email, String password, String birthDate, float weight, int height,
-			int maxHeartRate, int restHeartRate, List<Session> sessionList, List<Challenge> challengeList) {
+			int maxHeartRate, int restHeartRate, List<Session> sessionList, List<Challenge> challengeList, List<Challenge> acceptedChallengeList) {
 		super();
 		this.name = name;
 		this.email = email;
@@ -30,6 +31,7 @@ public class User {
 		this.restHeartRate = restHeartRate;
 		this.sessionList = sessionList;
 		this.challengeList = challengeList;
+		this.acceptedChallengeList = acceptedChallengeList;
 	}
 	
 	public User() {}

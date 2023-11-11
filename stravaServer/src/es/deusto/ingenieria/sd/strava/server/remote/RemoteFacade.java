@@ -2,6 +2,7 @@ package es.deusto.ingenieria.sd.strava.server.remote;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,47 +28,79 @@ public class RemoteFacade extends UnicastRemoteObject implements IRemoteFacade {
     
     public RemoteFacade() throws RemoteException {super();}
     
-    public boolean createChallenge(String token, String name, String startDate,
+	@SuppressWarnings("unlikely-arg-type")
+	public boolean createChallenge(String token, String name, String startDate,
                                                  String endDate, float targetDistance,
-                                                 long targetTime, String sport) {
-        try {
-			return challengeService.createChallenge(getUserByToken(token), name, startDate, endDate,
-			        targetDistance, targetTime, sport);
-		} catch (RemoteException e) {e.printStackTrace();}
-        
-		return false;
+                                                 long targetTime, String sport) throws RemoteException {
+    	// Implementation of a challenge
+    	
+    	System.out.println(" * RemoteFacade createChallenge");
+    	
+		if (this.serverState.containsKey(token)) {						
+			if (challengeService.createChallenge(getUserByToken(token), name, startDate, endDate,
+			        targetDistance, targetTime, sport)) {
+				return true;
+			} else {
+				throw new RemoteException("createChallenge() fails!");
+			}
+		} else {
+			throw new RemoteException("To create a challenge you must first log in");
+		}
     }
     
     public List<ChallengeDTO> getChallenges() throws RemoteException {
         // Implementation based on ChallengeAppService
-    	
+           
+        System.out.println(" * RemoteFacade getChallenges()");
         List<Challenge> challenges = challengeService.getChallenges();
-        return ChallengeAssembler.getInstance().challengeToDTO(challenges);
+		
+		if (challenges != null) {
+			//Convert domain object to DTO
+	        return ChallengeAssembler.getInstance().challengeToDTO(challenges);
+		} else {
+			throw new RemoteException("getChallenges() fails!");
+		}
     }
 
  
-    public boolean acceptChallenge(String token, String challengeName) {
+    public boolean acceptChallenge(String token, String challengeName) throws RemoteException {
         // Implementation based on ChallengeAppService
-    	
-        try {
+    			
+		System.out.println(" * RemoteFacade acceptChallenge()");
+        List<Challenge> challenges = challengeService.getChallenges();
+		
+		if (challenges != null) {
+			//Convert domain object to DTO
 			return challengeService.acceptChallenge(getUserByToken(token), challengeName);
-		} catch (RemoteException e) {e.printStackTrace();}
-        
-		return false;
+		} else {
+			throw new RemoteException("acceptChallenge() fails!");
+		}
     }
     
     public List<ChallengeDTO> getActiveChallenges(String token, String date) throws RemoteException {
         // Implementation based on ChallengeAppService
     	
+        System.out.println(" * RemoteFacade getActiveChallenges ('" + token + "')");
         List<Challenge> activeChallenges = challengeService.getActiveChallenges(getUserByToken(token), date);
-        return ChallengeAssembler.getInstance().challengeToDTO(activeChallenges);
+		
+		if (token != null) {
+			return ChallengeAssembler.getInstance().challengeToDTO(activeChallenges);	
+		} else {
+			throw new RemoteException("getActiveChallenges() fails!");
+		}
     }
     
     public List<ChallengeDTO> getAcceptedChallenges(String token) throws RemoteException {
         // Implementation based on ChallengeAppService
-    	
+        
+        System.out.println(" * RemoteFacade getAcceptedChallenges ('" + token + "')");
         List<Challenge> acceptedChallenges = challengeService.getAcceptedChallenges(getUserByToken(token));
-        return ChallengeAssembler.getInstance().challengeToDTO(acceptedChallenges);
+		
+		if (token != null) {
+	        return ChallengeAssembler.getInstance().challengeToDTO(acceptedChallenges);
+		} else {
+			throw new RemoteException("getAcceptedChallenges() fails!");
+		}
     }
     
     public boolean registerGoogle(String email, String name, String birthDate) {
@@ -96,32 +129,66 @@ public class RemoteFacade extends UnicastRemoteObject implements IRemoteFacade {
         return userService.registerFacebook(email, name, birthDate, weight, height, maxHeartRate, restHeartRate);
     }
     
-    public User login(String email, String password) {
-        // Implementation based on LoginAppService
-    	
-        return userService.login(email, password);
-    }
-    
-    public boolean createSession(String token, String title, String sport, float distance,
-                                              String startDate, long startTime, int duration) {
+    @SuppressWarnings("unlikely-arg-type")
+	public boolean createSession(String token, String title, String sport, float distance,
+                                              String startDate, long startTime, int duration) throws RemoteException {
         // Implementation based on SessionAppService
-    	
-        try {
-			return sessionService.createSession(getUserByToken(token), title, sport, distance, startDate, startTime, duration);
-		} catch (RemoteException e) {e.printStackTrace();}
-        
-		return false;
+		
+		System.out.println(" * RemoteFacade createSession");
+		
+		if (this.serverState.containsKey(token)) {						
+			//Make the bid using Bid Application Service
+			if (sessionService.createSession(getUserByToken(token), title, sport, distance, 
+					startDate, startTime, duration)) {
+				return true;
+			} else {
+				throw new RemoteException("createSession fails!");
+			}
+		} else {
+			throw new RemoteException("To create a session you must first log in");
+		}
     }
     
     public List<SessionDTO> getSessions(String token) throws RemoteException {
         // Implementation based on SessionAppService
-    	
+        	        
+        System.out.println(" * RemoteFacade getSessions('" + token + "')");
         List<Session> sessions = sessionService.getSessions(getUserByToken(token));
-        return SessionAssembler.getInstance().sessionToDTO(sessions);
+        
+		if (sessions != null) {
+			//Convert domain object to DTO
+			return SessionAssembler.getInstance().sessionToDTO(sessions);
+		} else {
+			throw new RemoteException("getSessions() fails!");
+		}
     }
     
-    public void logout(String token) throws RemoteException {
+    public synchronized long login(String email, String password) throws RemoteException {
+        // Implementation based on LoginAppService
+    	
+    	System.out.println(" * RemoteFacade login(): " + email + " / " + password);
+		User user = userService.login(email, password);
+			
+		//If login() success user is stored in the Server State
+		if (user != null) {
+			//If user is not logged in 
+			if (!this.serverState.values().contains(user)) {
+				Long token = Calendar.getInstance().getTimeInMillis();		
+				this.serverState.put(token, user);	
+				return(token);
+				
+			} else {
+				throw new RemoteException("User is already logged in!");
+			}
+		} else {
+			throw new RemoteException("Login fails!");
+		}
+    }
+    
+    public synchronized void logout(String token) throws RemoteException {
         // Implementation of logout
+    	
+    	System.out.println(" * RemoteFacade logout(): " + token);
     	
         Long tokenId = Long.parseLong(token);
         if (serverState.containsKey(tokenId)) {
