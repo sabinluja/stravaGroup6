@@ -29,7 +29,7 @@ public class SessionController {
 			return this.serviceLocator.getService().getSessions(token);
 		} catch (RemoteException e) {
 			System.out.println("# Error getting all sessions: " + e);
-			return false;
+			return null;
 		}
     }
 }

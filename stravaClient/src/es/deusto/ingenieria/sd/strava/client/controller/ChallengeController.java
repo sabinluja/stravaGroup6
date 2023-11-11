@@ -54,7 +54,7 @@ public class ChallengeController {
 	
 	public List<ChallengeDTO> getAcceptedChallenges(String token, String date) {
 		try {
-			return this.serviceLocator.getService().getAcceptedChallenges(token, date);
+			return this.serviceLocator.getService().getAcceptedChallenges(token);
 		} catch (RemoteException e) {
 			System.out.println("# Error getting the accepted challenges: " + e);
 			return null;
