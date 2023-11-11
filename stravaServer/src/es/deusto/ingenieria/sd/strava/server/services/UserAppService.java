@@ -33,7 +33,7 @@ public class UserAppService {
 	public User login(String email, String password) {
 		User user = new User();		
 		user.setEmail("sabin.luja@opendeusto.es");
-		user.setName("Sabin");		
+		user.setName("Sabin");
 		
 		//Generate the hash of the password
 		String hashPass = org.apache.commons.codec.digest.DigestUtils.sha1Hex("$!9PhNz,");		
