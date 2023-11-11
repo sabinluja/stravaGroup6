@@ -89,7 +89,7 @@ public class ChallengeWindow extends JFrame {
             }
         });
 
-        this.setTitle("SpringBoot Client Application GUI");
+        this.setTitle("SpringBoot Challenge Application GUI");
         this.setLayout(new BorderLayout(5, 5));
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.add(endpointsJList, BorderLayout.WEST);
@@ -97,6 +97,6 @@ public class ChallengeWindow extends JFrame {
 
         this.setSize(1024, 600);
         this.setLocationRelativeTo(null);
-        this.setVisible(true);
+        this.setVisible(false);
     }
 }
