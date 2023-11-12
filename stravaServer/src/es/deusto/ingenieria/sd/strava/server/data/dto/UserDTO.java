@@ -75,7 +75,7 @@ public class UserDTO implements Serializable {
 	// Methods: (toString)
 
 	public String toString() {
-		return "UserDTO [email=" + email + ", name=" + name + ", birthDate=" + birthDate + ", weight=" + weight
+		return "User [email=" + email + ", name=" + name + ", birthDate=" + birthDate + ", weight=" + weight
 				+ ", height=" + height + ", maxHeartRate=" + maxHeartRate + ", restHeartRate=" + restHeartRate + "]";
 	}	
 }

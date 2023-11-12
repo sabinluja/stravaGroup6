@@ -68,7 +68,7 @@ public class SessionDTO implements Serializable {
 	// Methods: (toString)
 	
 	public String toString() {
-		return "SessionDTO [title=" + title + ", sport=" + sport + ", distance=" + distance + ", startDate=" + startDate
+		return "Session [title=" + title + ", sport=" + sport + ", distance=" + distance + ", startDate=" + startDate
 				+ ", startTime=" + startTime + ", duration=" + duration + "]";
 	}
 }

@@ -77,7 +77,7 @@ public class ChallengeDTO implements Serializable {
 	// Methods: (toString)
 	
 	public String toString() {
-		return "ChallengeDTO [name=" + name + ", startDate=" + startDate + ", endDate=" + endDate + ", targetTime="
+		return "Challenge [name=" + name + ", startDate=" + startDate + ", endDate=" + endDate + ", targetTime="
 				+ targetTime + ", targetDistance=" + targetDistance + ", sport=" + sport + "]";
 	}
 }

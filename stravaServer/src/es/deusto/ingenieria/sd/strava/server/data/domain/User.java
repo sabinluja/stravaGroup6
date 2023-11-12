@@ -13,8 +13,8 @@ public class User {
 	private int maxHeartRate;
 	private int restHeartRate;
 	private List<Session> sessionList = new ArrayList<Session>();
-	private List<Challenge> challengeList = new ArrayList<>();
-	private List<Challenge> acceptedChallengeList = new ArrayList<>();
+	private List<Challenge> challengeList = new ArrayList<Challenge>();
+	private List<Challenge> acceptedChallengeList = new ArrayList<Challenge>();
 		
 	
 	// Constructor, getters and setters

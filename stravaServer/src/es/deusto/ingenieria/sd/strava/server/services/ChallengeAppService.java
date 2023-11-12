@@ -127,15 +127,7 @@ public class ChallengeAppService {
 	}
 
 	
-	public List<Challenge> getAcceptedChallenges(User user) {
-		List<Challenge> acceptedChallengesList = new ArrayList<>();
-
-        if (user != null) {
-            for (Challenge challenge : user.getAcceptedChallengeList()) {
-            	if (acceptChallenge(user, challenge.getName()))
-            		acceptedChallengesList.add(challenge); 
-            }
-        }
-        return acceptedChallengesList; // The list with the accepted challenges of that concrete user
+	public List<Challenge> getAcceptedChallenges(User user) {      
+        return user.getAcceptedChallengeList(); // The list with the accepted challenges of that concrete user
 	}
 }
