@@ -135,6 +135,7 @@ public class RemoteFacade extends UnicastRemoteObject implements IRemoteFacade {
         // Implementation based on SessionAppService
     	
         try {
+        	System.out.println("facade");
 			return sessionService.createSession(getUserByToken(token), title, sport, distance, startDate, startTime, duration);
 		} catch (RemoteException e) {e.printStackTrace();}
         

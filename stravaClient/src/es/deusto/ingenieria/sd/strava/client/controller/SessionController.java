@@ -17,6 +17,7 @@ public class SessionController {
 	public boolean createSession(String token, String title, String sport, float distance,
             	String startDate, long startTime, int duration) {
 		try {
+			System.out.println("controller");
 			return this.serviceLocator.getService().createSession(token, title, sport, distance, startDate, startTime, duration);
 		} catch (RemoteException e) {
 			System.out.println("# Error creating the session: " + e);

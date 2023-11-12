@@ -11,9 +11,17 @@ public class SessionAppService {
 	public SessionAppService() {}
 	
 	public boolean createSession(User user, String title, String sport, float distance, String startDate, long startTime, int duration) {
-		Session newSession = new Session(title, sport, distance, startDate, startTime, duration);
-
+		
+		System.out.println("appservice");
 		if (user != null) {
+			System.out.println("entra");
+			Session newSession = new Session();
+			newSession.setTitle(title);
+			newSession.setSports(sport);
+			newSession.setDistance(distance);
+			newSession.setStartDate(startDate);
+			newSession.setStartTime(startTime);
+			newSession.setDuration(duration);
             user.addSession(newSession);
             return true; // The challenge has been correctly created
         }

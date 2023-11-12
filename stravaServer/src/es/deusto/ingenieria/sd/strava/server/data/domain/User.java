@@ -1,5 +1,6 @@
 package es.deusto.ingenieria.sd.strava.server.data.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class User {
@@ -11,9 +12,9 @@ public class User {
 	private int height;
 	private int maxHeartRate;
 	private int restHeartRate;
-	private List<Session> sessionList;
-	private List<Challenge> challengeList;
-	private List<Challenge> acceptedChallengeList;
+	private List<Session> sessionList = new ArrayList<Session>();
+	private List<Challenge> challengeList = new ArrayList<>();
+	private List<Challenge> acceptedChallengeList = new ArrayList<>();
 		
 	
 	// Constructor, getters and setters
@@ -156,7 +157,9 @@ public class User {
 	// Additional methods: 
 
 	public void addSession(Session session) {
+		System.out.println("user");
 		if (session != null && !this.sessionList.contains(session)) {
+			System.out.println("if");
 			this.sessionList.add(session);
 		}
 	}
