@@ -49,4 +49,14 @@ public class UserController {
 			return false;
 		}
     }
+    
+    public boolean login(String email, String password) {
+		try {
+			this.serviceLocator.getService().login(email, password);
+			return true;
+		} catch (RemoteException e) {
+			System.out.println("# Error in login (mandatory + optional arguments): " + e);
+			return false;
+		}
+	}
 }

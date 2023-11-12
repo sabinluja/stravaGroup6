@@ -31,10 +31,13 @@ public class UserWindow extends JFrame {
     public UserWindow(UserController controller, ChallengeController chc, SessionController sc) { // Change constructor parameter
         // Obtain the methods of the controller using reflection
         List<Method> methods = Arrays.asList(UserController.class.getMethods()); // Change here
-
+        
         Vector<String> methodNames = new Vector<>();
         methods.forEach(method -> {
-            if (method.getName().contains("User")) {
+            if (method.getName().contains("register")) {
+                methodNames.add(method.getName());
+            }
+            if (method.getName().contains("login")) {
                 methodNames.add(method.getName());
             }
         });
@@ -73,13 +76,48 @@ public class UserWindow extends JFrame {
 
             if (selectedValue != null && e.getValueIsAdjusting()) {
                 try {
+                	System.out.println("1");
                     resultsDoc.insertString(resultsDoc.getLength(), selectedValue + "\n", grayText);
-
                     Class<? extends UserController> userControllerClass = controller.getClass();
+                    
+                    if (selectedValue.contains("register")) {
+                        Register r = new Register();
+                        if (r.datosProcesados()) {
+	                        String email = r.getEmail();
+	                        String nombre = r.getNombre();
+	                        String birthDate = r.getBirthDate();
+	                        float weight = r.getWeight();
+	                        int height = r.getHeight();
+	                        int maxHeart = r.getMaxHeart();
+	                        int restHeart = r.getRestHeart();
+	                        System.out.println(email);
+	                        System.out.println(nombre);
+	                        System.out.println(birthDate);
+	                        System.out.println(weight);
+	                        System.out.println(height);
+	                        System.out.println(maxHeart);
+	                        System.out.println(restHeart);
+	                        
+                        }
+                    }
+                    
+                    if (selectedValue.contains("login")) {
+                        Login l = new Login();
+                        if (l.dataProcessed()) {
+	                        String email = l.getUsername();
+	                        String password = l.getPassword();
+	                        System.out.println(email);
+	                        System.out.println(password);   
+                        }
+                    }
+                    
                     // Getting method by name
                     Method method = userControllerClass.getMethod(selectedValue);
+                    System.out.println("4");
                     // Method invocation using reflection
                     Object result = method.invoke(controller);
+                    
+                    System.out.println(method.getName());
 
                     if (result != null) {
                         resultsDoc.insertString(resultsDoc.getLength(), result.toString() + "\n\n", greenText);
