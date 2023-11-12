@@ -28,19 +28,19 @@ import es.deusto.ingenieria.sd.strava.client.controller.UserController;
 
 public class SessionWindow extends JFrame {
     private static final long serialVersionUID = 1L;
+    Object result;
+    String token;
+    String title;
+    String sport;
+    float distance;
+	String startDate;
+	long startTime;
+	int duration;
 
     public SessionWindow(SessionController controller, UserController uc) { // Change constructor parameter
         // Obtain the methods of the controller using reflection
         List<Method> methods = Arrays.asList(SessionController.class.getMethods()); // Change here
-        Object result;
-        String token;
-        String title;
-        String sport;
-        float distance;
-    	String startDate;
-    	long startTime;
-    	int duration;
-        
+      
         
         Vector<String> methodNames = new Vector<>();
         methods.forEach(method -> {
@@ -114,13 +114,13 @@ public class SessionWindow extends JFrame {
 		                                e.printStackTrace();
 		                            }
 		                        }
-		                        token = uc.getToken();
-		                        title;
-		                        sport;
-		                        distance;
-		                    	startDate;
-		                    	startTime;
-		                    	duration;
+		                        token = uc.getToken()+"";
+		                        title = s.getTitle();
+		                        sport = s.getSport();
+		                        distance = s.getDistance();
+		                    	startDate = s.getStartDate();
+		                    	startTime = s.getStartTime();
+		                    	duration = s.getDuration();
 		                        
 		                        result = controller.createSession(token, title, sport, distance, startDate, startTime, duration);     
 		                    }
@@ -135,10 +135,10 @@ public class SessionWindow extends JFrame {
 		                                e.printStackTrace();
 		                            }
 		                        }
-
+/*
 		                        email = l.getUsername();
 		                        password = l.getPassword();  
-		                        result = controller.login(email, password);     
+		                        result = controller.login(email, password);    */ 
 		                    }
 		                    
 		                    // Getting method by name
