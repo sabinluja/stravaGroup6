@@ -120,7 +120,6 @@ public class RemoteFacade extends UnicastRemoteObject implements IRemoteFacade {
     public boolean registerGoogle(String email, String name, String birthDate,
                                   float weight, int height, int maxHeartRate, int restHeartRate) {
         // Implementation based on UserAppService
-    	
         return userService.registerGoogle(email, name, birthDate, weight, height, maxHeartRate, restHeartRate);
     }
     
@@ -159,9 +158,11 @@ public class RemoteFacade extends UnicastRemoteObject implements IRemoteFacade {
     public synchronized long login(String email, String password) throws RemoteException {
         // Implementation based on LoginAppService
     	
+    	System.out.println("1");
     	System.out.println(" * RemoteFacade login(): " + email + " / " + password);
+    	System.out.println("2");
 		User user = userService.login(email, password);
-			
+		System.out.println("3");
 		//If login() success user is stored in the Server State
 		if (user != null) {
 			//If user is not logged in 

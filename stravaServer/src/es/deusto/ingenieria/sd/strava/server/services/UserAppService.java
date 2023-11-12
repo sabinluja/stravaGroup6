@@ -1,5 +1,6 @@
 package es.deusto.ingenieria.sd.strava.server.services;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import es.deusto.ingenieria.sd.strava.server.data.domain.User;
@@ -8,7 +9,7 @@ public class UserAppService {
 	
 	public UserAppService() {}
 	
-	private List<User> registeredUsers;
+	private List<User> registeredUsers = new ArrayList<User>();
 	
 	// Mandatory arguments for registration
 	
@@ -56,7 +57,7 @@ public class UserAppService {
 		user.setName("Sabin");
 		
 		//Generate the hash of the password
-		String hashPass = org.apache.commons.codec.digest.DigestUtils.sha1Hex("$!9PhNz,");		
+		String hashPass = org.apache.commons.codec.digest.DigestUtils.sha1Hex("$!9PhNz,");	
 		user.setPassword(hashPass);
 		
 		if (user.getEmail().equals(email) && user.checkPassword(password)) {		
