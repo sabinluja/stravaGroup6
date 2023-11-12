@@ -33,10 +33,9 @@ public class RemoteFacade extends UnicastRemoteObject implements IRemoteFacade {
                                                  String endDate, float targetDistance,
                                                  long targetTime, String sport) throws RemoteException {
     	// Implementation of a challenge
+
     	
-    	System.out.println(" * RemoteFacade createChallenge");
-    	
-		if (this.serverState.containsKey(token)) {						
+		if (this.serverState.containsKey(Long.parseLong(token))) {						
 			if (challengeService.createChallenge(getUserByToken(token), name, startDate, endDate,
 			        targetDistance, targetTime, sport)) {
 				return true;
@@ -66,11 +65,13 @@ public class RemoteFacade extends UnicastRemoteObject implements IRemoteFacade {
     public boolean acceptChallenge(String token, String challengeName) throws RemoteException {
         // Implementation based on ChallengeAppService
     			
-		System.out.println(" * RemoteFacade acceptChallenge()");
+		System.out.println(" * RemoteFacade acceptChallenge()"+token+challengeName);
         List<Challenge> challenges = challengeService.getChallenges();
+        System.out.println("YO");
 		
 		if (challenges != null) {
 			//Convert domain object to DTO
+			System.out.println("TU");
 			return challengeService.acceptChallenge(getUserByToken(token), challengeName);
 		} else {
 			throw new RemoteException("acceptChallenge() fails!");
@@ -106,7 +107,7 @@ public class RemoteFacade extends UnicastRemoteObject implements IRemoteFacade {
     }
     
     public boolean registerGoogle(String email, String name, String birthDate) {
-        // Implementation based on UserAppService
+        // Implementation based on UserAppService 
     	
         return userService.registerGoogle(email, name, birthDate);
     }

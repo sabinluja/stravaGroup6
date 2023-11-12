@@ -8,7 +8,7 @@ import es.deusto.ingenieria.sd.strava.server.data.domain.User;
 
 public class ChallengeAppService {
 	
-	private List<Challenge> challengeDTOList = new ArrayList<>();
+	private List<Challenge> challengeList = new ArrayList<>();
 	
 	public ChallengeAppService() {}
 
@@ -18,16 +18,19 @@ public class ChallengeAppService {
 
 		if (user != null) {
             user.addChallenge(newChallenge);
+            challengeList.add(newChallenge);
+
             return true; // The challenge has been correctly created
         }
         return false; // The challenge has not been created
 	}
 	
 	public List<Challenge> getChallenges() {
-		return this.challengeDTOList;
+		return this.challengeList;
 	}
 	
 	public boolean acceptChallenge(User user, String challengeName) {
+
 		if (user != null) {
             for (Challenge challenge : user.getChallengeList()) {
                 if (challenge.getName().equals(challengeName)) {

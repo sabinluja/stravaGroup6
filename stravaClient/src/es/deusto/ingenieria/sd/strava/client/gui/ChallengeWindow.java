@@ -121,6 +121,8 @@ public class ChallengeWindow extends JFrame {
 	                    	    System.out.println(sport);
 	                    	    System.out.println(targetDistance);
 	                    	    System.out.println(targetTime);     
+	                    	    
+	                    	    result = controller.createChallenge(uc.getToken()+"", name, startDate, endDate, targetDistance, targetTime, sport);
 		                    
 		                        
 		                    }
@@ -139,7 +141,8 @@ public class ChallengeWindow extends JFrame {
 		                        }
 
 		                        name = ac.getName();
-		                        result = controller.acceptChallenge(uc.getToken()+"", selectedValue);   
+		                        System.out.println(name);
+		                        result = controller.acceptChallenge(uc.getToken()+"", name);   
 		                    }
                             else if (selectedValue.contains("getAcceptedChallenges")) {
                             	result = controller.getAcceptedChallenges(uc.getToken()+"",Calendar.getInstance().getTimeInMillis()+"");
