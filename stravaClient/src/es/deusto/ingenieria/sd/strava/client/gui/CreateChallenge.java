@@ -27,9 +27,9 @@ public class CreateChallenge extends JFrame {
         // GUI components
         JLabel nameLabel = new JLabel("Name:");
         nameField = new JTextField();
-        JLabel startDateLabel = new JLabel("Start Date:");
+        JLabel startDateLabel = new JLabel("Start Date (YYYY-MM-DD):");
         startDateField = new JTextField();
-        JLabel endDateLabel = new JLabel("End Date:");
+        JLabel endDateLabel = new JLabel("End Date (YYYY-MM-DD):");
         endDateField = new JTextField();
         JLabel targetDistanceLabel = new JLabel("Target Distance:");
         targetDistanceField = new JTextField();
@@ -66,7 +66,7 @@ public class CreateChallenge extends JFrame {
         panel.add(saveButton);
 
         // Add panel to the JFrame
-        add(panel);
+        getContentPane().add(panel);
 
         // Make the JFrame visible
         setVisible(true);

@@ -1,6 +1,9 @@
 package es.deusto.ingenieria.sd.strava.server.services;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import es.deusto.ingenieria.sd.strava.server.data.domain.Challenge;
@@ -42,18 +45,30 @@ public class ChallengeAppService {
 	}
 	
 	public List<Challenge> getActiveChallenges(User user, String date) {
-		List<Challenge> activeChallengesList = new ArrayList<>();
+        List<Challenge> activeChallengesList = new ArrayList<>();
 
         if (user != null) {
-            for (Challenge challenge : user.getChallengeList()) {
-                if (date.compareTo(challenge.getStartDate()) >= 0 && date.compareTo(challenge.getEndDate()) <= 0) {
-                	activeChallengesList.add(challenge);
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+            try {
+                Date currentDate = dateFormat.parse(date);
+
+                for (Challenge challenge : user.getChallengeList()) {
+                    Date startDate = dateFormat.parse(challenge.getStartDate());
+                    Date endDate = dateFormat.parse(challenge.getEndDate());
+
+                    if (currentDate.compareTo(startDate) >= 0 && currentDate.compareTo(endDate) <= 0) {
+                        activeChallengesList.add(challenge);
+                    }
                 }
-                
+            } catch (ParseException e) {
+                // Handle the ParseException according to your requirements
+                e.printStackTrace();
             }
         }
-        return activeChallengesList; // The list with the active challenges of that concrete user
-	}
+
+        return activeChallengesList;
+    }
 	
 	public List<Challenge> getAcceptedChallenges(User user) {
 		List<Challenge> acceptedChallengesList = new ArrayList<>();
