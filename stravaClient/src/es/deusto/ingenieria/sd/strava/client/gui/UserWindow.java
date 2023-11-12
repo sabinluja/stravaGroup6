@@ -9,6 +9,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Vector;
+import java.util.concurrent.TimeUnit;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -27,6 +28,7 @@ import es.deusto.ingenieria.sd.strava.client.controller.UserController;
 
 public class UserWindow extends JFrame {
     private static final long serialVersionUID = 1L;
+    Object result;
 
     public UserWindow(UserController controller, ChallengeController chc, SessionController sc) { // Change constructor parameter
         // Obtain the methods of the controller using reflection
@@ -75,6 +77,7 @@ public class UserWindow extends JFrame {
             StyledDocument resultsDoc = endpointResults.getStyledDocument();
 
             if (selectedValue != null && e.getValueIsAdjusting()) {
+            	
                 try {
                 	System.out.println("1");
                     resultsDoc.insertString(resultsDoc.getLength(), selectedValue + "\n", grayText);
@@ -82,23 +85,39 @@ public class UserWindow extends JFrame {
                     
                     if (selectedValue.contains("register")) {
                         Register r = new Register();
-                        if (r.datosProcesados()) {
-	                        String email = r.getEmail();
-	                        String nombre = r.getNombre();
-	                        String birthDate = r.getBirthDate();
-	                        float weight = r.getWeight();
-	                        int height = r.getHeight();
-	                        int maxHeart = r.getMaxHeart();
-	                        int restHeart = r.getRestHeart();
-	                        System.out.println(email);
-	                        System.out.println(nombre);
-	                        System.out.println(birthDate);
-	                        System.out.println(weight);
-	                        System.out.println(height);
-	                        System.out.println(maxHeart);
-	                        System.out.println(restHeart);
-	                        
-                        }
+                        System.out.println("pene1");
+                        Thread esperaDatosThread = new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                while (!r.datosProcesados()) {
+                                    try {
+                                        TimeUnit.SECONDS.sleep(2);
+                                    } catch (InterruptedException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                                
+                                String email = r.getEmail();
+                                String nombre = r.getNombre();
+                                String birthDate = r.getBirthDate();
+                                float weight = r.getWeight();
+                                int height = r.getHeight();
+                                int maxHeart = r.getMaxHeart();
+                                int restHeart = r.getRestHeart();
+                                System.out.println(email);
+                                System.out.println(nombre);
+                                System.out.println(birthDate);
+                                System.out.println(weight);
+                                System.out.println(height);
+                                System.out.println(maxHeart);
+                                System.out.println(restHeart);
+                                
+                                result = controller.registerGoogle(email, nombre, birthDate, weight, height, maxHeart, restHeart);
+
+                            }
+                        });
+
+                        esperaDatosThread.start(); // Inicia el hilo de espera
                     }
                     
                     if (selectedValue.contains("login")) {
@@ -112,16 +131,17 @@ public class UserWindow extends JFrame {
                     }
                     
                     // Getting method by name
-                    Method method = userControllerClass.getMethod(selectedValue);
+                    //Method method = userControllerClass.getMethod(selectedValue);
                     System.out.println("4");
                     // Method invocation using reflection
-                    Object result = method.invoke(controller);
+                    //Object result = method.invoke(controller);
                     
-                    System.out.println(method.getName());
+                    //System.out.println(method.getName());
 
                     if (result != null) {
                         resultsDoc.insertString(resultsDoc.getLength(), result.toString() + "\n\n", greenText);
                     }
+                    
 
                 } catch (Exception ex1) {
                     try {

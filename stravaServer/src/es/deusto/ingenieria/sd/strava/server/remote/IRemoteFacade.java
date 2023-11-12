@@ -1,13 +1,14 @@
 package es.deusto.ingenieria.sd.strava.server.remote;
 
 import java.rmi.RemoteException;
+import java.rmi.Remote;
 import java.util.List;
 
 
 import es.deusto.ingenieria.sd.strava.server.data.dto.ChallengeDTO;
 import es.deusto.ingenieria.sd.strava.server.data.dto.SessionDTO;
 
-public interface IRemoteFacade {
+public interface IRemoteFacade extends Remote {
     boolean createChallenge(String token, String name, String startDate, String endDate, float targetDistance,
                             long targetTime, String sport) throws RemoteException;
     List<ChallengeDTO> getChallenges()throws RemoteException;
