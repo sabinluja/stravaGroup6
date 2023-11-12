@@ -9,10 +9,7 @@ import es.deusto.ingenieria.sd.strava.server.remote.RemoteFacade;
 public class MainProgram {
 
 	public static void main(String[] args) {	
-		//Activate Security Manager. It is needed for RMI.
-		if (System.getSecurityManager() == null) {
-			System.setSecurityManager(new SecurityManager());
-		}
+
 
 		//args[0] = RMIRegistry IP
 		//args[1] = RMIRegistry Port
