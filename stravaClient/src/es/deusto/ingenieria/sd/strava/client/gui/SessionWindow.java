@@ -97,7 +97,6 @@ public class SessionWindow extends JFrame {
                 	Thread esperaDatosThread = new Thread(new Runnable() {
                         @Override
                         public void run() {
-		                	System.out.println("inicio");
 		                    try {
 								resultsDoc.insertString(resultsDoc.getLength(), selectedValue + "\n", grayText);
 							} catch (BadLocationException e) {
@@ -140,18 +139,7 @@ public class SessionWindow extends JFrame {
 								}
 		                    	
 		                    }
-		                    
-		                    System.out.println("result:");
-	                    	System.out.println(result.toString());
-		                    // Getting method by name
-		                    //Method method = userControllerClass.getMethod(selectedValue);
-		                    System.out.println("vuelta");
-		                    // Method invocation using reflection
-		                    //Object result = method.invoke(controller);
-		                    
-		                    
-		                    //System.out.println(method.getName());
-		                    
+		                    		                    
 		                    if (result != null) {
 		                        try {
 									resultsDoc.insertString(resultsDoc.getLength(), result.toString() + "\n\n", greenText);
