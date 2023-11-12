@@ -7,7 +7,7 @@ import es.deusto.ingenieria.sd.strava.client.remote.ServiceLocator;
 public class UserController {
 	//Reference to the Service Locator
 	private ServiceLocator serviceLocator;
-	private long token = -1;
+	private long token = -1; 
 
 	public UserController (ServiceLocator serviceLoc) {
 		this.serviceLocator = serviceLoc;

@@ -190,7 +190,7 @@ public class UserWindow extends JFrame {
         session.setBounds(10, 504, 100, 23);
         session.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                SessionWindow sessionWindow = new SessionWindow(sc); // Cambia esto por la instancia real
+                SessionWindow sessionWindow = new SessionWindow(sc, controller); // Cambia esto por la instancia real
                 sessionWindow.setVisible(true);
             }
         });

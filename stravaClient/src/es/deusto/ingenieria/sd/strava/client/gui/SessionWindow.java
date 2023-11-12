@@ -29,10 +29,17 @@ import es.deusto.ingenieria.sd.strava.client.controller.UserController;
 public class SessionWindow extends JFrame {
     private static final long serialVersionUID = 1L;
 
-    public SessionWindow(SessionController controller) { // Change constructor parameter
+    public SessionWindow(SessionController controller, UserController uc) { // Change constructor parameter
         // Obtain the methods of the controller using reflection
         List<Method> methods = Arrays.asList(SessionController.class.getMethods()); // Change here
         Object result;
+        String token;
+        String title;
+        String sport;
+        float distance;
+    	String startDate;
+    	long startTime;
+    	int duration;
         
         
         Vector<String> methodNames = new Vector<>();
@@ -107,15 +114,15 @@ public class SessionWindow extends JFrame {
 		                                e.printStackTrace();
 		                            }
 		                        }
-		                        String token;
-		                        String title;
-		                        String sport;
-		                        float distance;
-		                    	String startDate;
-		                    	long startTime;
-		                    	int duration;
+		                        token = uc.getToken();
+		                        title;
+		                        sport;
+		                        distance;
+		                    	startDate;
+		                    	startTime;
+		                    	duration;
 		                        
-		                        result = controller.registerGoogle(email, nombre, birthDate, weight, height, maxHeart, restHeart);     
+		                        result = controller.createSession(token, title, sport, distance, startDate, startTime, duration);     
 		                    }
 		                        
 		                    
