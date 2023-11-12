@@ -31,9 +31,11 @@ public class Login extends JFrame {
         // GUI components
         JLabel usernameLabel = new JLabel("Username:");
         usernameField = new JTextField();
+        usernameField.setText("sabin.luja@opendeusto.es");
         JLabel passwordLabel = new JLabel("Password:");
         passwordField = new JPasswordField();
         JButton loginButton = new JButton("Login");
+        passwordField.setText("$!9PhNz,");
 
         // Button action
         loginButton.addActionListener(new ActionListener() {
@@ -51,7 +53,7 @@ public class Login extends JFrame {
         panel.add(loginButton);
 
         // Add panel to the JFrame
-        add(panel);
+        getContentPane().add(panel);
 
         // Make the JFrame visible
         setVisible(true);
