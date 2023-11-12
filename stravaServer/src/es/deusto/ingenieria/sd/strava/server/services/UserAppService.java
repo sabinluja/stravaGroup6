@@ -17,7 +17,8 @@ public class UserAppService {
 	
 	public void initialize() {
 
-		// CHALLENGE 
+		// CHALLENGES
+		
         Challenge challenge1 = new Challenge();
         challenge1.setName("Challenge 1");
         challenge1.setStartDate("2023-01-01");
@@ -58,6 +59,9 @@ public class UserAppService {
         challenge5.setTargetDistance(20.0f); // 20 kilometers
         challenge5.setSports("Cycling");
 
+        
+        // SESIONS 
+        
         Session session1 = new Session();
         session1.setTitle("Session 1");
         session1.setSports("Running");
@@ -98,6 +102,8 @@ public class UserAppService {
         session5.setStartTime(System.currentTimeMillis());
         session5.setDuration(7200); // 2 hours
 
+        
+        // USERS
         
         user1 = new User();
         user1.setName("Sabin");
