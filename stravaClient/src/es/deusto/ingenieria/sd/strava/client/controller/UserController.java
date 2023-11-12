@@ -15,7 +15,7 @@ public class UserController {
 	public boolean registerGoogle(String email, String name, String birthDate) {
 		try {
 			return this.serviceLocator.getService().registerGoogle(email, name, birthDate);
-		} catch (RemoteException e) {
+		} catch (Exception e) {
 			System.out.println("# Error registering with google (only mandatory arguments): " + e);
 			return false;
 		}
@@ -34,7 +34,7 @@ public class UserController {
                                   float weight, int height, int maxHeartRate, int restHeartRate) {
     	try {
 			return this.serviceLocator.getService().registerGoogle(email, name, birthDate, weight, height, maxHeartRate, restHeartRate);
-		} catch (RemoteException e) {
+		} catch (Exception e) {
 			System.out.println("# Error registering with google (mandatory + optional arguments): " + e);
 			return false;
 		}

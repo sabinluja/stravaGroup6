@@ -1,6 +1,7 @@
 package es.deusto.ingenieria.sd.strava.client.remote;
 
 import java.rmi.Naming;
+import java.rmi.Remote;
 
 import es.deusto.ingenieria.sd.strava.server.remote.IRemoteFacade;
 
@@ -8,7 +9,7 @@ import es.deusto.ingenieria.sd.strava.server.remote.IRemoteFacade;
 public class ServiceLocator {
 	
 	//Remote Facade reference
-	private IRemoteFacade service;
+	private Remote service;
 
 	public void setService(String ip, String port, String serviceName) {
 		
@@ -16,13 +17,14 @@ public class ServiceLocator {
 		//Get Remote Facade reference using RMIRegistry (IP + Port) and the service name.
 		try {		
 			String URL = "//" + ip + ":" + port + "/" + serviceName;
-			this.service = (IRemoteFacade) Naming.lookup(URL);
+			System.out.println();
+			this.service =  Naming.lookup(URL);
 		} catch (Exception ex) {
 			System.err.println("# Error locating remote facade: " + ex);
 		}		
 	}
 
 	public IRemoteFacade getService() {
-		return this.service;
+		return (IRemoteFacade) this.service;
 	}
 }
