@@ -3,12 +3,15 @@ package es.deusto.ingenieria.sd.strava.client.gui;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Vector;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JList;
 import javax.swing.JScrollPane;
@@ -30,7 +33,7 @@ public class ChallengeWindow extends JFrame {
 
         Vector<String> methodNames = new Vector<>();
         methods.forEach(method -> {
-            if (method.getName().contains("User")) {
+            if (method.getName().contains("Challenge")) {
                 methodNames.add(method.getName());
             }
         });
@@ -58,6 +61,16 @@ public class ChallengeWindow extends JFrame {
         SimpleAttributeSet grayText = new SimpleAttributeSet();
         StyleConstants.setForeground(grayText, new Color(131, 148, 149));
         StyleConstants.setBold(grayText, true);
+        
+        JButton back = new JButton("Back");
+        back.setBackground(Color.WHITE);
+        back.setBounds(10, 504, 89, 23);
+        back.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+            	ChallengeWindow.this.dispose();
+            }
+        });
+        getContentPane().add(back);
 
         // Update the lister for the JList to use ChallengeController
         endpointsJList.addListSelectionListener(e -> {
@@ -70,6 +83,25 @@ public class ChallengeWindow extends JFrame {
                     resultsDoc.insertString(resultsDoc.getLength(), selectedValue + "\n", grayText);
 
                     Class<? extends ChallengeController> ChallengeControllerClass = controller.getClass();
+                    
+                    if (selectedValue.contains("create")) {
+                    	CreateChallenge c = new CreateChallenge();
+                    	if(c.dataProcessed()) {
+                    		String name = c.getName();
+                    		String startDate = c.getStartDate();
+                    		String endDate = c.getEndDate();
+                    		String sport = c.getSport();
+                    	    float targetDistance = c.getTargetDistance();
+                    	    long targetTime = c.getTargetTime();
+                    	    System.out.println(name);
+                    	    System.out.println(startDate);
+                    	    System.out.println(endDate);
+                    	    System.out.println(sport);
+                    	    System.out.println(targetDistance);
+                    	    System.out.println(targetTime);
+                    	}
+                    }
+                    
                     // Getting method by name
                     Method method = ChallengeControllerClass.getMethod(selectedValue);
                     // Method invocation using reflection

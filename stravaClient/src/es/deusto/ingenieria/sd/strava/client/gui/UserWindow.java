@@ -139,8 +139,8 @@ public class UserWindow extends JFrame {
         
 
         JButton challenge = new JButton("Challenge");
-        challenge.setBackground(new Color(0, 0, 0));
-        challenge.setBounds(10, 470, 89, 23);
+        challenge.setBackground(Color.WHITE);
+        challenge.setBounds(10, 470, 100, 23);
         challenge.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 ChallengeWindow challengeWindow = new ChallengeWindow(chc);
@@ -150,8 +150,8 @@ public class UserWindow extends JFrame {
         getContentPane().add(challenge);
 
         JButton session = new JButton("Session");
-        session.setBackground(Color.BLACK);
-        session.setBounds(10, 504, 89, 23);
+        session.setBackground(Color.WHITE);
+        session.setBounds(10, 504, 100, 23);
         session.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 SessionWindow sessionWindow = new SessionWindow(sc); // Cambia esto por la instancia real

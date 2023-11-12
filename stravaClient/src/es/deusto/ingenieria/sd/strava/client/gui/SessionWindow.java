@@ -2,12 +2,15 @@ package es.deusto.ingenieria.sd.strava.client.gui;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Vector;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JList;
 import javax.swing.JScrollPane;
@@ -29,7 +32,7 @@ public class SessionWindow extends JFrame {
 
         Vector<String> methodNames = new Vector<>();
         methods.forEach(method -> {
-            if (method.getName().contains("User")) {
+            if (method.getName().contains("Session")) {
                 methodNames.add(method.getName());
             }
         });
@@ -57,6 +60,16 @@ public class SessionWindow extends JFrame {
         SimpleAttributeSet grayText = new SimpleAttributeSet();
         StyleConstants.setForeground(grayText, new Color(131, 148, 149));
         StyleConstants.setBold(grayText, true);
+        
+        JButton back = new JButton("Back");
+        back.setBackground(Color.WHITE);
+        back.setBounds(10, 504, 89, 23);
+        back.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+            	SessionWindow.this.dispose();
+            }
+        });
+        getContentPane().add(back);
 
         // Update the lister for the JList to use SessionController
         endpointsJList.addListSelectionListener(e -> {
@@ -69,6 +82,25 @@ public class SessionWindow extends JFrame {
                     resultsDoc.insertString(resultsDoc.getLength(), selectedValue + "\n", grayText);
 
                     Class<? extends SessionController> SessionControllerClass = controller.getClass();
+                    
+                    if (selectedValue.contains("create")) {
+                        CreateSession s = new CreateSession();
+                        if (s.dataProcessed()) {
+                        	String name = s.getName();
+                    		String startDate = s.getStartDate();
+                    		long startTime = s.getStartTime();
+                    		String sport = s.getSport();
+                    	    float distance = s.getDistance();
+                    	    int duration = s.getDuration();
+                    	    System.out.println(name);
+                    	    System.out.println(startDate);
+                    	    System.out.println(startTime);
+                    	    System.out.println(sport);
+                    	    System.out.println(distance);
+                    	    System.out.println(duration);
+                        }
+                    }
+                    
                     // Getting method by name
                     Method method = SessionControllerClass.getMethod(selectedValue);
                     // Method invocation using reflection
