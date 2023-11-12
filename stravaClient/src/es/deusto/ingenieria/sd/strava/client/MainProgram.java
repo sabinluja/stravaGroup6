@@ -27,10 +27,10 @@ public class MainProgram {
 		serviceLocator.setService(args[0], args[1], args[2]);
 		
 		ChallengeController challengeController = new ChallengeController(serviceLocator);			
-		ChallengeWindow challengeWindow = new ChallengeWindow(challengeController);
 		SessionController sessionController = new SessionController(serviceLocator);			
-		SessionWindow sessionWindow = new SessionWindow(sessionController);
 		UserController userController = new UserController(serviceLocator);
+		ChallengeWindow challengeWindow = new ChallengeWindow(challengeController,userController);
+		SessionWindow sessionWindow = new SessionWindow(sessionController,userController);
 		UserWindow userWindow = new UserWindow(userController, challengeController, sessionController);			
 		
 		

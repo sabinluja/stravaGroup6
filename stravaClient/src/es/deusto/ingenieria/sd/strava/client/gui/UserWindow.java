@@ -179,7 +179,7 @@ public class UserWindow extends JFrame {
         challenge.setBounds(10, 470, 100, 23);
         challenge.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                ChallengeWindow challengeWindow = new ChallengeWindow(chc);
+                ChallengeWindow challengeWindow = new ChallengeWindow(chc,controller);
                 challengeWindow.setVisible(true);
             }
         });
