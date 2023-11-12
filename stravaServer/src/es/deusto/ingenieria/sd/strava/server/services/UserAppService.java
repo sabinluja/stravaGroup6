@@ -22,7 +22,7 @@ public class UserAppService {
         Challenge challenge1 = new Challenge();
         challenge1.setName("Challenge 1");
         challenge1.setStartDate("2023-01-01");
-        challenge1.setEndDate("2023-01-10");
+        challenge1.setEndDate("2024-01-10");
         challenge1.setTargetTime(3600); // 1 hour
         challenge1.setTargetDistance(10.0f); // 10 kilometers
         challenge1.setSports("Running");
@@ -30,7 +30,7 @@ public class UserAppService {
         Challenge challenge2 = new Challenge();
         challenge2.setName("Challenge 2");
         challenge2.setStartDate("2023-02-01");
-        challenge2.setEndDate("2023-02-15");
+        challenge2.setEndDate("2024-02-15");
         challenge2.setTargetTime(1800); // 30 minutes
         challenge2.setTargetDistance(5.0f); // 5 kilometers
         challenge2.setSports("Cycling");
@@ -46,7 +46,7 @@ public class UserAppService {
         Challenge challenge4 = new Challenge();
         challenge4.setName("Challenge 4");
         challenge4.setStartDate("2023-04-01");
-        challenge4.setEndDate("2023-04-20");
+        challenge4.setEndDate("2024-04-20");
         challenge4.setTargetTime(7200); // 2 hours
         challenge4.setTargetDistance(8.0f); // 8 kilometers
         challenge4.setSports("Both");

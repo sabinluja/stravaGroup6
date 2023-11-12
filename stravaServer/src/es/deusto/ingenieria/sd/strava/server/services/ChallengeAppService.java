@@ -3,6 +3,7 @@ package es.deusto.ingenieria.sd.strava.server.services;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -22,7 +23,7 @@ public class ChallengeAppService {
         Challenge challenge1 = new Challenge();
         challenge1.setName("Challenge 1");
         challenge1.setStartDate("2023-01-01");
-        challenge1.setEndDate("2023-01-10");
+        challenge1.setEndDate("2024-01-10");
         challenge1.setTargetTime(3600); // 1 hour
         challenge1.setTargetDistance(10.0f); // 10 kilometers
         challenge1.setSports("Running");
@@ -30,7 +31,7 @@ public class ChallengeAppService {
         Challenge challenge2 = new Challenge();
         challenge2.setName("Challenge 2");
         challenge2.setStartDate("2023-02-01");
-        challenge2.setEndDate("2023-02-15");
+        challenge2.setEndDate("2024-02-15");
         challenge2.setTargetTime(1800); // 30 minutes
         challenge2.setTargetDistance(5.0f); // 5 kilometers
         challenge2.setSports("Cycling");
@@ -46,7 +47,7 @@ public class ChallengeAppService {
         Challenge challenge4 = new Challenge();
         challenge4.setName("Challenge 4");
         challenge4.setStartDate("2023-04-01");
-        challenge4.setEndDate("2023-04-20");
+        challenge4.setEndDate("2024-04-20");
         challenge4.setTargetTime(7200); // 2 hours
         challenge4.setTargetDistance(8.0f); // 8 kilometers
         challenge4.setSports("Both");
@@ -86,8 +87,10 @@ public class ChallengeAppService {
 	public boolean acceptChallenge(User user, String challengeName) {
 
 		if (user != null) {
-            for (Challenge challenge : user.getChallengeList()) {
+			
+            for (Challenge challenge : getActiveChallenges(user, Calendar.getInstance().getTimeInMillis()+"")) {
                 if (challenge.getName().equals(challengeName)) {
+                	user.addAcceptedChallenge(challenge);
                     return true; // Challenge found and accepted
                 }
             }
@@ -105,7 +108,7 @@ public class ChallengeAppService {
 
 	            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
-	            for (Challenge challenge : user.getChallengeList()) {
+	            for (Challenge challenge : this.challengeList) {
 	                // Parse start date and end date in "yyyy-MM-dd" format
 	                Date startDate = dateFormat.parse(challenge.getStartDate());
 	                Date endDate = dateFormat.parse(challenge.getEndDate());
@@ -128,7 +131,7 @@ public class ChallengeAppService {
 		List<Challenge> acceptedChallengesList = new ArrayList<>();
 
         if (user != null) {
-            for (Challenge challenge : user.getChallengeList()) {
+            for (Challenge challenge : user.getAcceptedChallengeList()) {
             	if (acceptChallenge(user, challenge.getName()))
             		acceptedChallengesList.add(challenge); 
             }
