@@ -91,7 +91,6 @@ public class UserWindow extends JFrame {
                 	Thread esperaDatosThread = new Thread(new Runnable() {
                         @Override
                         public void run() {
-		                	System.out.println("1");
 		                    try {
 								resultsDoc.insertString(resultsDoc.getLength(), selectedValue + "\n", grayText);
 							} catch (BadLocationException e) {
@@ -136,15 +135,6 @@ public class UserWindow extends JFrame {
 		                        password = l.getPassword();  
 		                        result = controller.login(email, password);     
 		                    }
-		                    
-		                    // Getting method by name
-		                    //Method method = userControllerClass.getMethod(selectedValue);
-		                    System.out.println("4");
-		                    // Method invocation using reflection
-		                    //Object result = method.invoke(controller);
-		                    
-		                    
-		                    //System.out.println(method.getName());
 		                    
 		                    if (result != null) {
 		                        try {
