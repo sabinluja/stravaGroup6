@@ -12,6 +12,7 @@ public class ServiceLocator {
 
 	public void setService(String ip, String port, String serviceName) {
 		
+		
 		//Get Remote Facade reference using RMIRegistry (IP + Port) and the service name.
 		try {		
 			String URL = "//" + ip + ":" + port + "/" + serviceName;
