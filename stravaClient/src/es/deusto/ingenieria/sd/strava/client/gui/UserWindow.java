@@ -114,7 +114,6 @@ public class UserWindow extends JFrame {
 		                                e.printStackTrace();
 		                            }
 		                        }
-		                        System.out.println("pene1");
 		                        email = r.getEmail();
 		                        nombre = r.getNombre();
 		                        birthDate = r.getBirthDate();

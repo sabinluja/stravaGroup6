@@ -48,9 +48,7 @@ public class acceptChallenge extends JFrame {
 
     private void processData() {
         // Get data from text fields and combo box
-        name = nameField.getText();
-        System.out.println(name);
-        
+        name = nameField.getText();       
 
         // Indicate that data has been processed
         dataProcessed = true;

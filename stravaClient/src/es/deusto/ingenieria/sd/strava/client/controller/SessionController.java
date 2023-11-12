@@ -17,7 +17,6 @@ public class SessionController {
 	public boolean createSession(String token, String title, String sport, float distance,
             	String startDate, long startTime, int duration) {
 		try {
-			System.out.println("controller");
 			return this.serviceLocator.getService().createSession(token, title, sport, distance, startDate, startTime, duration);
 		} catch (RemoteException e) {
 			System.out.println("# Error creating the session: " + e);
@@ -27,8 +26,6 @@ public class SessionController {
 	
 	public List<SessionDTO> getSessions(String token) throws RemoteException {
 		try {
-			//List<SessionDTO> ret = this.serviceLocator.getService().getSessions(token);
-			//System.out.println(ret);
 			return this.serviceLocator.getService().getSessions(token);
 		} catch (RemoteException e) {
 			System.out.println("# Error getting all sessions: " + e);

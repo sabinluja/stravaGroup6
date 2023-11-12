@@ -89,7 +89,6 @@ public class ChallengeWindow extends JFrame {
                 	Thread esperaDatosThread = new Thread(new Runnable() {
                         @Override
                         public void run() {
-		                	System.out.println("1");
 		                    try {
 								resultsDoc.insertString(resultsDoc.getLength(), selectedValue + "\n", grayText);
 							} catch (BadLocationException e) {
@@ -108,20 +107,12 @@ public class ChallengeWindow extends JFrame {
 		                                e.printStackTrace();
 		                            }
 		                        }
-		                        System.out.println("4");
 	                    		String name = c.getName();
 	                    		String startDate = c.getStartDate();
 	                    		String endDate = c.getEndDate();
 	                    		String sport = c.getSport();
 	                    	    float targetDistance = c.getTargetDistance();
 	                    	    long targetTime = c.getTargetTime();
-	                    	    System.out.println(name);
-	                    	    System.out.println(startDate);
-	                    	    System.out.println(endDate);
-	                    	    System.out.println(sport);
-	                    	    System.out.println(targetDistance);
-	                    	    System.out.println(targetTime);     
-	                    	    
 	                    	    result = controller.createChallenge(uc.getToken()+"", name, startDate, endDate, targetDistance, targetTime, sport);
 		                    
 		                        
@@ -141,7 +132,6 @@ public class ChallengeWindow extends JFrame {
 		                        }
 
 		                        name = ac.getName();
-		                        System.out.println(name);
 		                        result = controller.acceptChallenge(uc.getToken()+"", name);   
 		                    }
                             else if (selectedValue.contains("getAcceptedChallenges")) {
@@ -150,15 +140,6 @@ public class ChallengeWindow extends JFrame {
                             else if (selectedValue.contains("getActiveChallenges")) {
                             	result = controller.getActiveChallenges(uc.getToken()+"",Calendar.getInstance().getTimeInMillis()+"");
                             }
-		                    
-		                    // Getting method by name
-		                    //Method method = userControllerClass.getMethod(selectedValue);
-		                    System.out.println("4");
-		                    // Method invocation using reflection
-		                    //Object result = method.invoke(controller);
-		                    
-		                    
-		                    //System.out.println(method.getName());
 		                    
 		                    if (result != null) {
 		                        try {
