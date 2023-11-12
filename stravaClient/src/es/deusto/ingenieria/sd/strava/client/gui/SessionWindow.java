@@ -128,7 +128,7 @@ public class SessionWindow extends JFrame {
 		                    }
 		                        
 		                    
-		                    if (selectedValue.contains("session")) {
+		                    if (selectedValue.contains("get")) {
 		                    	try {
 		                    		token = uc.getToken()+"";
 									result = controller.getSessions(token);	

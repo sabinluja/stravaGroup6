@@ -148,7 +148,6 @@ public class RemoteFacade extends UnicastRemoteObject implements IRemoteFacade {
         	        
         System.out.println(" * RemoteFacade getSessions('" + token + "')");
         List<Session> sessions = sessionService.getSessions(getUserByToken(token));
-        
 		if (sessions != null) {
 			//Convert domain object to DTO
 			return SessionAssembler.getInstance().sessionToDTO(sessions);

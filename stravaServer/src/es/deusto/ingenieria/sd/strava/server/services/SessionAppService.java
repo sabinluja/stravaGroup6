@@ -37,7 +37,6 @@ public class SessionAppService {
 		
 		System.out.println("appservice");
 		if (user != null) {
-			System.out.println("entra");
 			Session newSession = new Session();
 			newSession.setTitle(title);
 			newSession.setSports(sport);
@@ -46,6 +45,7 @@ public class SessionAppService {
 			newSession.setStartTime(startTime);
 			newSession.setDuration(duration);
             user.addSession(newSession);
+            System.out.println(user.toString());
             return true; // The challenge has been correctly created
         }
         return false; // The challenge has not been created
