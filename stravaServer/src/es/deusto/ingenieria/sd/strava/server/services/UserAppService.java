@@ -10,6 +10,7 @@ import es.deusto.ingenieria.sd.strava.server.data.domain.User;
 public class UserAppService {
 	
 	User user1;
+	private List<User> registeredUsers = new ArrayList<User>();
 	
 	public UserAppService() {
 		initialize();
@@ -160,10 +161,15 @@ public class UserAppService {
 		user5.addSession(session5);
 		user5.addSession(session3);
 		
+		registeredUsers.add(user1);
+		registeredUsers.add(user2);
+		registeredUsers.add(user3);
+		registeredUsers.add(user4);
+		registeredUsers.add(user5);
+		
 	}
 	
-	
-	private List<User> registeredUsers = new ArrayList<User>();
+
 	
 	// Mandatory arguments for registration
 	
@@ -208,11 +214,24 @@ public class UserAppService {
 	public User login(String email, String password) {
 		
 		//Generate the hash of the password
-		String hashPass = org.apache.commons.codec.digest.DigestUtils.sha1Hex("$!9PhNz,");	
-		user1.setPassword(hashPass);
+		//String hashPass = org.apache.commons.codec.digest.DigestUtils.sha1Hex("$!9PhNz,");	
+		//user1.setPassword(hashPass);
+		User user = new User();
+		for (User u : this.registeredUsers) {
+			if(u.getEmail().equals(email)) {
+				user.setName(u.getName());
+		        user.setEmail(u.getEmail());
+		        user.setBirthDate(u.getBirthDate());
+		        user.setSessionList(u.getSessionList());
+		        user.setAcceptedChallengeList(u.getAcceptedChallengeList());
+		        user.setChallengeList(u.getChallengeList());
+				String hashPass = org.apache.commons.codec.digest.DigestUtils.sha1Hex("$!9PhNz,");	
+				user.setPassword(hashPass);
+			}
+		}
 		
-		if (user1.getEmail().equals(email) && user1.checkPassword(org.apache.commons.codec.digest.DigestUtils.sha1Hex(password))) {		
-			return user1;
+		if (user.getEmail().equals(email) && user.checkPassword(org.apache.commons.codec.digest.DigestUtils.sha1Hex(password))) {		
+			return user;
 		} else {
 			return null;
 		}

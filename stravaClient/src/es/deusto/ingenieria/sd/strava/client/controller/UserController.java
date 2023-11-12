@@ -61,6 +61,15 @@ public class UserController {
 		}
 	}
     
+    public void logout() {
+    	try {
+			this.serviceLocator.getService().logout((this.getToken())+"");
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }
+    
     public long getToken() {
 		return token;
 	}

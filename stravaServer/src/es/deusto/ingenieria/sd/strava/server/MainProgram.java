@@ -20,9 +20,9 @@ public class MainProgram {
 		try {
 			IRemoteFacade remoteFacade = new RemoteFacade();			
 			Naming.rebind(name, (Remote) remoteFacade);
-			System.out.println(" * eAuction Server v1 '" + name + "' started!!");
+			System.out.println(" * Strava Server '" + name + "' started!!");
 		} catch (Exception ex) {
-			System.err.println(" # eAuction Server Exception: " + ex.getMessage());
+			System.err.println(" # Strava Server Exception: " + ex.getMessage());
 			ex.printStackTrace();
 		}
 	}

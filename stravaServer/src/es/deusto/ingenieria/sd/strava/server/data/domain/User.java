@@ -157,9 +157,7 @@ public class User {
 	// Additional methods: 
 
 	public void addSession(Session session) {
-		System.out.println("user");
 		if (session != null && !this.sessionList.contains(session)) {
-			System.out.println("if");
 			this.sessionList.add(session);
 		}
 	}

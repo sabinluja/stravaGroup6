@@ -36,6 +36,7 @@ public class Login extends JFrame {
         passwordField = new JPasswordField();
         JButton loginButton = new JButton("Login");
         passwordField.setText("$!9PhNz,");
+        passwordField.setEditable(false);
 
         // Button action
         loginButton.addActionListener(new ActionListener() {

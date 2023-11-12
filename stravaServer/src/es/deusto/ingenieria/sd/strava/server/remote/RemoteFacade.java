@@ -67,11 +67,9 @@ public class RemoteFacade extends UnicastRemoteObject implements IRemoteFacade {
     			
 		System.out.println(" * RemoteFacade acceptChallenge()"+token+challengeName);
         List<Challenge> challenges = challengeService.getChallenges();
-        System.out.println("YO");
 		
 		if (challenges != null) {
 			//Convert domain object to DTO
-			System.out.println("TU");
 			return challengeService.acceptChallenge(getUserByToken(token), challengeName);
 		} else {
 			throw new RemoteException("acceptChallenge() fails!");
@@ -136,7 +134,6 @@ public class RemoteFacade extends UnicastRemoteObject implements IRemoteFacade {
         // Implementation based on SessionAppService
     	
         try {
-        	System.out.println("facade");
 			return sessionService.createSession(getUserByToken(token), title, sport, distance, startDate, startTime, duration);
 		} catch (RemoteException e) {e.printStackTrace();}
         

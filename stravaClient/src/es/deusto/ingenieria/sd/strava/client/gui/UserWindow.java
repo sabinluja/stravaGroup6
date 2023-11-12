@@ -38,6 +38,8 @@ public class UserWindow extends JFrame {
     int height;
     int maxHeart;
     int restHeart;
+    JButton challenge;
+    JButton session;
 
     public UserWindow(UserController controller, ChallengeController chc, SessionController sc) { // Change constructor parameter
         // Obtain the methods of the controller using reflection
@@ -49,6 +51,9 @@ public class UserWindow extends JFrame {
                 methodNames.add(method.getName());
             }
             if (method.getName().contains("login")) {
+                methodNames.add(method.getName());
+            }
+            if (method.getName().contains("logout")) {
                 methodNames.add(method.getName());
             }
         });
@@ -133,7 +138,15 @@ public class UserWindow extends JFrame {
 
 		                        email = l.getUsername();
 		                        password = l.getPassword();  
-		                        result = controller.login(email, password);     
+		                        result = controller.login(email, password);
+		                        challenge.setEnabled(true);
+		                        session.setEnabled(true);
+		                    }
+		                    
+		                    if (selectedValue.contains("logout")) {
+		                    	controller.logout();
+		                    	challenge.setEnabled(false);
+		                        session.setEnabled(false);
 		                    }
 		                    
 		                    if (result != null) {
@@ -164,9 +177,10 @@ public class UserWindow extends JFrame {
         getContentPane().setLayout(null);
         
 
-        JButton challenge = new JButton("Challenge");
+        challenge = new JButton("Challenge");
         challenge.setBackground(Color.WHITE);
         challenge.setBounds(10, 470, 100, 23);
+        challenge.setEnabled(false);
         challenge.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 ChallengeWindow challengeWindow = new ChallengeWindow(chc,controller);
@@ -175,9 +189,10 @@ public class UserWindow extends JFrame {
         });
         getContentPane().add(challenge);
 
-        JButton session = new JButton("Session");
+        session = new JButton("Session");
         session.setBackground(Color.WHITE);
         session.setBounds(10, 504, 100, 23);
+        session.setEnabled(false);
         session.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 SessionWindow sessionWindow = new SessionWindow(sc, controller); // Cambia esto por la instancia real
