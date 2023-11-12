@@ -96,30 +96,33 @@ public class ChallengeAppService {
 	}
 	
 	public List<Challenge> getActiveChallenges(User user, String date) {
-        List<Challenge> activeChallengesList = new ArrayList<>();
+	    List<Challenge> activeChallengesList = new ArrayList<>();
 
-        if (user != null) {
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+	    if (user != null) {
+	        try {
+	            // Parse the date from milliseconds as a String
+	            Date currentDate = new Date(Long.parseLong(date));
 
-            try {
-                Date currentDate = dateFormat.parse(date);
+	            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
-                for (Challenge challenge : user.getChallengeList()) {
-                    Date startDate = dateFormat.parse(challenge.getStartDate());
-                    Date endDate = dateFormat.parse(challenge.getEndDate());
+	            for (Challenge challenge : user.getChallengeList()) {
+	                // Parse start date and end date in "yyyy-MM-dd" format
+	                Date startDate = dateFormat.parse(challenge.getStartDate());
+	                Date endDate = dateFormat.parse(challenge.getEndDate());
 
-                    if (currentDate.compareTo(startDate) >= 0 && currentDate.compareTo(endDate) <= 0) {
-                        activeChallengesList.add(challenge);
-                    }
-                }
-            } catch (ParseException e) {
-                // Handle the ParseException according to your requirements
-                e.printStackTrace();
-            }
-        }
+	                if (currentDate.compareTo(startDate) >= 0 && currentDate.compareTo(endDate) <= 0) {
+	                    activeChallengesList.add(challenge);
+	                }
+	            }
+	        } catch (NumberFormatException | ParseException e) {
+	            // Handle the NumberFormatException or ParseException according to your requirements
+	            e.printStackTrace();
+	        }
+	    }
 
-        return activeChallengesList;
-    }
+	    return activeChallengesList;
+	}
+
 	
 	public List<Challenge> getAcceptedChallenges(User user) {
 		List<Challenge> acceptedChallengesList = new ArrayList<>();
