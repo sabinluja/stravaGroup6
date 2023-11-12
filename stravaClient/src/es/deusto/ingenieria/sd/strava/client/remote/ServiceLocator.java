@@ -11,10 +11,6 @@ public class ServiceLocator {
 	private IRemoteFacade service;
 
 	public void setService(String ip, String port, String serviceName) {
-		//Activate Security Manager. It is needed for RMI.
-		if (System.getSecurityManager() == null) {
-			System.setSecurityManager(new SecurityManager());
-		}
 		
 		//Get Remote Facade reference using RMIRegistry (IP + Port) and the service name.
 		try {		
