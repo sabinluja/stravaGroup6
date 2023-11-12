@@ -9,6 +9,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Vector;
+import java.util.concurrent.TimeUnit;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -17,11 +18,13 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.border.TitledBorder;
+import javax.swing.text.BadLocationException;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
 
 import es.deusto.ingenieria.sd.strava.client.controller.SessionController;
+import es.deusto.ingenieria.sd.strava.client.controller.UserController;
 
 public class SessionWindow extends JFrame {
     private static final long serialVersionUID = 1L;
@@ -29,7 +32,9 @@ public class SessionWindow extends JFrame {
     public SessionWindow(SessionController controller) { // Change constructor parameter
         // Obtain the methods of the controller using reflection
         List<Method> methods = Arrays.asList(SessionController.class.getMethods()); // Change here
-
+        Object result;
+        
+        
         Vector<String> methodNames = new Vector<>();
         methods.forEach(method -> {
             if (method.getName().contains("Session")) {
@@ -78,37 +83,78 @@ public class SessionWindow extends JFrame {
             StyledDocument resultsDoc = endpointResults.getStyledDocument();
 
             if (selectedValue != null && e.getValueIsAdjusting()) {
+            	
                 try {
-                    resultsDoc.insertString(resultsDoc.getLength(), selectedValue + "\n", grayText);
+                	Thread esperaDatosThread = new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+		                	System.out.println("1");
+		                    try {
+								resultsDoc.insertString(resultsDoc.getLength(), selectedValue + "\n", grayText);
+							} catch (BadLocationException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+		                    Class<? extends SessionController> sessionControllerClass = controller.getClass();
+		                    
+		                    if (selectedValue.contains("create")) {
+		                        CreateSession s = new CreateSession();
+		                        
+		                        while (!s.dataProcessed()) {
+		                            try {
+		                                TimeUnit.SECONDS.sleep(2);
+		                            } catch (InterruptedException e) {
+		                                e.printStackTrace();
+		                            }
+		                        }
+		                        String token;
+		                        String title;
+		                        String sport;
+		                        float distance;
+		                    	String startDate;
+		                    	long startTime;
+		                    	int duration;
+		                        
+		                        result = controller.registerGoogle(email, nombre, birthDate, weight, height, maxHeart, restHeart);     
+		                    }
+		                        
+		                    
+		                    if (selectedValue.contains("login")) {
+		                        Login l = new Login();
+		                        while (!l.dataProcessed()) {
+		                            try {
+		                                TimeUnit.SECONDS.sleep(2);
+		                            } catch (InterruptedException e) {
+		                                e.printStackTrace();
+		                            }
+		                        }
 
-                    Class<? extends SessionController> SessionControllerClass = controller.getClass();
-                    
-                    if (selectedValue.contains("create")) {
-                        CreateSession s = new CreateSession();
-                        if (s.dataProcessed()) {
-                        	String name = s.getName();
-                    		String startDate = s.getStartDate();
-                    		long startTime = s.getStartTime();
-                    		String sport = s.getSport();
-                    	    float distance = s.getDistance();
-                    	    int duration = s.getDuration();
-                    	    System.out.println(name);
-                    	    System.out.println(startDate);
-                    	    System.out.println(startTime);
-                    	    System.out.println(sport);
-                    	    System.out.println(distance);
-                    	    System.out.println(duration);
+		                        email = l.getUsername();
+		                        password = l.getPassword();  
+		                        result = controller.login(email, password);     
+		                    }
+		                    
+		                    // Getting method by name
+		                    //Method method = userControllerClass.getMethod(selectedValue);
+		                    System.out.println("4");
+		                    // Method invocation using reflection
+		                    //Object result = method.invoke(controller);
+		                    
+		                    
+		                    //System.out.println(method.getName());
+		                    
+		                    if (result != null) {
+		                        try {
+									resultsDoc.insertString(resultsDoc.getLength(), result.toString() + "\n\n", greenText);
+								} catch (BadLocationException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
+		                    }
                         }
-                    }
-                    
-                    // Getting method by name
-                    Method method = SessionControllerClass.getMethod(selectedValue);
-                    // Method invocation using reflection
-                    Object result = method.invoke(controller);
-
-                    if (result != null) {
-                        resultsDoc.insertString(resultsDoc.getLength(), result.toString() + "\n\n", greenText);
-                    }
+                	});
+                	esperaDatosThread.start();
+                
 
                 } catch (Exception ex1) {
                     try {

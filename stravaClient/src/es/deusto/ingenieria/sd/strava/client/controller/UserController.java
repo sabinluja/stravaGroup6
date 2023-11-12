@@ -7,6 +7,7 @@ import es.deusto.ingenieria.sd.strava.client.remote.ServiceLocator;
 public class UserController {
 	//Reference to the Service Locator
 	private ServiceLocator serviceLocator;
+	private long token = -1;
 
 	public UserController (ServiceLocator serviceLoc) {
 		this.serviceLocator = serviceLoc;
@@ -52,12 +53,15 @@ public class UserController {
     
     public boolean login(String email, String password) {
 		try {
-			System.out.println("antes");
-			this.serviceLocator.getService().login(email, password);
+			this.token = this.serviceLocator.getService().login(email, password);
 			return true;
 		} catch (RemoteException e) {
 			System.out.println("# Error in login (mandatory + optional arguments): " + e);
 			return false;
 		}
+	}
+    
+    public long getToken() {
+		return token;
 	}
 }
