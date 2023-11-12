@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.lang.reflect.Method;
+import java.rmi.RemoteException;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -25,6 +26,7 @@ import javax.swing.text.StyledDocument;
 
 import es.deusto.ingenieria.sd.strava.client.controller.SessionController;
 import es.deusto.ingenieria.sd.strava.client.controller.UserController;
+import es.deusto.ingenieria.sd.strava.server.data.dto.SessionDTO;
 
 public class SessionWindow extends JFrame {
     private static final long serialVersionUID = 1L;
@@ -95,7 +97,7 @@ public class SessionWindow extends JFrame {
                 	Thread esperaDatosThread = new Thread(new Runnable() {
                         @Override
                         public void run() {
-		                	System.out.println("1");
+		                	System.out.println("inicio");
 		                    try {
 								resultsDoc.insertString(resultsDoc.getLength(), selectedValue + "\n", grayText);
 							} catch (BadLocationException e) {
@@ -126,24 +128,24 @@ public class SessionWindow extends JFrame {
 		                    }
 		                        
 		                    
-		                    if (selectedValue.contains("login")) {
-		                        Login l = new Login();
-		                        while (!l.dataProcessed()) {
-		                            try {
-		                                TimeUnit.SECONDS.sleep(2);
-		                            } catch (InterruptedException e) {
-		                                e.printStackTrace();
-		                            }
-		                        }
-/*
-		                        email = l.getUsername();
-		                        password = l.getPassword();  
-		                        result = controller.login(email, password);    */ 
+		                    if (selectedValue.contains("session")) {
+		                    	try {
+		                    		token = uc.getToken()+"";
+									result = controller.getSessions(token);	
+									//resultsDoc.insertString(resultsDoc.getLength(), result.toString() + "\n\n", greenText);
+									
+								} catch (RemoteException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
+		                    	
 		                    }
 		                    
+		                    System.out.println("result:");
+	                    	System.out.println(result.toString());
 		                    // Getting method by name
 		                    //Method method = userControllerClass.getMethod(selectedValue);
-		                    System.out.println("4");
+		                    System.out.println("vuelta");
 		                    // Method invocation using reflection
 		                    //Object result = method.invoke(controller);
 		                    
