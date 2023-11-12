@@ -52,6 +52,7 @@ public class UserController {
     
     public boolean login(String email, String password) {
 		try {
+			System.out.println("antes");
 			this.serviceLocator.getService().login(email, password);
 			return true;
 		} catch (RemoteException e) {
