@@ -158,12 +158,14 @@ public class User {
 
 	public void addSession(Session session) {
 		if (session != null && !this.sessionList.contains(session)) {
+			session.setUser(this);
 			this.sessionList.add(session);
 		}
 	}
 
 	public void addChallenge(Challenge challenge) {
 		if (challenge != null && !this.challengeList.contains(challenge)) {
+			challenge.setUser(this);
 			this.challengeList.add(challenge);
 		}
 	}

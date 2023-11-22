@@ -7,6 +7,7 @@ public class Challenge {
 	private long targetTime;
 	private float targetDistance;
 	private String sports;
+	private User user;
 	
 	
 	// Constructor, getters and setters
@@ -69,6 +70,14 @@ public class Challenge {
 
 	public void setSports(String sports) {
 		this.sports = sports;
+	}
+	
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 	

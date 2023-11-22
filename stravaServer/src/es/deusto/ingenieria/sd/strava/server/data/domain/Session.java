@@ -7,6 +7,7 @@ public class Session {
 	private String startDate;
 	private long startTime;
 	private int duration;
+	private User user;
 	
 	
 	// Constructor, getters and setters
@@ -69,6 +70,14 @@ public class Session {
 
 	public void setDuration(int duration) {
 		this.duration = duration;
+	}
+	
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 	
 	
