@@ -35,8 +35,8 @@ public class FacebookGateway implements IProviderGateway {
 	}
 	
 	@Override
-	public boolean register(String email, String name, String birthDate) {
-		String message = "register_mandatory"+DELIMITER+email+DELIMITER+name+DELIMITER+birthDate;
+	public boolean register(String email, String password) {
+		String message = "register_mandatory"+DELIMITER+email+DELIMITER+password;
 		String response = null;
 		StringTokenizer tokenizer = null;
 			
@@ -71,44 +71,6 @@ public class FacebookGateway implements IProviderGateway {
 		} 	
 	}
 		
-		
-
-	@Override
-	public boolean register(String email, String name, String birthDate, float weight, int height, int maxHeartRate, int restHeartRate) {
-		String message = "register_optional"+DELIMITER+email+DELIMITER+name+DELIMITER+birthDate+DELIMITER+weight+DELIMITER+height+DELIMITER+maxHeartRate+DELIMITER+restHeartRate;
-		String response = null;
-		StringTokenizer tokenizer = null;
-			
-		//Declaration of the socket to send/receive information to/from the server (an IP and a Port are needed)
-		try (Socket socket = new Socket(serverIP, serverPort);
-			//Streams to send and receive information are created from the Socket
-			DataInputStream in = new DataInputStream(socket.getInputStream());
-			DataOutputStream out = new DataOutputStream(socket.getOutputStream())) {
-			
-			//Send request (one String) to the server
-			out.writeUTF(message);
-			System.out.println(" - Sending data to '" + socket.getInetAddress().getHostAddress() + ":" + socket.getPort() + "' -> '" + message + "'");
-			
-			//Read response (one String) from the server
-			response = in.readUTF();			
-			System.out.println(" - Getting response from '" + socket.getInetAddress().getHostAddress() + ":" + socket.getPort() + "' -> '" + response + "'");
-			tokenizer = new StringTokenizer(response, DELIMITER);
-
-		} catch (UnknownHostException e) {
-			System.err.println("# Trans. SocketClient: Socket error: " + e.getMessage());	
-		} catch (EOFException e) {
-			System.err.println("# Trans. SocketClient: EOF error: " + e.getMessage());
-		} catch (IOException e) {
-			System.err.println("# Trans. SocketClient: IO error: " + e.getMessage());
-		}
-		//return translation;
-		
-		if (tokenizer.nextToken().equals("OK")) {
-			return true;
-		} else {
-			return false;
-		} 
-	}
 
 	@Override
 	public boolean validatePassword(String email, String password) {
