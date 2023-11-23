@@ -6,6 +6,8 @@ import java.util.List;
 import es.deusto.ingenieria.sd.strava.server.data.domain.Challenge;
 import es.deusto.ingenieria.sd.strava.server.data.domain.Session;
 import es.deusto.ingenieria.sd.strava.server.data.domain.User;
+import es.deusto.ingenieria.sd.strava.server.gateways.GatewayFactory;
+import es.deusto.ingenieria.sd.strava.server.gateways.IProviderGateway;
 
 public class UserAppService {
 	
@@ -177,7 +179,9 @@ public class UserAppService {
 		try {
 			User registerGoogleMandatory = new User(name, email, birthDate);
 			registeredUsers.add(registerGoogleMandatory);
-			
+			//IProviderGateway provider = GatewayFactory.getInstance().createGateway("Google");
+			//provider.validateEmail(email);
+			//provider.register(email, password);
 			return true;
 	    } catch (Exception e) {e.printStackTrace(); return false;}
 	}
