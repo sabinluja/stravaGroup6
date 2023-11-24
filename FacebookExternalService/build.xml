@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project basedir="." default="help" name="FacebookServer">    
+	<property environment="env"/>
+	<property name="source.dir" location="src"/>
+   	<property name="build.dir" location="bin"/>
+	<property name="lib.dir" location="lib"/>
+	<property name="server.port" value="35600"/>
+
+	<path id="full.classpath">
+        <fileset dir="${lib.dir}">
+            <include name="**/*.jar"/>
+        </fileset>
+        <pathelement location="${build.dir}"/>    	
+    </path>
+	
+	<target name="help">
+		<echo>Usage: ant [build | server]</echo>
+	</target>	
+	
+	<target name="build" description="Builds the project">
+		<delete dir="${build.dir}"/>
+		<mkdir dir="${build.dir}"/>
+		<javac srcdir="${source.dir}" destdir="${build.dir}" classpathref="full.classpath" deprecation="true" fork="true" includeAntRuntime="no"/>
+    </target>
+
+	<target name="server" depends="build" description="Runs the Server">
+		<java classname="es.deusto.ingenieria.sd.strava.FacebookExternalService" classpathref="full.classpath" fork="true">
+	 		<arg value="${server.port}"/> 
+        </java>
+    </target>
+	
+</project>
