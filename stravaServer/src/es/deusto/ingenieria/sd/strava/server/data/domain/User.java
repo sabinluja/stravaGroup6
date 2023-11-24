@@ -12,6 +12,7 @@ public class User {
 	private int height;
 	private int maxHeartRate;
 	private int restHeartRate;
+	private String provider;
 	private List<Session> sessionList = new ArrayList<Session>();
 	private List<Challenge> challengeList = new ArrayList<Challenge>();
 	private List<Challenge> acceptedChallengeList = new ArrayList<Challenge>();
@@ -20,7 +21,7 @@ public class User {
 	// Constructor, getters and setters
 	
 	public User(String name, String email, String password, String birthDate, float weight, int height,
-			int maxHeartRate, int restHeartRate, List<Session> sessionList, List<Challenge> challengeList, List<Challenge> acceptedChallengeList) {
+			int maxHeartRate, int restHeartRate, String provider, List<Session> sessionList, List<Challenge> challengeList, List<Challenge> acceptedChallengeList) {
 		super();
 		this.name = name;
 		this.email = email;
@@ -30,13 +31,14 @@ public class User {
 		this.height = height;
 		this.maxHeartRate = maxHeartRate;
 		this.restHeartRate = restHeartRate;
+		this.provider = provider;
 		this.sessionList = sessionList;
 		this.challengeList = challengeList;
 		this.acceptedChallengeList = acceptedChallengeList;
 	}
 	
 	public User(String name, String email, String birthDate, float weight, int height,
-			int maxHeartRate, int restHeartRate) {
+			int maxHeartRate, int restHeartRate, String provider) {
 		super();
 		this.name = name;
 		this.email = email;
@@ -45,15 +47,17 @@ public class User {
 		this.height = height;
 		this.maxHeartRate = maxHeartRate;
 		this.restHeartRate = restHeartRate;
+		this.provider = provider;
 	}
 	
-	public User(String name, String email, String birthDate) {
+	public User(String name, String email, String birthDate, String provider) {
 		super();
 		this.name = name;
 		this.email = email;
 		this.birthDate = birthDate;
+		this.provider = provider;
 	}
-	
+
 	public User(String name, String email) {
 		super();
 		this.name = name;
@@ -116,6 +120,14 @@ public class User {
 
 	public void setRestHeartRate(int restHeartRate) {
 		this.restHeartRate = restHeartRate;
+	}
+	
+	public String getProvider() {
+		return provider;
+	}
+
+	public void setProvider(String provider) {
+		this.provider = provider;
 	}
 
 	public List<Session> getSessionList() {
