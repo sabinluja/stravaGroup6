@@ -54,6 +54,12 @@ public class User {
 		this.birthDate = birthDate;
 	}
 	
+	public User(String name, String email) {
+		super();
+		this.name = name;
+		this.email = email;
+	}
+	
 	public User() {}
 
 	public String getName() {
