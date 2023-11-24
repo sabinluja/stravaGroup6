@@ -1,27 +1,20 @@
 package es.deusto.ingenieria.sd.strava.client.gui;
-
+import java.awt.CardLayout;
 import java.awt.Color;
-import java.awt.Dimension;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.lang.reflect.Method;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Vector;
 import java.util.concurrent.TimeUnit;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JList;
-import javax.swing.JScrollPane;
-import javax.swing.JTextPane;
-import javax.swing.ListSelectionModel;
-import javax.swing.border.TitledBorder;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.text.BadLocationException;
-import javax.swing.text.SimpleAttributeSet;
-import javax.swing.text.StyleConstants;
-import javax.swing.text.StyledDocument;
+
+import es.deusto.ingenieria.sd.strava.client.gui.Login;
+import es.deusto.ingenieria.sd.strava.client.gui.Register;
+
 
 import es.deusto.ingenieria.sd.strava.client.controller.ChallengeController;
 import es.deusto.ingenieria.sd.strava.client.controller.SessionController;
@@ -40,172 +33,192 @@ public class UserWindow extends JFrame {
     int restHeart;
     JButton challenge;
     JButton session;
+    JButton loginButton;
+    JButton logoutButton;
+    JButton registerButton;
+    JPanel cards;
+    private JLabel label;
 
-    public UserWindow(UserController controller, ChallengeController chc, SessionController sc) { // Change constructor parameter
-        // Obtain the methods of the controller using reflection
-        List<Method> methods = Arrays.asList(UserController.class.getMethods()); // Change here
-        
-        Vector<String> methodNames = new Vector<>();
-        methods.forEach(method -> {
-            if (method.getName().contains("register")) {
-                methodNames.add(method.getName());
-            }
-            if (method.getName().contains("login")) {
-                methodNames.add(method.getName());
-            }
-            if (method.getName().contains("logout")) {
-                methodNames.add(method.getName());
-            }
-        });
+    public UserWindow(UserController controller, ChallengeController chc, SessionController sc) {
+    this.setTitle("SpringBoot Client Application GUI");
+         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        Collections.sort(methodNames);
+         // Create cards panel with CardLayout
+         cards = new JPanel();
 
-        JList<String> endpointsJList = new JList<>(methodNames);
-        endpointsJList.setBounds(-5, 0, 200, 561);
-        endpointsJList.setBorder(new TitledBorder("Endpoints"));
-        endpointsJList.setSelectedIndex(-1);
-        endpointsJList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        endpointsJList.setPreferredSize(new Dimension(200, 200));
+         // Card 1: Login and Register buttons
+         JPanel card1 = new JPanel();
+         card1.setLayout(null);
 
-        JTextPane endpointResults = new JTextPane();
-        endpointResults.setBackground(new Color(0, 40, 51));
-        endpointResults.setEditable(false);
-        JScrollPane scrollPane = new JScrollPane(endpointResults);
-        scrollPane.setBounds(205, 0, 803, 561);
-        scrollPane.setBorder(new TitledBorder("Server responses"));
+         loginButton = new JButton("Login");
+         loginButton.setBackground(Color.WHITE);
+         loginButton.setBounds(84, 46, 100, 23);
+         loginButton.addActionListener(new ActionListener() {
+             @Override
+             public void actionPerformed(ActionEvent e) {
+                 handleLogin(controller);
+             }
+         });
+         card1.add(loginButton);
 
-        SimpleAttributeSet orangeText = new SimpleAttributeSet();
-        StyleConstants.setForeground(orangeText, Color.ORANGE);
+         registerButton = new JButton("Register");
+         registerButton.setBackground(Color.WHITE);
+         registerButton.setBounds(84, 80, 100, 23);
+         registerButton.addActionListener(new ActionListener() {
+             @Override
+             public void actionPerformed(ActionEvent e) {
+                 handleRegister(controller);
+             }
+         });
+         
+         
+         logoutButton = new JButton("logout");
+         logoutButton.setBackground(Color.WHITE);
+         logoutButton.setBounds(84, 80, 100, 23);
+         logoutButton.addActionListener(new ActionListener() {
+             @Override
+             public void actionPerformed(ActionEvent e) {
+                 handleLogout(controller);
+             }
+         });
+         
+         getContentPane().setLayout(new GridLayout(0, 1, 0, 0));
+         card1.add(registerButton);
 
-        SimpleAttributeSet greenText = new SimpleAttributeSet();
-        StyleConstants.setForeground(greenText, new Color(133, 153, 1));
+         // Card 2: Challenge and Session buttons
+         JPanel card2 = new JPanel();
+         card2.setLayout(null);
 
-        SimpleAttributeSet grayText = new SimpleAttributeSet();
-        StyleConstants.setForeground(grayText, new Color(131, 148, 149));
-        StyleConstants.setBold(grayText, true);
+         challenge = new JButton("Challenge");
+         challenge.setBackground(Color.WHITE);
+         challenge.setBounds(10, 20, 100, 23);
+         challenge.setEnabled(false);
+         card2.add(challenge);
 
-        // Update the lister for the JList to use UserController
-        endpointsJList.addListSelectionListener(e -> {
-            String selectedValue = endpointsJList.getSelectedValue();
+         session = new JButton("Session");
+         session.setBackground(Color.WHITE);
+         session.setBounds(10, 54, 100, 23);
+         session.setEnabled(false);
+         card2.add(session);
+         cards.setLayout(new CardLayout(0, 0));
 
-            StyledDocument resultsDoc = endpointResults.getStyledDocument();
+         // Add cards to the CardLayout
+         cards.add(card1, "name_877758968441800");
+         
+         label = new JLabel("");
+         cards.add(label, "name_877759002109600");
+         cards.add(card2, "name_877759035848900");
 
-            if (selectedValue != null && e.getValueIsAdjusting()) {
-            	
-                try {
-                	Thread esperaDatosThread = new Thread(new Runnable() {
-                        @Override
-                        public void run() {
-		                    try {
-								resultsDoc.insertString(resultsDoc.getLength(), selectedValue + "\n", grayText);
-							} catch (BadLocationException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							}
-		                    Class<? extends UserController> userControllerClass = controller.getClass();
-		                    
-		                    if (selectedValue.contains("register")) {
-		                        Register r = new Register();
-		                        
-		                        while (!r.datosProcesados()) {
-		                            try {
-		                                TimeUnit.SECONDS.sleep(2);
-		                            } catch (InterruptedException e) {
-		                                e.printStackTrace();
-		                            }
-		                        }
-		                        email = r.getEmail();
-		                        nombre = r.getNombre();
-		                        birthDate = r.getBirthDate();
-		                        weight = r.getWeight();
-		                        height = r.getHeight();
-		                        maxHeart = r.getMaxHeart();
-		                        restHeart = r.getRestHeart();
-		                        result = controller.registerGoogle(email, nombre, birthDate, weight, height, maxHeart, restHeart);     
-		                    }
-		                        
-		                    
-		                    if (selectedValue.contains("login")) {
-		                        Login l = new Login();
-		                        while (!l.dataProcessed()) {
-		                            try {
-		                                TimeUnit.SECONDS.sleep(2);
-		                            } catch (InterruptedException e) {
-		                                e.printStackTrace();
-		                            }
-		                        }
+         getContentPane().add(cards);
 
-		                        email = l.getUsername();
-		                        password = l.getPassword();  
-		                        result = controller.login(email, password);
-		                        challenge.setEnabled(true);
-		                        session.setEnabled(true);
-		                    }
-		                    
-		                    if (selectedValue.contains("logout")) {
-		                    	controller.logout();
-		                    	challenge.setEnabled(false);
-		                        session.setEnabled(false);
-		                    }
-		                    
-		                    if (result != null) {
-		                        try {
-									resultsDoc.insertString(resultsDoc.getLength(), result.toString() + "\n\n", greenText);
-								} catch (BadLocationException e) {
-									// TODO Auto-generated catch block
-									e.printStackTrace();
-								}
-		                    }
-                        }
-                	});
-                	esperaDatosThread.start();
-                
+         this.setSize(300, 200);
+         this.setLocationRelativeTo(null);
+         this.setVisible(true);
+     }
 
-                } catch (Exception ex1) {
-                    try {
-                        resultsDoc.insertString(resultsDoc.getLength(),
-                                " - The invocation throws an exception: " + ex1.getMessage() + "\n\n", orangeText);
-                    } catch (Exception ex2) {
-                    }
-                }
-            }
-        });
 
-        this.setTitle("SpringBoot Client Application GUI");
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        getContentPane().setLayout(null);
-        
+    private void handleButtonPress(String buttonText) {
+        // Handle button press based on the buttonText
+        System.out.println("Button pressed: " + buttonText);
+    }
 
-        challenge = new JButton("Challenge");
-        challenge.setBackground(Color.WHITE);
-        challenge.setBounds(10, 470, 100, 23);
+    private void handleRegister(UserController controller) {
+    	Thread waitDataRegister = new Thread(() -> {
+	        Register r = new Register();
+	        while (!r.datosProcesados()) {
+	            try {
+	                TimeUnit.SECONDS.sleep(2);
+	            } catch (InterruptedException e) {
+	                e.printStackTrace();
+	            }
+	        }
+	        
+	        email = r.getEmail();
+	        nombre = r.getNombre();
+	        birthDate = r.getBirthDate();
+	        weight = r.getWeight();
+	        height = r.getHeight();
+	        maxHeart = r.getMaxHeart();
+	        restHeart = r.getRestHeart();
+	        result = controller.registerGoogle(email, nombre, birthDate, weight, height, maxHeart, restHeart);
+	        
+	        if (result != null && result.equals(true)) {
+	            // Successful registration, switch to the second card
+	            CardLayout cardLayout = (CardLayout) cards.getLayout();
+	            cardLayout.show(cards, "Card2");
+	
+	            // Enable Challenge and Session buttons
+	            challenge.setEnabled(true);
+	            session.setEnabled(true);
+	
+	            // Disable Login and Register buttons
+	            loginButton.setEnabled(false);
+	            registerButton.setEnabled(false);
+	
+	            // Enable Logout button
+	            logoutButton.setEnabled(true);
+	        } else {
+	            // Registration failed, keep the buttons in their current state
+	            challenge.setEnabled(false);
+	            session.setEnabled(false);
+	        }
+    	}); waitDataRegister.start();
+    }
+
+    private void handleLogin(UserController controller) {
+	    Thread waitDataLogin = new Thread(() -> {
+		    Login l = new Login();
+		    
+		    while (!l.dataProcessed()) {
+		    	try {
+		    		TimeUnit.SECONDS.sleep(2);
+		    	} catch (InterruptedException e) {e.printStackTrace();}
+		    }
+	
+			email = l.getUsername();
+			password = l.getPassword();
+			result = controller.login(email, password);
+			
+			if (result != null && result.equals(true)) {
+			   // Successful login, switch to the second card
+			   CardLayout cardLayout = (CardLayout) cards.getLayout();
+			   cardLayout.show(cards, "Card2");
+			
+			   // Enable Challenge and Session buttons
+			   challenge.setEnabled(true);
+			   session.setEnabled(true);
+			
+			   // Disable Login and Register buttons
+			   loginButton.setEnabled(false);
+			   registerButton.setEnabled(false);
+			
+			   // Enable Logout button
+			   logoutButton.setEnabled(true);
+			} else {
+			   // Login failed, disable Challenge and Session buttons
+			   challenge.setEnabled(false);
+			   session.setEnabled(false);
+			}
+	    }); waitDataLogin.start();
+    }
+    
+    
+    private void handleLogout(UserController controller) {
+        controller.logout();
+        // Handle the logout process
+        // ...
+
+        // Switch back to the first card
+        CardLayout cardLayout = (CardLayout) cards.getLayout();
+        cardLayout.show(cards, "Card1");
+
+        // Disable Challenge, Session, and Logout buttons
         challenge.setEnabled(false);
-        challenge.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                ChallengeWindow challengeWindow = new ChallengeWindow(chc,controller);
-                challengeWindow.setVisible(true);
-            }
-        });
-        getContentPane().add(challenge);
-
-        session = new JButton("Session");
-        session.setBackground(Color.WHITE);
-        session.setBounds(10, 504, 100, 23);
         session.setEnabled(false);
-        session.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                SessionWindow sessionWindow = new SessionWindow(sc, controller); // Cambia esto por la instancia real
-                sessionWindow.setVisible(true);
-            }
-        });
-        getContentPane().add(session);
-        
-        getContentPane().add(session);
-        getContentPane().add(endpointsJList);
-        getContentPane().add(scrollPane);
+        logoutButton.setEnabled(false);
 
-        this.setSize(1024, 600);
-        this.setLocationRelativeTo(null);
-        this.setVisible(true);
+        // Enable Login and Register buttons
+        loginButton.setEnabled(true);
+        registerButton.setEnabled(true);
     }
 }
