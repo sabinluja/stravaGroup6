@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import es.deusto.ingenieria.sd.strava.GoogleExternalService.service.GoogleService;
 
+@RestController
 public class GoogleController {
 
     private static final Logger log= LoggerFactory.getLogger(GoogleController.class);

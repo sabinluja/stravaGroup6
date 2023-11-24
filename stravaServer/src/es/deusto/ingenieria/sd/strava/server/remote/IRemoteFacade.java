@@ -16,10 +16,8 @@ public interface IRemoteFacade extends Remote {
     List<ChallengeDTO> getActiveChallenges(String token, String date) throws RemoteException;
     
     List<ChallengeDTO> getAcceptedChallenges(String token)throws RemoteException;
-    boolean registerGoogle(String email, String name, String birthDate)throws RemoteException;
-    boolean registerFacebook(String email, String name, String birthDate)throws RemoteException;
-    boolean registerGoogle(String email, String name, String birthDate, float weight, int height, int maxHeartRate, int restHeartRate)throws RemoteException;
-    boolean registerFacebook(String email, String name, String birthDate, float weight, int height, int maxHeartRate, int restHeartRate)throws RemoteException;
+    boolean register(String email, String name, String birthDate, String password, String provider)throws RemoteException;
+    boolean register(String email, String name, String birthDate, String password, String provider, float weight, int height, int maxHeartRate, int restHeartRate)throws RemoteException;
     
     long login(String email, String password)throws RemoteException;
     boolean createSession(String token, String style, String sport, float distance, String startDate, long startTime, int duration)throws RemoteException;

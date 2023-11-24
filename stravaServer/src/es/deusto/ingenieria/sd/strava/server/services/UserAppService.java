@@ -175,9 +175,9 @@ public class UserAppService {
 	
 	// Mandatory arguments for registration
 	
-	public boolean registerGoogle(String email, String name, String birthDate) {
+	public boolean register(String email, String name, String birthDate, String password, String provider) {
 		try {
-			User registerGoogleMandatory = new User(name, email, birthDate);
+			User registerGoogleMandatory = new User(name, email, birthDate, provider);
 			registeredUsers.add(registerGoogleMandatory);
 			//IProviderGateway provider = GatewayFactory.getInstance().createGateway("Google");
 			//provider.validateEmail(email);
@@ -186,34 +186,17 @@ public class UserAppService {
 	    } catch (Exception e) {e.printStackTrace(); return false;}
 	}
 	
-	public boolean registerFacebook(String email, String name, String birthDate) {
-		try {
-			User registerGoogleMandatory = new User(name, email, birthDate);
-			registeredUsers.add(registerGoogleMandatory);
-			
-			return true;
-	    } catch (Exception e) {e.printStackTrace(); return false;}
-	}
-	
 	// Mandatory + optional arguments for registration
 	
-	public boolean registerGoogle(String email, String name, String birthDate, float weight, int height, int maxHeartRate, int restHeartRate) {
+	public boolean register(String email, String name, String birthDate, String password, String provider, float weight, int height, int maxHeartRate, int restHeartRate) {
 		try {
-			User registerGoogleMandatory = new User(name, email, birthDate, weight, height, maxHeartRate, restHeartRate);
+			User registerGoogleMandatory = new User(name, email, birthDate, weight, height, maxHeartRate, restHeartRate, provider);
 			registeredUsers.add(registerGoogleMandatory);
 			
 			return true;
 	    } catch (Exception e) {e.printStackTrace(); return false;}
 	}
 	
-	public boolean registerFacebook(String email, String name, String birthDate, float weight, int height, int maxHeartRate, int restHeartRate) {
-		try {
-			User registerGoogleMandatory = new User(name, email, birthDate, weight, height, maxHeartRate, restHeartRate);
-			registeredUsers.add(registerGoogleMandatory);
-			
-			return true;
-	    } catch (Exception e) {e.printStackTrace(); return false;}
-	}
 	
 	public User login(String email, String password) {
 		
@@ -229,6 +212,7 @@ public class UserAppService {
 		        user.setSessionList(u.getSessionList());
 		        user.setAcceptedChallengeList(u.getAcceptedChallengeList());
 		        user.setChallengeList(u.getChallengeList());
+		        user.setPassword(u.getPassword());
 				String hashPass = org.apache.commons.codec.digest.DigestUtils.sha1Hex("$!9PhNz,");	
 				user.setPassword(hashPass);
 			}
