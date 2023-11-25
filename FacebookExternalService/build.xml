@@ -16,7 +16,7 @@
 	<target name="help">
 		<echo>Usage: ant [build | server]</echo>
 	</target>	
-	
+	 
 	<target name="build" description="Builds the project">
 		<delete dir="${build.dir}"/>
 		<mkdir dir="${build.dir}"/>

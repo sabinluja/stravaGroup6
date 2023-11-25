@@ -12,7 +12,7 @@ public class RequestHandler {
     private static HashMap<String, String> userCredentials = new HashMap<>();
 
     public void handleRequest(Socket socket) {
-
+ 
         try {
             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
