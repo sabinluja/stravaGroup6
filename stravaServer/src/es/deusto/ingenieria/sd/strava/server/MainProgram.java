@@ -3,6 +3,8 @@ package es.deusto.ingenieria.sd.strava.server;
 import java.rmi.Naming;
 import java.rmi.Remote;
 
+import es.deusto.ingenieria.sd.strava.server.gateways.FacebookGateway;
+import es.deusto.ingenieria.sd.strava.server.gateways.IProviderGateway;
 import es.deusto.ingenieria.sd.strava.server.remote.IRemoteFacade;
 import es.deusto.ingenieria.sd.strava.server.remote.RemoteFacade;
 
@@ -21,6 +23,14 @@ public class MainProgram {
 			IRemoteFacade remoteFacade = new RemoteFacade();			
 			Naming.rebind(name, (Remote) remoteFacade);
 			System.out.println(" * Strava Server '" + name + "' started!!");
+			
+			if (args.length < 2) {
+				System.err.println(" # Usage: Trans. SocketClient [SERVER IP] [PORT] ");
+				System.exit(1);
+			}
+			
+			IProviderGateway facebookClient = FacebookGateway.getInstance();
+			
 		} catch (Exception ex) {
 			System.err.println(" # Strava Server Exception: " + ex.getMessage());
 			ex.printStackTrace();

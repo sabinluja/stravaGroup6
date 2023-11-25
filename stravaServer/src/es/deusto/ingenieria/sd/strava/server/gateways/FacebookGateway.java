@@ -19,8 +19,8 @@ public class FacebookGateway implements IProviderGateway {
 		try {		
 			//String URL = "//127.0.0.1:1099/CurrencyExchange";
 			//this.currencyConvService = (ICurrencyExchange) Naming.lookup(URL);
-			this.serverIP = "127.0.0.1";
-			this.serverPort = 1099;
+			this.serverIP = "0.0.0.0";
+			this.serverPort = 35600;
 		} catch (Exception ex) {
 			System.err.println("# Error locating external service: " + ex);
 		}
