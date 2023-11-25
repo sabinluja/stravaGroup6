@@ -52,124 +52,74 @@ public class SessionWindow extends JFrame {
         });
 
         Collections.sort(methodNames);
+        
+        JButton createSession = new JButton("Create Session");
+        createSession.setBackground(Color.WHITE);
+        createSession.setBounds(75, 10, 130, 23);
+        
+        createSession.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+            	Thread createSessionT = new Thread(() -> {
+	            	CreateSession s = new CreateSession();
+	                
+	                while (!s.dataProcessed()) {
+	                    try {
+	                        TimeUnit.SECONDS.sleep(2);
+	                    } catch (InterruptedException e1) {
+	                        e1.printStackTrace();
+	                    }
+	                }
+	                
+	                token = uc.getToken()+"";
+	                title = s.getTitle();
+	                sport = s.getSport();
+	                distance = s.getDistance();
+	            	startDate = s.getStartDate();
+	            	startTime = s.getStartTime();
+	            	duration = s.getDuration();
+	                
+	                result = controller.createSession(token, title, sport, distance, startDate, startTime, duration);
+	                System.out.println(result);
+            	}); createSessionT.start();
+            }
+        });
 
-        JList<String> endpointsJList = new JList<>(methodNames);
-        endpointsJList.setBorder(new TitledBorder("Endpoints"));
-        endpointsJList.setSelectedIndex(-1);
-        endpointsJList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        endpointsJList.setPreferredSize(new Dimension(200, 200));
-
-        JTextPane endpointResults = new JTextPane();
-        endpointResults.setBackground(new Color(0, 40, 51));
-        endpointResults.setEditable(false);
-        JScrollPane scrollPane = new JScrollPane(endpointResults);
-        scrollPane.setBorder(new TitledBorder("Server responses"));
-
-        SimpleAttributeSet orangeText = new SimpleAttributeSet();
-        StyleConstants.setForeground(orangeText, Color.ORANGE);
-
-        SimpleAttributeSet greenText = new SimpleAttributeSet();
-        StyleConstants.setForeground(greenText, new Color(133, 153, 1));
-
-        SimpleAttributeSet grayText = new SimpleAttributeSet();
-        StyleConstants.setForeground(grayText, new Color(131, 148, 149));
-        StyleConstants.setBold(grayText, true);
+        JButton getSessions = new JButton("Get Sessions");
+        getSessions.setBackground(Color.WHITE);
+        getSessions.setBounds(75, 40, 130, 23);
+        
+        getSessions.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+            	try {
+            		token = uc.getToken()+"";
+    				result = controller.getSessions(token);	
+    				System.out.println(result);
+    				
+    			} catch (RemoteException e2) {
+    				// TODO Auto-generated catch block
+    				e2.printStackTrace();
+    			}
+            }
+        });
         
         JButton back = new JButton("Back");
         back.setBackground(Color.WHITE);
-        back.setBounds(10, 504, 89, 23);
+        back.setBounds(10, 80, 89, 23);
         back.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
             	SessionWindow.this.dispose();
             }
         });
+        
+        getContentPane().setLayout(null);
+        getContentPane().add(createSession);
+        getContentPane().add(getSessions);
         getContentPane().add(back);
 
-        // Update the lister for the JList to use SessionController
-        endpointsJList.addListSelectionListener(e -> {
-            String selectedValue = endpointsJList.getSelectedValue();
-
-            StyledDocument resultsDoc = endpointResults.getStyledDocument();
-
-            if (selectedValue != null && e.getValueIsAdjusting()) {
-            	
-                try {
-                	Thread esperaDatosThread = new Thread(new Runnable() {
-                        @Override
-                        public void run() {
-		                    try {
-								resultsDoc.insertString(resultsDoc.getLength(), selectedValue + "\n", grayText);
-							} catch (BadLocationException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							}
-		                    Class<? extends SessionController> sessionControllerClass = controller.getClass();
-		                    
-		                    if (selectedValue.contains("create")) {
-		                        CreateSession s = new CreateSession();
-		                        
-		                        while (!s.dataProcessed()) {
-		                            try {
-		                                TimeUnit.SECONDS.sleep(2);
-		                            } catch (InterruptedException e) {
-		                                e.printStackTrace();
-		                            }
-		                        }
-		                        token = uc.getToken()+"";
-		                        title = s.getTitle();
-		                        sport = s.getSport();
-		                        distance = s.getDistance();
-		                    	startDate = s.getStartDate();
-		                    	startTime = s.getStartTime();
-		                    	duration = s.getDuration();
-		                        
-		                        result = controller.createSession(token, title, sport, distance, startDate, startTime, duration);     
-		                    }
-		                        
-		                    
-		                    if (selectedValue.contains("get")) {
-		                    	try {
-		                    		token = uc.getToken()+"";
-									result = controller.getSessions(token);	
-									//resultsDoc.insertString(resultsDoc.getLength(), result.toString() + "\n\n", greenText);
-									
-								} catch (RemoteException e) {
-									// TODO Auto-generated catch block
-									e.printStackTrace();
-								}
-		                    	
-		                    }
-		                    		                    
-		                    if (result != null) {
-		                        try {
-									resultsDoc.insertString(resultsDoc.getLength(), result.toString() + "\n\n", greenText);
-								} catch (BadLocationException e) {
-									// TODO Auto-generated catch block
-									e.printStackTrace();
-								}
-		                    }
-                        }
-                	});
-                	esperaDatosThread.start();
-                
-
-                } catch (Exception ex1) {
-                    try {
-                        resultsDoc.insertString(resultsDoc.getLength(),
-                                " - The invocation throws an exception: " + ex1.getMessage() + "\n\n", orangeText);
-                    } catch (Exception ex2) {
-                    }
-                }
-            }
-        });
-
-        this.setTitle("SpringBoot Session Application GUI");
-        this.setLayout(new BorderLayout(5, 5));
+        this.setTitle("Session");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.add(endpointsJList, BorderLayout.WEST);
-        this.add(scrollPane, BorderLayout.CENTER);
 
-        this.setSize(1024, 600);
+        this.setSize(300, 150);
         this.setLocationRelativeTo(null);
         this.setVisible(false);
     }

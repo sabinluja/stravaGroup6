@@ -53,31 +53,31 @@ public class ChallengeWindow extends JFrame {
         	public void actionPerformed(ActionEvent e) {
         	}
         });
-        create.setBounds(70, 10, 160, 30);
+        create.setBounds(60, 10, 180, 30);
         create.setBackground(Color.WHITE);
         
         getContentPane().add(create);
         
         JButton getChallenges = new JButton("Get Challenges");
-        getChallenges.setBounds(70, 50, 160, 30);
+        getChallenges.setBounds(60, 50, 180, 30);
         getChallenges.setBackground(Color.WHITE);
         
         getContentPane().add(getChallenges);
 
         JButton acceptChallenge = new JButton("Accept Challenge");
-        acceptChallenge.setBounds(70, 90, 160, 30);
+        acceptChallenge.setBounds(60, 90, 180, 30);
         acceptChallenge.setBackground(Color.WHITE);
         
         getContentPane().add(acceptChallenge);
         
         JButton getAcceptedChallenges = new JButton("Get Accepted Challenge");
-        getAcceptedChallenges.setBounds(70, 130, 160, 30);
+        getAcceptedChallenges.setBounds(60, 130, 180, 30);
         getAcceptedChallenges.setBackground(Color.WHITE);
         
         getContentPane().add(getAcceptedChallenges);
         
         JButton getActiveChallenges = new JButton("Get Active Challenge");
-        getActiveChallenges.setBounds(70, 170, 160, 30);
+        getActiveChallenges.setBounds(60, 170, 180, 30);
         getActiveChallenges.setBackground(Color.WHITE);
         
         getContentPane().add(getActiveChallenges);
@@ -131,7 +131,7 @@ public class ChallengeWindow extends JFrame {
 	                result = controller.acceptChallenge(uc.getToken()+"", name);
 	                System.out.println(result);
                 
-            }); acceptChallengeT.start();
+            	}); acceptChallengeT.start();
             }
         });
         
