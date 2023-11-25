@@ -58,8 +58,7 @@ public class UserWindow extends JFrame {
          loginButton.addActionListener(new ActionListener() {
              @Override
              public void actionPerformed(ActionEvent e) {
-                 //handleLogin(controller);
-            	 handleCard("card2");
+                 handleLogin(controller);
              }
          });
          card1.add(loginButton);
@@ -75,16 +74,16 @@ public class UserWindow extends JFrame {
          });
          
          
-         logoutButton = new JButton("Logout"); // Cambiado el texto a "Logout"
+         logoutButton = new JButton("Logout");
          logoutButton.setBackground(Color.WHITE);
-         logoutButton.setBounds(84, 114, 100, 23); // Cambiado el valor de Y para que no se superponga con el botón Register
+         logoutButton.setBounds(84, 114, 100, 23);
          logoutButton.addActionListener(new ActionListener() {
              @Override
              public void actionPerformed(ActionEvent e) {
                  handleLogout(controller);
              }
          });
-         card1.add(logoutButton); // Agregado el botón de logout al panel card1
+         card1.add(logoutButton);
 
          
          getContentPane().setLayout(new GridLayout(0, 1, 0, 0));
@@ -116,7 +115,6 @@ public class UserWindow extends JFrame {
          card2.add(session);
          cards.setLayout(new CardLayout(0, 0));
 
-         // Add cards to the CardLayout
          cards.add(card1, "card1");
          
          label = new JLabel("");
@@ -134,22 +132,6 @@ public class UserWindow extends JFrame {
     private void handleCard(String card) {
         CardLayout cardLayout = (CardLayout) cards.getLayout();
         cardLayout.show(cards, card);
-
-        if (card.equals("card12")) { // Si es la tarjeta con los botones de login y registro
-            // Habilitar o deshabilitar botones según sea necesario
-            logoutButton.setEnabled(false);
-            challenge.setEnabled(false);
-            session.setEnabled(false);
-            loginButton.setEnabled(true);
-            registerButton.setEnabled(true);
-        } else if (card.equals("card21")) { // Si es la tarjeta con los botones de Challenge y Session
-            // Habilitar o deshabilitar botones según sea necesario
-            backButton.setEnabled(true);
-            challenge.setEnabled(true);
-            session.setEnabled(true);
-            loginButton.setEnabled(false);
-            registerButton.setEnabled(false);
-        }
     }
 
 
@@ -178,24 +160,8 @@ public class UserWindow extends JFrame {
 	        result = controller.register(email, nombre, birthDate,password,provider, weight, height, maxHeart, restHeart);
 	        
 	        if (result != null && result.equals(true)) {
-	            // Successful registration, switch to the second card
-	            CardLayout cardLayout = (CardLayout) cards.getLayout();
-	            cardLayout.show(cards, "Card2");
-	
-	            // Enable Challenge and Session buttons
-	            challenge.setEnabled(true);
-	            session.setEnabled(true);
-	
-	            // Disable Login and Register buttons
-	            loginButton.setEnabled(false);
-	            registerButton.setEnabled(false);
-	
-	            // Enable Logout button
-	            logoutButton.setEnabled(true);
-	        } else {
-	            // Registration failed, keep the buttons in their current state
-	            challenge.setEnabled(false);
-	            session.setEnabled(false);
+	            handleCard("card2");
+
 	        }
     	}); waitDataRegister.start();
     }
@@ -215,24 +181,7 @@ public class UserWindow extends JFrame {
 			result = controller.login(email, password);
 			
 			if (result != null && result.equals(true)) {
-			   // Successful login, switch to the second card
-			   CardLayout cardLayout = (CardLayout) cards.getLayout();
-			   cardLayout.show(cards, "Card2");
-			
-			   // Enable Challenge and Session buttons
-			   challenge.setEnabled(true);
-			   session.setEnabled(true);
-			
-			   // Disable Login and Register buttons
-			   loginButton.setEnabled(false);
-			   registerButton.setEnabled(false);
-			
-			   // Enable Logout button
-			   logoutButton.setEnabled(true);
-			} else {
-			   // Login failed, disable Challenge and Session buttons
-			   challenge.setEnabled(false);
-			   session.setEnabled(false);
+				handleCard("Card2");
 			}
 	    }); waitDataLogin.start();
     }
@@ -241,15 +190,5 @@ public class UserWindow extends JFrame {
     private void handleLogout(UserController controller) {
         controller.logout();
 
-        CardLayout cardLayout = (CardLayout) cards.getLayout();
-        cardLayout.show(cards, "Card1");
-
-        challenge.setEnabled(false);
-        session.setEnabled(false);
-        logoutButton.setEnabled(false);
-
-
-        loginButton.setEnabled(true);
-        registerButton.setEnabled(true);
     }
 }
