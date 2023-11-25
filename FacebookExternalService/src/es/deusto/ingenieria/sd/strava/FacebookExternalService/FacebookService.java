@@ -10,9 +10,9 @@ import java.net.Socket;
 import java.util.HashMap;
 import java.util.StringTokenizer;
 
-import es.deusto.ingenieria.sd.strava.server.gateways.IProviderGateway;
+//import es.deusto.ingenieria.sd.strava.server.gateways.IProviderGateway;
 
-public class FacebookService extends Thread implements IProviderGateway{
+public class FacebookService extends Thread{
 	private DataInputStream in;
 	private DataOutputStream out;
 	private Socket tcpSocket;
@@ -20,61 +20,80 @@ public class FacebookService extends Thread implements IProviderGateway{
     private static HashMap<String, String> userCredentials = new HashMap<>();
 
 
-    
+   
     public FacebookService(Socket socket) {
-    	userCredentials.put("jane.smith@example.com", "jane.smith");
+    userCredentials.put("jane.smith@example.com", "jane.smith");
         userCredentials.put("bob.anderson@example.com", "bob.anderson");
-		try {
-			this.tcpSocket = socket;
-		    this.in = new DataInputStream(socket.getInputStream());
-			this.out = new DataOutputStream(socket.getOutputStream());
-			this.start();
-		} catch (IOException e) {
-			System.err.println("# FacebookService - TCPConnection IO error:" + e.getMessage());
-		}
-	}
+        try {
+        	this.tcpSocket = socket;
+        	this.in = new DataInputStream(socket.getInputStream());
+        	this.out = new DataOutputStream(socket.getOutputStream());
+        	this.start();
+        } catch (IOException e) {
+        	System.err.println("# FacebookService - TCPConnection IO error:" + e.getMessage());
+        }
+    }
 
-	public void run() {
-		try {
-			String data = this.in.readUTF();			
-			System.out.println("   - FacebookService - Received data from '" + tcpSocket.getInetAddress().getHostAddress() + ":" + tcpSocket.getPort() + "' -> '" + data + "'");					
-			data = processRequest(data);
-			this.out.writeUTF(data);					
-			System.out.println("   - FacebookService - Sent data to '" + tcpSocket.getInetAddress().getHostAddress() + ":" + tcpSocket.getPort() + "' -> '" + data.toUpperCase() + "'");
-		} catch (EOFException e) {
-			System.err.println("   # FacebookService - TCPConnection EOF error" + e.getMessage());
-		} catch (IOException e) {
-			System.err.println("   # FacebookService - TCPConnection IO error:" + e.getMessage());
-		} finally {
-			try {
-				tcpSocket.close();
-			} catch (IOException e) {
-				System.err.println("   # FacebookService - TCPConnection IO error:" + e.getMessage());
-			}
-		}
-	}
-    
-    
+    public void run() {
+    	try {
+    		String data = this.in.readUTF();
+    		System.out.println("   - FacebookService - Received data from '" + tcpSocket.getInetAddress().getHostAddress() + ":" + tcpSocket.getPort() + "' -> '" + data + "'");
+    		System.out.println("1");
+    		data = processRequest(data);
+    		System.out.println("2");
+    		this.out.writeUTF(data);
+    		System.out.println("   - FacebookService - Sent data to '" + tcpSocket.getInetAddress().getHostAddress() + ":" + tcpSocket.getPort() + "' -> '" + data.toUpperCase() + "'");
+    	} catch (EOFException e) {
+    		System.err.println("   # FacebookService - TCPConnection EOF error" + e.getMessage());
+    	} catch (IOException e) {
+    		System.err.println("   # FacebookService - TCPConnection IO error:" + e.getMessage());
+    	} finally {
+    		try {
+    			tcpSocket.close();
+    		} catch (IOException e) {
+    			System.err.println("   # FacebookService - TCPConnection IO error:" + e.getMessage());
+    		}
+    	}
+    }
+   
+   
     public String processRequest(String request) {
-    	Boolean r;
+    	boolean r;
         StringTokenizer tokenizer = new StringTokenizer(request, DELIMITER);
         String action = tokenizer.nextToken();
-        
+        System.out.println("Action received: " + action);
+       
         //RequestHandler rh = new RequestHandler();
+        String email;
+    String password;
         switch (action) {
             case "register_mandatory":
-                r= register(tokenizer.nextToken(), tokenizer.nextToken());
+            email = tokenizer.nextToken();
+            password = tokenizer.nextToken();
+            System.out.println("Email: " + email + "; Password: " + password);
+                r= register(email, password);
+                break;
             case "validate_password":
+            email = tokenizer.nextToken();
+            password = tokenizer.nextToken();
+            System.out.println("Email: " + email + "; Password: " + password);
                 r=validatePassword(tokenizer.nextToken(), tokenizer.nextToken());
+                break;
             case "validate_email":
+            email = tokenizer.nextToken();
+            System.out.println("Email: " + email);
                 r=validateEmail(tokenizer.nextToken());
+                break;
             default:
                 r=false;
+                break;
         }
-        handleRequest();
-        return r.toString();
+        //handleRequest();
+        System.out.println("Resultado" + r);
+        return r+"";
+   
     }
-    
+   
     public boolean register(String email, String password) {
         if (!userCredentials.containsKey(email)) {
             userCredentials.put(email, password);
@@ -99,8 +118,8 @@ public class FacebookService extends Thread implements IProviderGateway{
         }
         return true;
     }
-    
-    
+   
+   
     public void handleRequest() {
 
         try {
@@ -114,8 +133,6 @@ public class FacebookService extends Thread implements IProviderGateway{
         } catch (IOException e) {
             System.err.println("Error handling client request: " + e.getMessage());
         }
-                
+               
     }
-
-    
 }
