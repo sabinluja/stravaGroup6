@@ -36,6 +36,7 @@ public class UserWindow extends JFrame {
     JButton session;
     JButton loginButton;
     JButton logoutButton;
+    JButton backButton;
     JButton registerButton;
     JPanel cards;
     private JLabel label;
@@ -73,15 +74,17 @@ public class UserWindow extends JFrame {
          });
          
          
-         logoutButton = new JButton("logout");
+         logoutButton = new JButton("Logout"); // Cambiado el texto a "Logout"
          logoutButton.setBackground(Color.WHITE);
-         logoutButton.setBounds(84, 80, 100, 23);
+         logoutButton.setBounds(84, 114, 100, 23); // Cambiado el valor de Y para que no se superponga con el botón Register
          logoutButton.addActionListener(new ActionListener() {
              @Override
              public void actionPerformed(ActionEvent e) {
                  handleLogout(controller);
              }
          });
+         card1.add(logoutButton); // Agregado el botón de logout al panel card1
+
          
          getContentPane().setLayout(new GridLayout(0, 1, 0, 0));
          card1.add(registerButton);
@@ -92,14 +95,24 @@ public class UserWindow extends JFrame {
 
          challenge = new JButton("Challenge");
          challenge.setBackground(Color.WHITE);
-         challenge.setBounds(10, 20, 100, 23);
-         challenge.setEnabled(false);
+         challenge.setBounds(84, 46, 100, 23);
          card2.add(challenge);
+         
+         backButton = new JButton("Back");
+         backButton.setBackground(Color.WHITE);
+         backButton.setBounds(84, 114, 100, 23);
+         backButton.addActionListener(new ActionListener() {
+             @Override
+             public void actionPerformed(ActionEvent e) {
+            	CardLayout cardLayout = (CardLayout) cards.getLayout();
+ 	            cardLayout.show(cards, "Card1");
+             }
+         });
+         card2.add(backButton);
 
          session = new JButton("Session");
          session.setBackground(Color.WHITE);
-         session.setBounds(10, 54, 100, 23);
-         session.setEnabled(false);
+         session.setBounds(84, 80, 100, 23);
          card2.add(session);
          cards.setLayout(new CardLayout(0, 0));
 
