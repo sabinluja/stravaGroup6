@@ -17,19 +17,19 @@ public class GoogleController {
     @GetMapping("/user/register/{email}/{password}")
     public boolean register(@PathVariable String email, @PathVariable String password) {
         log.info("Registering a user");
-        return this.googleService.register(email, password);
+        return googleService.register(email, password);
     }
 
     @GetMapping("/validate/password/{email}/{password}")
     public boolean validatePassword(@PathVariable String email, @PathVariable String password) {
         log.info("Validating password");
-        return this.googleService.validatePassword(email, password);
+        return googleService.validatePassword(email, password);
     }
 
     @GetMapping("/validate/email/{email}")
     public boolean validateEmail(@PathVariable String email) {
     	log.info("Validating email");
-        return this.googleService.validateEmail(email);
+        return googleService.validateEmail(email);
     }
 }
 

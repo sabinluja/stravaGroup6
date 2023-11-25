@@ -12,6 +12,7 @@ public class FacebookService extends Thread{
 	private DataOutputStream out;
 	private Socket tcpSocket;
     private static final String DELIMITER = "#";
+    private RequestHandler rh = new RequestHandler();
 
     
     public FacebookService(Socket socket) {
@@ -51,7 +52,7 @@ public class FacebookService extends Thread{
         StringTokenizer tokenizer = new StringTokenizer(request, DELIMITER);
         String action = tokenizer.nextToken();
         
-        RequestHandler rh = new RequestHandler();
+        //RequestHandler rh = new RequestHandler();
         switch (action) {
             case "register_mandatory":
                 r= rh.registerUser(tokenizer.nextToken(), tokenizer.nextToken());

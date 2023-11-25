@@ -64,11 +64,13 @@ public class GoogleExternalServiceApplication {
       return (args) -> {
           // INIT data ... some Users
     	    	  
-    	  User rebeca = new User ("Rebeca", "Cortazar");
-    	  User roberto = new User ("Roberto", "Carballedo");
-    	   
-    	  repository.save(rebeca);
-    	  repository.save(roberto);
+    	  User sabin = new User("sabin.luja@opendeusto.es", "sabin.luja");
+    	  User alice = new User("alice.johnson@example.com", "alice.johnson");
+    	  User eva = new User("eva.rodriguez@example.com", "eva.rodriguez");
+    	  
+    	  repository.save(sabin);
+    	  repository.save(alice);
+    	  repository.save(eva);
     	  
         log.info("Sample users created"); 
     	  
