@@ -40,15 +40,6 @@ public class CreateSession extends JFrame {
         JLabel durationLabel = new JLabel("Duration (in minutes):");
         durationField = new JTextField();
 
-        // Button action
-        JButton saveButton = new JButton("Save Data");
-        saveButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                processData();
-            }
-        });
-
         // Add components to the panel
         panel.add(titleLabel);
         panel.add(titleField);
@@ -62,38 +53,15 @@ public class CreateSession extends JFrame {
         panel.add(startTimeField);
         panel.add(durationLabel);
         panel.add(durationField);
-        panel.add(saveButton);
 
         // Add panel to the JFrame
-        add(panel);
+        getContentPane().add(panel);
+        
+        JButton saveButton = new JButton("Save Data");
+        getContentPane().add(saveButton, BorderLayout.SOUTH);
 
         // Make the JFrame visible
         setVisible(true);
-    }
-
-    private void processData() {
-        // Get data from text fields and combo box
-        title = titleField.getText();
-        sport = (String) sportComboBox.getSelectedItem();
-        startDate = startDateField.getText();
-
-        // Convert numeric data
-        try {
-            distance = Float.parseFloat(distanceField.getText());
-            startTime = Long.parseLong(startTimeField.getText());
-            duration = Integer.parseInt(durationField.getText());
-        } catch (NumberFormatException ex) {
-            // Handle conversion errors as needed
-            distance = 0;
-            startTime = 0;
-            duration = 0;
-        }
-
-        // Indicate that data has been processed
-        dataProcessed = true;
-
-        // Close the window after processing data (adjust as needed)
-        dispose();
     }
 
     // Methods to get processed data

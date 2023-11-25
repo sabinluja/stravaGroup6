@@ -13,12 +13,13 @@ public class acceptChallenge extends JFrame {
     public acceptChallenge() {
         // Configure the JFrame
         setTitle("Activity Data");
-        setSize(454, 234);
+        setSize(450, 130);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
         // Create the JPanel
         JPanel panel = new JPanel();
+        panel.setBounds(0, 0, 438, 195);
         panel.setLayout(new GridLayout(7, 2));
 
         // GUI components
@@ -33,6 +34,7 @@ public class acceptChallenge extends JFrame {
                 processData();
             }
         });
+        getContentPane().setLayout(null);
 
         // Add components to the panel
         panel.add(nameLabel);

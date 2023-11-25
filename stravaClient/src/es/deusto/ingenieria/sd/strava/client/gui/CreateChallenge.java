@@ -41,15 +41,6 @@ public class CreateChallenge extends JFrame {
         String[] sports = {"Cycling", "Running", "Both"};
         sportComboBox = new JComboBox<>(sports);
 
-        // Button action
-        JButton saveButton = new JButton("Save Data");
-        saveButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                processData();
-            }
-        });
-
         // Add components to the panel
         panel.add(nameLabel);
         panel.add(nameField);
@@ -63,37 +54,15 @@ public class CreateChallenge extends JFrame {
         panel.add(targetTimeField);
         panel.add(sportLabel);
         panel.add(sportComboBox);
-        panel.add(saveButton);
 
         // Add panel to the JFrame
         getContentPane().add(panel);
+        
+        JButton saveButton = new JButton("Save Data");
+        getContentPane().add(saveButton, BorderLayout.SOUTH);
 
         // Make the JFrame visible
         setVisible(true);
-    }
-
-    private void processData() {
-        // Get data from text fields and combo box
-        name = nameField.getText();
-        startDate = startDateField.getText();
-        endDate = endDateField.getText();
-        sport = (String) sportComboBox.getSelectedItem();
-
-        // Convert numeric data
-        try {
-            targetDistance = Float.parseFloat(targetDistanceField.getText());
-            targetTime = Long.parseLong(targetTimeField.getText());
-        } catch (NumberFormatException ex) {
-            // Handle conversion errors as needed
-            targetDistance = 0;
-            targetTime = 0;
-        }
-
-        // Indicate that data has been processed
-        dataProcessed = true;
-
-        // Close the window after processing data (adjust as needed)
-        dispose();
     }
 
     // Methods to get processed data

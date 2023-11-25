@@ -74,6 +74,7 @@ public class FacebookGateway implements IProviderGateway {
 	@Override
 	public boolean validatePassword(String email, String password) {
 		String message = "validate_password"+DELIMITER+email+DELIMITER+password;
+		System.out.println(message);
 		String response = null;
 		StringTokenizer tokenizer = null;
 			

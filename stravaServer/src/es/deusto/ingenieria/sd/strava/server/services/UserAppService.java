@@ -18,7 +18,9 @@ public class UserAppService {
     }
 
     public void initialize() {
+    	
         // CHALLENGES
+    	
         Challenge challenge1 = new Challenge();
         challenge1.setName("Challenge 1");
         challenge1.setStartDate("2023-01-01");
@@ -60,6 +62,7 @@ public class UserAppService {
         challenge5.setSports("Cycling");
 
         // SESSIONS
+        
         Session session1 = new Session();
         session1.setTitle("Session 1");
         session1.setSports("Running");
@@ -99,37 +102,64 @@ public class UserAppService {
         session5.setStartDate("2023-06-01");
         session5.setStartTime(System.currentTimeMillis());
         session5.setDuration(7200); // 2 hours
+        
+        // USERS
+        
+        user1 = new User();
+        user1.setName("Sabin");
+        user1.setEmail("sabin.luja@opendeusto.es");
+        user1.setBirthDate("2003-01-01");
+        user1.setProvider("Facebook");
+        
+        User user2 = new User();
+        user2.setName("Jane Smith");
+        user2.setEmail("jane.smith@example.com");
+        user2.setBirthDate("1995-05-15");
+        user2.setProvider("Facebook");
+
+        User user3 = new User();
+        user3.setName("Alice Johnson");
+        user3.setEmail("alice.johnson@example.com");
+        user3.setBirthDate("1988-09-20");
+        user3.setProvider("Google");
+
+        User user4 = new User();
+        user4.setName("Bob Anderson");
+        user4.setEmail("bob.anderson@example.com");
+        user4.setBirthDate("1992-12-08");
+        user4.setProvider("Facebook");
+
+        User user5 = new User();
+        user5.setName("Eva Rodriguez");
+        user5.setEmail("eva.rodriguez@example.com");
+        user5.setBirthDate("1997-03-25");
+        user5.setProvider("Google");
 
         // USERS
-        user1 = new User();
         user1.addChallenge(challenge1);
         user1.addChallenge(challenge4);
         user1.addAcceptedChallenge(challenge1);
         user1.addSession(session1);
         user1.addSession(session4);
 
-        User user2 = new User();
         user2.addChallenge(challenge2);
         user2.addChallenge(challenge1);
         user2.addAcceptedChallenge(challenge2);
         user2.addSession(session2);
         user2.addSession(session1);
 
-        User user3 = new User();
         user3.addChallenge(challenge3);
         user3.addChallenge(challenge5);
         user3.addAcceptedChallenge(challenge3);
         user3.addSession(session3);
         user3.addSession(session5);
 
-        User user4 = new User();
         user4.addChallenge(challenge4);
         user4.addChallenge(challenge2);
         user4.addAcceptedChallenge(challenge4);
         user4.addSession(session4);
         user4.addSession(session2);
 
-        User user5 = new User();
         user5.addChallenge(challenge5);
         user5.addChallenge(challenge3);
         user5.addAcceptedChallenge(challenge5);

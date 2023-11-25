@@ -22,7 +22,8 @@ public class FacebookService extends Thread{
 
    
     public FacebookService(Socket socket) {
-    userCredentials.put("jane.smith@example.com", "jane.smith");
+    	userCredentials.put("jane.smith@example.com", "jane.smith");
+    	userCredentials.put("sabin.luja@opendeusto.es", "sabin.luja");
         userCredentials.put("bob.anderson@example.com", "bob.anderson");
         try {
         	this.tcpSocket = socket;
@@ -65,33 +66,31 @@ public class FacebookService extends Thread{
        
         //RequestHandler rh = new RequestHandler();
         String email;
-    String password;
-        switch (action) {
-            case "register_mandatory":
-            email = tokenizer.nextToken();
-            password = tokenizer.nextToken();
-            System.out.println("Email: " + email + "; Password: " + password);
-                r= register(email, password);
-                break;
-            case "validate_password":
-            email = tokenizer.nextToken();
-            password = tokenizer.nextToken();
-            System.out.println("Email: " + email + "; Password: " + password);
-                r=validatePassword(tokenizer.nextToken(), tokenizer.nextToken());
-                break;
-            case "validate_email":
-            email = tokenizer.nextToken();
-            System.out.println("Email: " + email);
-                r=validateEmail(tokenizer.nextToken());
-                break;
-            default:
-                r=false;
-                break;
-        }
+	    String password;
+	    
+	    if (action.equals("register_mandatory")) {
+	        email = tokenizer.nextToken();
+	        password = tokenizer.nextToken();
+	        System.out.println("Email: " + email + "; Password: " + password);
+	        r = register(email, password);
+	        
+	    } else if (action.equals("validate_password")) {
+	        email = tokenizer.nextToken();
+	        password = tokenizer.nextToken();
+	        System.out.println("Email: " + email + "; Password: " + password);
+	        r = validatePassword(email, password);
+	        
+	    } else if (action.equals("validate_email")) {
+	        email = tokenizer.nextToken();
+	        System.out.println("Email: " + email);
+	        r = validateEmail(email);
+	    } else {
+	        r = false;
+	    }
+
         //handleRequest();
         System.out.println("Resultado" + r);
         return r+"";
-   
     }
    
     public boolean register(String email, String password) {

@@ -1,5 +1,6 @@
 package es.deusto.ingenieria.sd.strava.client.gui;
 
+import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -35,8 +36,7 @@ public class Login extends JFrame {
         JLabel passwordLabel = new JLabel("Password:");
         passwordField = new JPasswordField();
         JButton loginButton = new JButton("Login");
-        passwordField.setText("$!9PhNz,");
-        passwordField.setEditable(false);
+        getContentPane().add(loginButton, BorderLayout.SOUTH);
 
         // Button action
         loginButton.addActionListener(new ActionListener() {
@@ -51,7 +51,6 @@ public class Login extends JFrame {
         panel.add(usernameField);
         panel.add(passwordLabel);
         panel.add(passwordField);
-        panel.add(loginButton);
 
         // Add panel to the JFrame
         getContentPane().add(panel);

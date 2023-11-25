@@ -1,8 +1,6 @@
 package es.deusto.ingenieria.sd.strava.client.gui;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.lang.reflect.Method;
@@ -15,15 +13,6 @@ import java.util.concurrent.TimeUnit;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JList;
-import javax.swing.JScrollPane;
-import javax.swing.JTextPane;
-import javax.swing.ListSelectionModel;
-import javax.swing.border.TitledBorder;
-import javax.swing.text.BadLocationException;
-import javax.swing.text.SimpleAttributeSet;
-import javax.swing.text.StyleConstants;
-import javax.swing.text.StyledDocument;
 
 import es.deusto.ingenieria.sd.strava.client.controller.ChallengeController;
 import es.deusto.ingenieria.sd.strava.client.controller.UserController;
@@ -45,133 +34,125 @@ public class ChallengeWindow extends JFrame {
         });
 
         Collections.sort(methodNames);
+        getContentPane().setLayout(null);
 
-        JList<String> endpointsJList = new JList<>(methodNames);
-        endpointsJList.setBorder(new TitledBorder("Endpoints"));
-        endpointsJList.setSelectedIndex(-1);
-        endpointsJList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        endpointsJList.setPreferredSize(new Dimension(200, 200));
-
-        JTextPane endpointResults = new JTextPane();
-        endpointResults.setBackground(new Color(0, 40, 51));
-        endpointResults.setEditable(false);
-        JScrollPane scrollPane = new JScrollPane(endpointResults);
-        scrollPane.setBorder(new TitledBorder("Server responses"));
-
-        SimpleAttributeSet orangeText = new SimpleAttributeSet();
-        StyleConstants.setForeground(orangeText, Color.ORANGE);
-
-        SimpleAttributeSet greenText = new SimpleAttributeSet();
-        StyleConstants.setForeground(greenText, new Color(133, 153, 1));
-
-        SimpleAttributeSet grayText = new SimpleAttributeSet();
-        StyleConstants.setForeground(grayText, new Color(131, 148, 149));
-        StyleConstants.setBold(grayText, true);
         
         JButton back = new JButton("Back");
         back.setBackground(Color.WHITE);
-        back.setBounds(10, 504, 89, 23);
+        back.setBounds(10, 211, 89, 23);
         back.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
             	ChallengeWindow.this.dispose();
             }
         });
+        
         getContentPane().add(back);
+        
+        JButton create = new JButton("Creatre");
+        create.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        	}
+        });
+        create.setBounds(70, 10, 160, 30);
+        create.setBackground(Color.WHITE);
+        
+        getContentPane().add(create);
+        
+        JButton getChallenges = new JButton("Get Challenges");
+        getChallenges.setBounds(70, 50, 160, 30);
+        getChallenges.setBackground(Color.WHITE);
+        
+        getContentPane().add(getChallenges);
 
-        // Update the lister for the JList to use ChallengeController
-        endpointsJList.addListSelectionListener(e -> {
-            String selectedValue = endpointsJList.getSelectedValue();
+        JButton acceptChallenge = new JButton("Accept Challenge");
+        acceptChallenge.setBounds(70, 90, 160, 30);
+        acceptChallenge.setBackground(Color.WHITE);
+        
+        getContentPane().add(acceptChallenge);
+        
+        JButton getAcceptedChallenges = new JButton("Get Accepted Challenge");
+        getAcceptedChallenges.setBounds(70, 130, 160, 30);
+        getAcceptedChallenges.setBackground(Color.WHITE);
+        
+        getContentPane().add(getAcceptedChallenges);
+        
+        JButton getActiveChallenges = new JButton("Get Active Challenge");
+        getActiveChallenges.setBounds(70, 170, 160, 30);
+        getActiveChallenges.setBackground(Color.WHITE);
+        
+        getContentPane().add(getActiveChallenges);
 
-            StyledDocument resultsDoc = endpointResults.getStyledDocument();
-
-            if (selectedValue != null && e.getValueIsAdjusting()) {
-            	try {
-                	Thread esperaDatosThread = new Thread(new Runnable() {
-                        @Override
-                        public void run() {
-		                    try {
-								resultsDoc.insertString(resultsDoc.getLength(), selectedValue + "\n", grayText);
-							} catch (BadLocationException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							}
-		                    Class<? extends ChallengeController> challengeControllerClass = controller.getClass();
-		                    
-		                    if (selectedValue.contains("create")) {
-		                    	CreateChallenge c = new CreateChallenge();
-		                        
-		                        while (!c.dataProcessed()) {
-		                            try {
-		                                TimeUnit.SECONDS.sleep(2);
-		                            } catch (InterruptedException e) {
-		                                e.printStackTrace();
-		                            }
-		                        }
-	                    		String name = c.getName();
-	                    		String startDate = c.getStartDate();
-	                    		String endDate = c.getEndDate();
-	                    		String sport = c.getSport();
-	                    	    float targetDistance = c.getTargetDistance();
-	                    	    long targetTime = c.getTargetTime();
-	                    	    result = controller.createChallenge(uc.getToken()+"", name, startDate, endDate, targetDistance, targetTime, sport);
-		                    
-		                        
-		                    }
-                    	    else if (selectedValue.contains("getChallenges")) {
-                            	result = controller.getChallenges();
-                            }
-                    	   
-                    	    else if (selectedValue.contains("acceptChallenge")) {
-		                        acceptChallenge ac = new acceptChallenge();
-		                        while (!ac.dataProcessed()) {
-		                            try {
-		                                TimeUnit.SECONDS.sleep(2);
-		                            } catch (InterruptedException e) {
-		                                e.printStackTrace();
-		                            }
-		                        }
-
-		                        name = ac.getName();
-		                        result = controller.acceptChallenge(uc.getToken()+"", name);   
-		                    }
-                            else if (selectedValue.contains("getAcceptedChallenges")) {
-                            	result = controller.getAcceptedChallenges(uc.getToken()+"",Calendar.getInstance().getTimeInMillis()+"");
-                            }
-                            else if (selectedValue.contains("getActiveChallenges")) {
-                            	result = controller.getActiveChallenges(uc.getToken()+"",Calendar.getInstance().getTimeInMillis()+"");
-                            }
-		                    
-		                    if (result != null) {
-		                        try {
-									resultsDoc.insertString(resultsDoc.getLength(), result.toString() + "\n\n", greenText);
-								} catch (BadLocationException e) {
-									// TODO Auto-generated catch block
-									e.printStackTrace();
-								}
-		                    }
-                        }
-                	});
-                	esperaDatosThread.start();
-                
-
-                } catch (Exception ex1) {
-                    try {
-                        resultsDoc.insertString(resultsDoc.getLength(),
-                                " - The invocation throws an exception: " + ex1.getMessage() + "\n\n", orangeText);
-                    } catch (Exception ex2) {
-                    }
-                }
-                
+    	create.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+            	Thread createT = new Thread(() -> {
+	            	CreateChallenge c = new CreateChallenge();
+	                
+	                while (!c.dataProcessed()) {
+	                    try {
+	                        TimeUnit.SECONDS.sleep(2);
+	                    } catch (InterruptedException e1) {
+	                        e1.printStackTrace();
+	                    }
+	                }
+	                
+	        		String name = c.getName();
+	        		String startDate = c.getStartDate();
+	        		String endDate = c.getEndDate();
+	        		String sport = c.getSport();
+	        	    float targetDistance = c.getTargetDistance();
+	        	    long targetTime = c.getTargetTime();
+	        	    result = controller.createChallenge(uc.getToken()+"", name, startDate, endDate, targetDistance, targetTime, sport);
+	        	    System.out.println(result);
+        	    
+            	}); createT.start();
             }
         });
-
-        this.setTitle("SpringBoot Challenge Application GUI");
-        this.setLayout(new BorderLayout(5, 5));
+    	
+    	getChallenges.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e2) {
+            	result = controller.getChallenges(); 
+            	System.out.println(result);
+            }
+        });
+	   
+        acceptChallenge.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e3) {
+            	Thread acceptChallengeT = new Thread(() -> {
+	            	acceptChallenge ac = new acceptChallenge();
+	                while (!ac.dataProcessed()) {
+	                    try {
+	                        TimeUnit.SECONDS.sleep(2);
+	                    } catch (InterruptedException e7) {
+	                        e7.printStackTrace();
+	                    }
+	                }
+	
+	                name = ac.getName();
+	                result = controller.acceptChallenge(uc.getToken()+"", name);
+	                System.out.println(result);
+                
+            }); acceptChallengeT.start();
+            }
+        });
+        
+        getAcceptedChallenges.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e4) {
+            	result = controller.getAcceptedChallenges(uc.getToken()+"",Calendar.getInstance().getTimeInMillis()+"");
+            	System.out.println(result);
+            }
+        });
+        
+        getActiveChallenges.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e5) {
+            	result = controller.getActiveChallenges(uc.getToken()+"",Calendar.getInstance().getTimeInMillis()+"");
+            	System.out.println(result);
+            }
+        });
+        	
+        this.setTitle("Challenge");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.add(endpointsJList, BorderLayout.WEST);
-        this.add(scrollPane, BorderLayout.CENTER);
 
-        this.setSize(1024, 600);
+        this.setSize(300, 280);
         this.setLocationRelativeTo(null);
         this.setVisible(false);
     }

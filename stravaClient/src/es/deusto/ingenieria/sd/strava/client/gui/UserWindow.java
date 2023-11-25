@@ -22,27 +22,16 @@ import es.deusto.ingenieria.sd.strava.client.controller.UserController;
 
 public class UserWindow extends JFrame {
     private static final long serialVersionUID = 1L;
-    String provider;
     Object result;
-    String email;
-    String nombre;
-    String birthDate;
-    String password;
+    String birthDate, password, nombre, email, provider;
     float weight;
-    int height;
-    int maxHeart;
-    int restHeart;
-    JButton challenge;
-    JButton session;
-    JButton loginButton;
-    JButton logoutButton;
-    JButton backButton;
-    JButton registerButton;
-    JPanel cards;
+    int maxHeart, restHeart, height;
+    JButton registerButton, backButton, logoutButton, loginButton, session, challenge;
+	JPanel cards;
     private JLabel label;
 
     public UserWindow(UserController controller, ChallengeController chc, SessionController sc) {
-    this.setTitle("SpringBoot Client Application GUI");
+    this.setTitle("Strava");
          this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
          // Create cards panel with CardLayout
@@ -54,29 +43,28 @@ public class UserWindow extends JFrame {
 
          loginButton = new JButton("Login");
          loginButton.setBackground(Color.WHITE);
-         loginButton.setBounds(84, 46, 100, 23);
+         loginButton.setBounds(85, 20, 100, 23);
          loginButton.addActionListener(new ActionListener() {
              @Override
              public void actionPerformed(ActionEvent e) {
-                 handleLogin(controller);
+            	 handleLogin(controller);
              }
          });
          card1.add(loginButton);
 
          registerButton = new JButton("Register");
          registerButton.setBackground(Color.WHITE);
-         registerButton.setBounds(84, 80, 100, 23);
+         registerButton.setBounds(85, 50, 100, 23);
          registerButton.addActionListener(new ActionListener() {
              @Override
              public void actionPerformed(ActionEvent e) {
                  handleRegister(controller);
              }
          });
-         
-         
+    
          logoutButton = new JButton("Logout");
          logoutButton.setBackground(Color.WHITE);
-         logoutButton.setBounds(84, 114, 100, 23);
+         logoutButton.setBounds(85, 80, 100, 23);
          logoutButton.addActionListener(new ActionListener() {
              @Override
              public void actionPerformed(ActionEvent e) {
@@ -84,7 +72,6 @@ public class UserWindow extends JFrame {
              }
          });
          card1.add(logoutButton);
-
          
          getContentPane().setLayout(new GridLayout(0, 1, 0, 0));
          card1.add(registerButton);
@@ -95,12 +82,22 @@ public class UserWindow extends JFrame {
 
          challenge = new JButton("Challenge");
          challenge.setBackground(Color.WHITE);
-         challenge.setBounds(84, 46, 100, 23);
+         challenge.setBounds(85, 20, 100, 23);
+         
+         challenge.addActionListener(new ActionListener() {
+             @Override
+             public void actionPerformed(ActionEvent e) {
+            	 ChallengeWindow cw = new ChallengeWindow(chc, controller);
+            	 cw.setVisible(true);
+             }
+         });
+         
          card2.add(challenge);
+
          
          backButton = new JButton("Back");
          backButton.setBackground(Color.WHITE);
-         backButton.setBounds(84, 114, 100, 23);
+         backButton.setBounds(85, 80, 100, 23);
          backButton.addActionListener(new ActionListener() {
              @Override
              public void actionPerformed(ActionEvent e) {
@@ -111,7 +108,16 @@ public class UserWindow extends JFrame {
 
          session = new JButton("Session");
          session.setBackground(Color.WHITE);
-         session.setBounds(84, 80, 100, 23);
+         session.setBounds(85, 50, 100, 23);
+         
+         session.addActionListener(new ActionListener() {
+             @Override
+             public void actionPerformed(ActionEvent e) {
+            	 SessionWindow sw = new SessionWindow(sc, controller);
+            	 sw.setVisible(true);
+             }
+         });
+         
          card2.add(session);
          cards.setLayout(new CardLayout(0, 0));
 
@@ -123,7 +129,7 @@ public class UserWindow extends JFrame {
 
          getContentPane().add(cards);
 
-         this.setSize(300, 200);
+         this.setSize(300, 160);
          this.setLocationRelativeTo(null);
          this.setVisible(true);
      }
@@ -145,11 +151,9 @@ public class UserWindow extends JFrame {
 	                e.printStackTrace();
 	            }
 	        }
-	        
-	        
-	        
-	        provider=r.getEmail();//CAMBIAR A PROVIDER
-	        password=r.getEmail();//CAMBIAR A CONTRASEÑA
+
+	        provider = r.getProvider();
+	        password = r.getPassword();
 	        email = r.getEmail();
 	        nombre = r.getNombre();
 	        birthDate = r.getBirthDate();
@@ -158,11 +162,7 @@ public class UserWindow extends JFrame {
 	        maxHeart = r.getMaxHeart();
 	        restHeart = r.getRestHeart();
 	        result = controller.register(email, nombre, birthDate,password,provider, weight, height, maxHeart, restHeart);
-	        
-	        if (result != null && result.equals(true)) {
-	            handleCard("card2");
 
-	        }
     	}); waitDataRegister.start();
     }
 
@@ -179,16 +179,14 @@ public class UserWindow extends JFrame {
 			email = l.getUsername();
 			password = l.getPassword();
 			result = controller.login(email, password);
-			
+						
 			if (result != null && result.equals(true)) {
-				handleCard("Card2");
+				handleCard("card2");
 			}
 	    }); waitDataLogin.start();
     }
     
-    
     private void handleLogout(UserController controller) {
         controller.logout();
-
     }
 }
