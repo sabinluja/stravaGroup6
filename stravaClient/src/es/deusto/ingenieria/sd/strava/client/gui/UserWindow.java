@@ -59,8 +59,7 @@ public class UserWindow extends JFrame {
              @Override
              public void actionPerformed(ActionEvent e) {
                  //handleLogin(controller);
-            	 CardLayout cardLayout = (CardLayout) cards.getLayout();
- 	             cardLayout.show(cards, "Card2");
+            	 handleCard("card2");
              }
          });
          card1.add(loginButton);
@@ -98,16 +97,17 @@ public class UserWindow extends JFrame {
          challenge = new JButton("Challenge");
          challenge.setBackground(Color.WHITE);
          challenge.setBounds(84, 46, 100, 23);
+         challenge.setEnabled(false);
          card2.add(challenge);
          
          backButton = new JButton("Back");
          backButton.setBackground(Color.WHITE);
          backButton.setBounds(84, 114, 100, 23);
+         backButton.setEnabled(false);
          backButton.addActionListener(new ActionListener() {
              @Override
              public void actionPerformed(ActionEvent e) {
-            	CardLayout cardLayout = (CardLayout) cards.getLayout();
- 	            cardLayout.show(cards, "Card1");
+            	 handleCard("card1");
              }
          });
          card2.add(backButton);
@@ -115,6 +115,7 @@ public class UserWindow extends JFrame {
          session = new JButton("Session");
          session.setBackground(Color.WHITE);
          session.setBounds(84, 80, 100, 23);
+         session.setEnabled(false);
          card2.add(session);
          cards.setLayout(new CardLayout(0, 0));
 
@@ -133,10 +134,27 @@ public class UserWindow extends JFrame {
      }
 
 
-    private void handleButtonPress(String buttonText) {
-        // Handle button press based on the buttonText
-        System.out.println("Button pressed: " + buttonText);
+    private void handleCard(String card) {
+        CardLayout cardLayout = (CardLayout) cards.getLayout();
+        cardLayout.show(cards, card);
+
+        if (card.equals("card1")) { // Si es la tarjeta con los botones de login y registro
+            // Habilitar o deshabilitar botones según sea necesario
+            logoutButton.setEnabled(false);
+            challenge.setEnabled(false);
+            session.setEnabled(false);
+            loginButton.setEnabled(true);
+            registerButton.setEnabled(true);
+        } else if (card.equals("card2")) { // Si es la tarjeta con los botones de Challenge y Session
+            // Habilitar o deshabilitar botones según sea necesario
+            logoutButton.setEnabled(true);
+            challenge.setEnabled(true);
+            session.setEnabled(true);
+            loginButton.setEnabled(false);
+            registerButton.setEnabled(false);
+        }
     }
+
 
     private void handleRegister(UserController controller) {
     	Thread waitDataRegister = new Thread(() -> {
