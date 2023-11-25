@@ -24,7 +24,7 @@
     </target>
 
 	<target name="server" depends="build" description="Runs the Server">
-		<java classname="es.deusto.ingenieria.sd.strava.FacebookExternalService" classpathref="full.classpath" fork="true">
+		<java classname="es.deusto.ingenieria.sd.strava.FacebookExternalService.FacebookServer" classpathref="full.classpath" fork="true">
 	 		<arg value="${server.port}"/> 
         </java>
     </target>

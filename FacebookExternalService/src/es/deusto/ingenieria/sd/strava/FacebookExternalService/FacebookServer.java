@@ -5,27 +5,28 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 public class FacebookServer {
-
-    private int port;
-
-    public FacebookServer(int port) {
-        this.port = port;
-    }
-
-    public void startServer() {
-        try (ServerSocket serverSocket = new ServerSocket(port)) {
-            System.out.println("Facebook Server started on port " + port);
-
-            while (true) {
-                Socket socket = serverSocket.accept();
-                System.out.println("Client connected: " + socket.getInetAddress().getHostAddress());
-
-                // Delegate handling to a handler or controller
-                RequestHandler handler = new RequestHandler(socket);
-                handler.handleRequest();
-            }
-        } catch (IOException e) {
-            System.err.println("Error starting the server: " + e.getMessage());
-        }
-    }
+	
+	private static int numClients = 0;
+	public static void main(String args[]) {
+		if (args.length < 1) {
+			System.err.println(" # Usage: TranslationServer [PORT]");
+			System.exit(1);
+		}
+		
+		//args[1] = Server socket port
+		int serverPort = Integer.parseInt(args[0]);
+		
+		try (ServerSocket tcpServerSocket = new ServerSocket(serverPort);) {
+			System.out.println(" - FacebookServer: Waiting for connections '" + tcpServerSocket.getInetAddress().getHostAddress() + ":" + tcpServerSocket.getLocalPort() + "' ...");
+			
+			while (true) {
+				new FacebookService(tcpServerSocket.accept());
+				System.out.println(" - FacebookServer: New client connection accepted. Client number: " + ++numClients);
+			}
+		} catch (IOException e) {
+			System.err.println("# FacebookServer: IO error:" + e.getMessage());
+		}
+	}
 }
+
+
