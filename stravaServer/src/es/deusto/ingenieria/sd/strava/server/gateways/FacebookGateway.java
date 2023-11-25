@@ -53,7 +53,6 @@ public class FacebookGateway implements IProviderGateway {
 			//Read response (one String) from the server
 			response = in.readUTF();			
 			System.out.println(" - Getting response from '" + socket.getInetAddress().getHostAddress() + ":" + socket.getPort() + "' -> '" + response + "'");
-			tokenizer = new StringTokenizer(response, DELIMITER);
 
 		} catch (UnknownHostException e) {
 			System.err.println("# Trans. SocketClient: Socket error: " + e.getMessage());	
@@ -64,7 +63,7 @@ public class FacebookGateway implements IProviderGateway {
 		}
 		//return translation;
 		
-		if (tokenizer.nextToken().equals("OK")) {
+		if (response.equals("true")) {
 			return true;
 		} else {
 			return false;
@@ -91,8 +90,7 @@ public class FacebookGateway implements IProviderGateway {
 			//Read response (one String) from the server
 			response = in.readUTF();			
 			System.out.println(" - Getting response from '" + socket.getInetAddress().getHostAddress() + ":" + socket.getPort() + "' -> '" + response + "'");
-			tokenizer = new StringTokenizer(response, DELIMITER);
-
+			
 		} catch (UnknownHostException e) {
 			System.err.println("# Trans. SocketClient: Socket error: " + e.getMessage());	
 		} catch (EOFException e) {
@@ -102,7 +100,7 @@ public class FacebookGateway implements IProviderGateway {
 		}
 		//return translation;
 		
-		if (tokenizer.nextToken().equals("OK")) {
+		if (response.equals("true")) {
 			return true;
 		} else {
 			return false;
@@ -128,8 +126,7 @@ public class FacebookGateway implements IProviderGateway {
 			//Read response (one String) from the server
 			response = in.readUTF();			
 			System.out.println(" - Getting response from '" + socket.getInetAddress().getHostAddress() + ":" + socket.getPort() + "' -> '" + response + "'");
-			tokenizer = new StringTokenizer(response, DELIMITER);
-
+			
 		} catch (UnknownHostException e) {
 			System.err.println("# Trans. SocketClient: Socket error: " + e.getMessage());	
 		} catch (EOFException e) {
@@ -139,7 +136,7 @@ public class FacebookGateway implements IProviderGateway {
 		}
 		//return translation;
 		
-		if (tokenizer.nextToken().equals("OK")) {
+		if (response.equals("true")) {
 			return true;
 		} else {
 			return false;

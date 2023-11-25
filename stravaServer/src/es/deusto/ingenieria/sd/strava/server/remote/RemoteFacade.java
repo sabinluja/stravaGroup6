@@ -104,29 +104,16 @@ public class RemoteFacade extends UnicastRemoteObject implements IRemoteFacade {
 		}
     }
     
-    public boolean registerGoogle(String email, String name, String birthDate) {
+    public boolean register(String email, String name, String birthDate, String password, String provider) {
         // Implementation based on UserAppService 
     	
-        return userService.registerGoogle(email, name, birthDate);
+        return userService.register(email, name, birthDate, password, provider);
     }
     
-    public boolean registerFacebook(String email, String name, String birthDate) {
-        // Implementation based on UserAppService
-    	
-        return userService.registerFacebook(email, name, birthDate);
-    }
-    
-    public boolean registerGoogle(String email, String name, String birthDate,
+    public boolean register(String email, String name, String birthDate, String password, String provider,
                                   float weight, int height, int maxHeartRate, int restHeartRate) {
         // Implementation based on UserAppService
-        return userService.registerGoogle(email, name, birthDate, weight, height, maxHeartRate, restHeartRate);
-    }
-    
-    public boolean registerFacebook(String email, String name, String birthDate,
-                                    float weight, int height, int maxHeartRate, int restHeartRate) {
-        // Implementation based on UserAppService
-    	
-        return userService.registerFacebook(email, name, birthDate, weight, height, maxHeartRate, restHeartRate);
+        return userService.register(email, name, birthDate, password, provider, weight, height, maxHeartRate, restHeartRate);
     }
     
     public boolean createSession(String token, String title, String sport, float distance,

@@ -112,26 +112,31 @@ public class UserAppService {
         user1.setName("Sabin");
         user1.setEmail("sabin.luja@opendeusto.es");
         user1.setBirthDate("2003-01-01");
+        user1.setProvider("Google");
 
         User user2 = new User();
         user2.setName("Jane Smith");
         user2.setEmail("jane.smith@example.com");
         user2.setBirthDate("1995-05-15");
+        user2.setProvider("Facebook");
 	
         User user3 = new User();
         user3.setName("Alice Johnson");
         user3.setEmail("alice.johnson@example.com");
         user3.setBirthDate("1988-09-20");
+        user3.setProvider("Google");
 
         User user4 = new User();
         user4.setName("Bob Anderson");
         user4.setEmail("bob.anderson@example.com");
         user4.setBirthDate("1992-12-08");
+        user4.setProvider("Facebook");
 
         User user5 = new User();
         user5.setName("Eva Rodriguez");
         user5.setEmail("eva.rodriguez@example.com");
         user5.setBirthDate("1997-03-25");
+        user5.setProvider("Google");
 		
 		user1.addChallenge(challenge1);
 		user1.addChallenge(challenge4);
@@ -175,45 +180,42 @@ public class UserAppService {
 	
 	// Mandatory arguments for registration
 	
-	public boolean registerGoogle(String email, String name, String birthDate) {
+	public boolean register(String email, String name, String birthDate, String password, String provider) {
 		try {
-			User registerGoogleMandatory = new User(name, email, birthDate);
-			registeredUsers.add(registerGoogleMandatory);
-			//IProviderGateway provider = GatewayFactory.getInstance().createGateway("Google");
-			//provider.validateEmail(email);
-			//provider.register(email, password);
-			return true;
-	    } catch (Exception e) {e.printStackTrace(); return false;}
-	}
-	
-	public boolean registerFacebook(String email, String name, String birthDate) {
-		try {
-			User registerGoogleMandatory = new User(name, email, birthDate);
-			registeredUsers.add(registerGoogleMandatory);
+			User registerGoogleMandatory = new User(name, email, birthDate, provider);
 			
-			return true;
+			IProviderGateway externalService = GatewayFactory.getInstance().createGateway(provider);
+			boolean emailExists = externalService.validateEmail(email);
+			boolean registration = externalService.register(email, password);
+			if (!emailExists && registration) {
+				registeredUsers.add(registerGoogleMandatory);
+				return true;
+			} else {
+				return false;
+			}
+			
 	    } catch (Exception e) {e.printStackTrace(); return false;}
 	}
 	
 	// Mandatory + optional arguments for registration
 	
-	public boolean registerGoogle(String email, String name, String birthDate, float weight, int height, int maxHeartRate, int restHeartRate) {
+	public boolean register(String email, String name, String birthDate, String password, String provider, float weight, int height, int maxHeartRate, int restHeartRate) {
 		try {
-			User registerGoogleMandatory = new User(name, email, birthDate, weight, height, maxHeartRate, restHeartRate);
-			registeredUsers.add(registerGoogleMandatory);
+			User registerGoogleMandatory = new User(name, email, birthDate, weight, height, maxHeartRate, restHeartRate, provider);
 			
-			return true;
+			IProviderGateway externalService = GatewayFactory.getInstance().createGateway(provider);
+			boolean emailExists = externalService.validateEmail(email);
+			boolean registration = externalService.register(email, password);
+			if (!emailExists && registration) {
+				registeredUsers.add(registerGoogleMandatory);
+				return true;
+			} else {
+				return false;
+			}
+			
 	    } catch (Exception e) {e.printStackTrace(); return false;}
 	}
 	
-	public boolean registerFacebook(String email, String name, String birthDate, float weight, int height, int maxHeartRate, int restHeartRate) {
-		try {
-			User registerGoogleMandatory = new User(name, email, birthDate, weight, height, maxHeartRate, restHeartRate);
-			registeredUsers.add(registerGoogleMandatory);
-			
-			return true;
-	    } catch (Exception e) {e.printStackTrace(); return false;}
-	}
 	
 	public User login(String email, String password) {
 		
@@ -229,12 +231,18 @@ public class UserAppService {
 		        user.setSessionList(u.getSessionList());
 		        user.setAcceptedChallengeList(u.getAcceptedChallengeList());
 		        user.setChallengeList(u.getChallengeList());
-				String hashPass = org.apache.commons.codec.digest.DigestUtils.sha1Hex("$!9PhNz,");	
-				user.setPassword(hashPass);
+		        user.setProvider(u.getProvider());
+		        //user.setPassword(u.getPassword());
+				//String hashPass = org.apache.commons.codec.digest.DigestUtils.sha1Hex("$!9PhNz,");	
+				//user.setPassword(hashPass);
 			}
 		}
 		
-		if (user.getEmail().equals(email) && user.checkPassword(org.apache.commons.codec.digest.DigestUtils.sha1Hex(password))) {		
+		IProviderGateway externalService = GatewayFactory.getInstance().createGateway(user.getProvider());
+		boolean validatePassword = externalService.validatePassword(email, password);
+		
+		//if (user.getEmail().equals(email) && user.checkPassword(org.apache.commons.codec.digest.DigestUtils.sha1Hex(password))) {		
+		if (user.getEmail().equals(email) && validatePassword) {	
 			return user;
 		} else {
 			return null;
