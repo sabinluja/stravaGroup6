@@ -136,7 +136,7 @@ public class UserWindow extends JFrame {
 
     private void handleCard(String card) {
         CardLayout cardLayout = (CardLayout) cards.getLayout();
-        cardLayout.show(cards, card);
+        cardLayout.show(cards, "name_877759035848900");
 
         if (card.equals("card1")) { // Si es la tarjeta con los botones de login y registro
             // Habilitar o deshabilitar botones según sea necesario
