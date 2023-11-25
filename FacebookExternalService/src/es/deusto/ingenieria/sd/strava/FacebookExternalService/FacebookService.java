@@ -1,19 +1,22 @@
 package es.deusto.ingenieria.sd.strava.FacebookExternalService;
 
+import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.EOFException;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.Socket;
 import java.util.HashMap;
 import java.util.StringTokenizer;
 
-public class FacebookService extends Thread{
+import es.deusto.ingenieria.sd.strava.server.gateways.IProviderGateway;
+
+public class FacebookService extends Thread implements IProviderGateway{
 	private DataInputStream in;
 	private DataOutputStream out;
 	private Socket tcpSocket;
     private static final String DELIMITER = "#";
-    private RequestHandler rh = new RequestHandler();
     private static HashMap<String, String> userCredentials = new HashMap<>();
 
 
@@ -60,7 +63,7 @@ public class FacebookService extends Thread{
         //RequestHandler rh = new RequestHandler();
         switch (action) {
             case "register_mandatory":
-                r= registerUser(tokenizer.nextToken(), tokenizer.nextToken());
+                r= register(tokenizer.nextToken(), tokenizer.nextToken());
             case "validate_password":
                 r=validatePassword(tokenizer.nextToken(), tokenizer.nextToken());
             case "validate_email":
@@ -68,11 +71,11 @@ public class FacebookService extends Thread{
             default:
                 r=false;
         }
-        rh.handleRequest(this.tcpSocket);
+        handleRequest();
         return r.toString();
     }
     
-    public Boolean registerUser(String email, String password) {
+    public boolean register(String email, String password) {
         if (!userCredentials.containsKey(email)) {
             userCredentials.put(email, password);
             return true;
@@ -80,7 +83,7 @@ public class FacebookService extends Thread{
         return false;
     }
 
-    public Boolean validatePassword(String email, String password) {
+    public boolean validatePassword(String email, String password) {
         if (userCredentials.containsKey(email)) {
             String storedPassword = userCredentials.get(email);
             if (password.equals(storedPassword)) {
@@ -90,11 +93,28 @@ public class FacebookService extends Thread{
         return false;
     }
 
-    public Boolean validateEmail(String email) {
+    public boolean validateEmail(String email) {
         if (userCredentials.containsKey(email)) {
             return false;
         }
         return true;
+    }
+    
+    
+    public void handleRequest() {
+
+        try {
+            BufferedReader in = new BufferedReader(new InputStreamReader(tcpSocket.getInputStream()));
+
+            String request = in.readLine(); // Read input from client
+
+            System.out.println("Received request from client: " + request);
+
+            in.close(); // Close the input stream
+        } catch (IOException e) {
+            System.err.println("Error handling client request: " + e.getMessage());
+        }
+                
     }
 
     
