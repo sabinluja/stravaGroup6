@@ -11,28 +11,20 @@ public class RequestHandler {
 
     private static HashMap<String, String> userCredentials = new HashMap<>();
 
-    public String handleRequest(Socket socket,String response) {
-    	
+    public void handleRequest(Socket socket) {
+
         try {
             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
             String request = in.readLine(); // Read input from client
 
             System.out.println("Received request from client: " + request);
-            
-
-            // Convert boolean to string representation
-            String booleanAsString = String.valueOf(response);
-
 
             in.close(); // Close the input stream
-            return booleanAsString;
         } catch (IOException e) {
             System.err.println("Error handling client request: " + e.getMessage());
         }
-        
-        return "NULL";
-        
+                
     }
     
     

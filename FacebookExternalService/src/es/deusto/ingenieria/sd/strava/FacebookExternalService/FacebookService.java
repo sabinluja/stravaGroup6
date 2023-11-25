@@ -47,7 +47,7 @@ public class FacebookService extends Thread{
     
     
     public String processRequest(String request) {
-    	String r,response;
+    	String r;
         StringTokenizer tokenizer = new StringTokenizer(request, DELIMITER);
         String action = tokenizer.nextToken();
         
@@ -62,8 +62,8 @@ public class FacebookService extends Thread{
             default:
                 r="false";
         }
-        response =rh.handleRequest(this.tcpSocket,r);
-        return response;
+        rh.handleRequest(this.tcpSocket);
+        return r;
     }
 
     
