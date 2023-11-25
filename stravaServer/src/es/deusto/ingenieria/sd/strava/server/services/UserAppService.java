@@ -7,7 +7,7 @@ import es.deusto.ingenieria.sd.strava.server.data.domain.Challenge;
 import es.deusto.ingenieria.sd.strava.server.data.domain.Session;
 import es.deusto.ingenieria.sd.strava.server.data.domain.User;
 import es.deusto.ingenieria.sd.strava.server.gateways.GatewayFactory;
-import es.deusto.ingenieria.sd.strava.server.gateways.IProviderGateway;
+import es.deusto.ingenieria.sd.strava.server.gateways.IProviderGateway; 
 
 public class UserAppService {
 	
