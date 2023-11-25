@@ -97,13 +97,11 @@ public class UserWindow extends JFrame {
          challenge = new JButton("Challenge");
          challenge.setBackground(Color.WHITE);
          challenge.setBounds(84, 46, 100, 23);
-         challenge.setEnabled(false);
          card2.add(challenge);
          
          backButton = new JButton("Back");
          backButton.setBackground(Color.WHITE);
          backButton.setBounds(84, 114, 100, 23);
-         backButton.setEnabled(false);
          backButton.addActionListener(new ActionListener() {
              @Override
              public void actionPerformed(ActionEvent e) {
@@ -115,16 +113,15 @@ public class UserWindow extends JFrame {
          session = new JButton("Session");
          session.setBackground(Color.WHITE);
          session.setBounds(84, 80, 100, 23);
-         session.setEnabled(false);
          card2.add(session);
          cards.setLayout(new CardLayout(0, 0));
 
          // Add cards to the CardLayout
-         cards.add(card1, "name_877758968441800");
+         cards.add(card1, "card1");
          
          label = new JLabel("");
          cards.add(label, "name_877759002109600");
-         cards.add(card2, "name_877759035848900");
+         cards.add(card2, "card2");
 
          getContentPane().add(cards);
 
@@ -136,18 +133,18 @@ public class UserWindow extends JFrame {
 
     private void handleCard(String card) {
         CardLayout cardLayout = (CardLayout) cards.getLayout();
-        cardLayout.show(cards, "name_877759035848900");
+        cardLayout.show(cards, card);
 
-        if (card.equals("card1")) { // Si es la tarjeta con los botones de login y registro
+        if (card.equals("card12")) { // Si es la tarjeta con los botones de login y registro
             // Habilitar o deshabilitar botones según sea necesario
             logoutButton.setEnabled(false);
             challenge.setEnabled(false);
             session.setEnabled(false);
             loginButton.setEnabled(true);
             registerButton.setEnabled(true);
-        } else if (card.equals("card2")) { // Si es la tarjeta con los botones de Challenge y Session
+        } else if (card.equals("card21")) { // Si es la tarjeta con los botones de Challenge y Session
             // Habilitar o deshabilitar botones según sea necesario
-            logoutButton.setEnabled(true);
+            backButton.setEnabled(true);
             challenge.setEnabled(true);
             session.setEnabled(true);
             loginButton.setEnabled(false);
