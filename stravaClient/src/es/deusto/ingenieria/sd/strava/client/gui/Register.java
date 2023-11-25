@@ -10,46 +10,51 @@ public class Register extends JFrame {
     private String email, nombre, birthDate;
     private float weight;
     private int height, maxHeart, restHeart;
+    private JTextField contrasenyaField;
     
     public Register() {
         // Configurar el JFrame
-        setTitle("Datos Personales");
+        setTitle("Register");
         setSize(400, 300);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
         // Crear el JPanel
         JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(8, 2));
+        panel.setLayout(new GridLayout(10, 2));
 
         // Componentes de la interfaz gráfica
         JLabel emailLabel = new JLabel("Email:");
         emailField = new JTextField();
-        JLabel nombreLabel = new JLabel("Nombre:");
+        JLabel passLabel = new JLabel("Password: ");
+        contrasenyaField = new JTextField();
+        JLabel nombreLabel = new JLabel("Name: ");
         nombreField = new JTextField();
-        JLabel birthDateLabel = new JLabel("Fecha de Nacimiento:");
+        JLabel birthDateLabel = new JLabel("Birthdate:");
         birthDateField = new JTextField();
-        JLabel weightLabel = new JLabel("Peso:");
+        JLabel weightLabel = new JLabel("Weight:");
         weightField = new JTextField();
-        JLabel heightLabel = new JLabel("Altura:");
+        JLabel heightLabel = new JLabel("Height:");
         heightField = new JTextField();
-        JLabel maxHeartLabel = new JLabel("Frecuencia Cardíaca Máxima:");
+        JLabel maxHeartLabel = new JLabel("Maximum heartrate freq:");
         maxHeartField = new JTextField();
-        JLabel restHeartLabel = new JLabel("Frecuencia Cardíaca en Reposo:");
+        JLabel restHeartLabel = new JLabel("Maximum heartrate freq (rest): ");
         restHeartField = new JTextField();
+        
+        JComboBox<String> providerCmbx = new JComboBox<String>();
+        providerCmbx.addItem("Google");
+        providerCmbx.addItem("Facebook");
+        providerCmbx.setSelectedIndex(0);
 
-        // Botón para procesar los datos
-        JButton procesarButton = new JButton("Procesar Datos");
-        procesarButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                procesarDatos();
-            }
-        });
+        JLabel providerLabel = new JLabel("Provider");
 
         // Agregar componentes al panel
+        panel.add(providerLabel);
+        panel.add(providerCmbx);
         panel.add(emailLabel);
         panel.add(emailField);
+        panel.add(passLabel);
+        panel.add(contrasenyaField);
         panel.add(nombreLabel);
         panel.add(nombreField);
         panel.add(birthDateLabel);
@@ -62,31 +67,33 @@ public class Register extends JFrame {
         panel.add(maxHeartField);
         panel.add(restHeartLabel);
         panel.add(restHeartField);
-        panel.add(procesarButton);
 
         // Agregar panel al JFrame
-        add(panel);
+        getContentPane().add(panel);
+        
+        JButton processrButton = new JButton("Procesar Datos");
+        getContentPane().add(processrButton, BorderLayout.SOUTH);
+        
+        processrButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                processData();
+            }
+        });
 
         // Hacer visible el JFrame
         setVisible(true);
     }
+    
+    private void processData() {
+        // Get data from text fields
+        // username = usernameField.getText();
+        // password = new String(passwordField.getPassword());
 
-    private void procesarDatos() {
-        // Obtener datos de los campos de texto
-        email = emailField.getText();
-        nombre = nombreField.getText();
-        birthDate = birthDateField.getText();
+        // Indicate that data has been processed
+        // dataProcessed = true;
 
-        // Convertir datos opcionales
-        weight = parseTextField(weightField.getText());
-        height = parseTextField(heightField.getText());
-        maxHeart = parseTextField(maxHeartField.getText());
-        restHeart = parseTextField(restHeartField.getText());
-
-        // Indicar que los datos han sido procesados
-        datosProcesados = true;
-
-        // Cierra la ventana después de procesar los datos (puedes ajustar esto según tus necesidades)
+        // Close the window after processing data (adjust as needed)
         dispose();
     }
 

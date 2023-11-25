@@ -40,7 +40,7 @@ public class UserWindow extends JFrame {
     private JLabel label;
 
     public UserWindow(UserController controller, ChallengeController chc, SessionController sc) {
-    this.setTitle("SpringBoot Client Application GUI");
+    this.setTitle("Strava");
          this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
          // Create cards panel with CardLayout
@@ -82,6 +82,8 @@ public class UserWindow extends JFrame {
              }
          });
          
+         
+         
          getContentPane().setLayout(new GridLayout(0, 1, 0, 0));
          card1.add(registerButton);
 
@@ -91,13 +93,13 @@ public class UserWindow extends JFrame {
 
          challenge = new JButton("Challenge");
          challenge.setBackground(Color.WHITE);
-         challenge.setBounds(10, 20, 100, 23);
+         challenge.setBounds(84, 46, 100, 23);
          challenge.setEnabled(false);
          card2.add(challenge);
 
          session = new JButton("Session");
          session.setBackground(Color.WHITE);
-         session.setBounds(10, 54, 100, 23);
+         session.setBounds(84, 80, 100, 23);
          session.setEnabled(false);
          card2.add(session);
          cards.setLayout(new CardLayout(0, 0));
