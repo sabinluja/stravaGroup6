@@ -58,7 +58,9 @@ public class UserWindow extends JFrame {
          loginButton.addActionListener(new ActionListener() {
              @Override
              public void actionPerformed(ActionEvent e) {
-                 handleLogin(controller);
+                 //handleLogin(controller);
+            	 CardLayout cardLayout = (CardLayout) cards.getLayout();
+ 	             cardLayout.show(cards, "Card2");
              }
          });
          card1.add(loginButton);
