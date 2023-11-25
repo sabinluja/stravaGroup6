@@ -22,6 +22,7 @@ import es.deusto.ingenieria.sd.strava.client.controller.UserController;
 
 public class UserWindow extends JFrame {
     private static final long serialVersionUID = 1L;
+    String provider;
     Object result;
     String email;
     String nombre;
@@ -133,6 +134,10 @@ public class UserWindow extends JFrame {
 	            }
 	        }
 	        
+	        
+	        
+	        provider=r.getEmail();//CAMBIAR A PROVIDER
+	        password=r.getEmail();//CAMBIAR A CONTRASEÑA
 	        email = r.getEmail();
 	        nombre = r.getNombre();
 	        birthDate = r.getBirthDate();
@@ -140,7 +145,7 @@ public class UserWindow extends JFrame {
 	        height = r.getHeight();
 	        maxHeart = r.getMaxHeart();
 	        restHeart = r.getRestHeart();
-	        result = controller.registerGoogle(email, nombre, birthDate, weight, height, maxHeart, restHeart);
+	        result = controller.register(email, nombre, birthDate,password,provider, weight, height, maxHeart, restHeart);
 	        
 	        if (result != null && result.equals(true)) {
 	            // Successful registration, switch to the second card
@@ -205,19 +210,15 @@ public class UserWindow extends JFrame {
     
     private void handleLogout(UserController controller) {
         controller.logout();
-        // Handle the logout process
-        // ...
 
-        // Switch back to the first card
         CardLayout cardLayout = (CardLayout) cards.getLayout();
         cardLayout.show(cards, "Card1");
 
-        // Disable Challenge, Session, and Logout buttons
         challenge.setEnabled(false);
         session.setEnabled(false);
         logoutButton.setEnabled(false);
 
-        // Enable Login and Register buttons
+
         loginButton.setEnabled(true);
         registerButton.setEnabled(true);
     }
