@@ -5,6 +5,7 @@ import java.io.DataOutputStream;
 import java.io.EOFException;
 import java.io.IOException;
 import java.net.Socket;
+import java.util.HashMap;
 import java.util.StringTokenizer;
 
 public class FacebookService extends Thread{
@@ -13,9 +14,13 @@ public class FacebookService extends Thread{
 	private Socket tcpSocket;
     private static final String DELIMITER = "#";
     private RequestHandler rh = new RequestHandler();
+    private static HashMap<String, String> userCredentials = new HashMap<>();
+
 
     
     public FacebookService(Socket socket) {
+    	userCredentials.put("jane.smith@example.com", "jane.smith");
+        userCredentials.put("bob.anderson@example.com", "bob.anderson");
 		try {
 			this.tcpSocket = socket;
 		    this.in = new DataInputStream(socket.getInputStream());
@@ -48,23 +53,48 @@ public class FacebookService extends Thread{
     
     
     public String processRequest(String request) {
-    	String r;
+    	Boolean r;
         StringTokenizer tokenizer = new StringTokenizer(request, DELIMITER);
         String action = tokenizer.nextToken();
         
         //RequestHandler rh = new RequestHandler();
         switch (action) {
             case "register_mandatory":
-                r= rh.registerUser(tokenizer.nextToken(), tokenizer.nextToken());
+                r= registerUser(tokenizer.nextToken(), tokenizer.nextToken());
             case "validate_password":
-                r=rh.validatePassword(tokenizer.nextToken(), tokenizer.nextToken());
+                r=validatePassword(tokenizer.nextToken(), tokenizer.nextToken());
             case "validate_email":
-                r=rh.validateEmail(tokenizer.nextToken());
+                r=validateEmail(tokenizer.nextToken());
             default:
-                r="false";
+                r=false;
         }
         rh.handleRequest(this.tcpSocket);
-        return r;
+        return r.toString();
+    }
+    
+    public Boolean registerUser(String email, String password) {
+        if (!userCredentials.containsKey(email)) {
+            userCredentials.put(email, password);
+            return true;
+        }
+        return false;
+    }
+
+    public Boolean validatePassword(String email, String password) {
+        if (userCredentials.containsKey(email)) {
+            String storedPassword = userCredentials.get(email);
+            if (password.equals(storedPassword)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public Boolean validateEmail(String email) {
+        if (userCredentials.containsKey(email)) {
+            return false;
+        }
+        return true;
     }
 
     

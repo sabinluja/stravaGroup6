@@ -9,10 +9,8 @@ import java.util.HashMap;
 
 public class RequestHandler {
 
-    private static HashMap<String, String> userCredentials = new HashMap<>();
-
     public void handleRequest(Socket socket) {
- 
+
         try {
             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
@@ -26,30 +24,5 @@ public class RequestHandler {
         }
                 
     }
-    
-    
-    public String registerUser(String email, String password) {
-        if (!userCredentials.containsKey(email)) {
-            userCredentials.put(email, password);
-            return "true";
-        }
-        return "false";
-    }
-
-    public String validatePassword(String email, String password) {
-        if (userCredentials.containsKey(email)) {
-            String storedPassword = userCredentials.get(email);
-            if (password.equals(storedPassword)) {
-                return "true";
-            }
-        }
-        return "false";
-    }
-
-    public String validateEmail(String email) {
-        if (userCredentials.containsKey(email)) {
-            return "false";
-        }
-        return "true";
-    }
+   
 }
