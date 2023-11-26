@@ -39,9 +39,7 @@ public class FacebookService extends Thread{
     	try {
     		String data = this.in.readUTF();
     		System.out.println("   - FacebookService - Received data from '" + tcpSocket.getInetAddress().getHostAddress() + ":" + tcpSocket.getPort() + "' -> '" + data + "'");
-    		System.out.println("1");
     		data = processRequest(data);
-    		System.out.println("2");
     		this.out.writeUTF(data);
     		System.out.println("   - FacebookService - Sent data to '" + tcpSocket.getInetAddress().getHostAddress() + ":" + tcpSocket.getPort() + "' -> '" + data.toUpperCase() + "'");
     	} catch (EOFException e) {
@@ -89,7 +87,7 @@ public class FacebookService extends Thread{
 	    }
 
         //handleRequest();
-        System.out.println("Resultado" + r);
+        System.out.println("Result: " + r);
         return r+"";
     }
    

@@ -204,7 +204,7 @@ public class UserAppService {
             boolean emailExists = externalService.validateEmail(email);
             boolean registration = externalService.register(email, password);
 
-            if (!emailExists && registration) {
+            if (emailExists && registration) {
                 registeredUsers.add(registerGoogleMandatory);
                 return true;
             } else {
@@ -230,7 +230,8 @@ public class UserAppService {
                 user.setProvider(u.getProvider());
             }
         }
-
+        
+        System.out.println(user.getProvider());
         IProviderGateway externalService = GatewayFactory.getInstance().createGateway(user.getProvider());
         boolean validatePassword = externalService.validatePassword(email, password);
 

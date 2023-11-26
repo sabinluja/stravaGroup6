@@ -143,7 +143,7 @@ public class UserWindow extends JFrame {
     	Thread waitDataRegister = new Thread(() -> {
 	        Register r = new Register();
 	        
-	        while (!r.datosProcesados()) {
+	        while (!r.dataProcessed()) {
 	            try {
 	                TimeUnit.SECONDS.sleep(2);
 	            } catch (InterruptedException e) {
@@ -160,8 +160,9 @@ public class UserWindow extends JFrame {
 	        height = r.getHeight();
 	        maxHeart = r.getMaxHeart();
 	        restHeart = r.getRestHeart();
-	        result = controller.register(email, nombre, birthDate,password,provider, weight, height, maxHeart, restHeart);
-
+	        result = controller.register(email, nombre, birthDate, password, provider, weight, height, maxHeart, restHeart);
+	        
+	        r.setVisible(true);
     	}); waitDataRegister.start();
     }
 

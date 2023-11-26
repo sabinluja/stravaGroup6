@@ -110,7 +110,7 @@ public class FacebookGateway implements IProviderGateway {
 
 	@Override
 	public boolean validateEmail(String email) {
-		String message = "validate_password"+DELIMITER+email;
+		String message = "validate_email"+DELIMITER+email;
 		String response = null;
 		StringTokenizer tokenizer = null;
 			

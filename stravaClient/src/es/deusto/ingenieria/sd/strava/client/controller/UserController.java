@@ -26,7 +26,7 @@ public class UserController {
     public boolean register(String email, String name, String birthDate, String password, String provider,
                                   float weight, int height, int maxHeartRate, int restHeartRate) {
     	try {
-			return ((UserController) this.serviceLocator.getService()).register(email, name, birthDate, password, provider, weight, height, maxHeartRate, restHeartRate);
+			return this.serviceLocator.getService().register(email, name, birthDate, password, provider, weight, height, maxHeartRate, restHeartRate);
 		} catch (Exception e) {
 			System.out.println("# Error registering with google (mandatory + optional arguments): " + e);
 			return false;
@@ -47,9 +47,11 @@ public class UserController {
     public void logout() {
     	try {
 			this.serviceLocator.getService().logout((this.getToken())+"");
+			System.out.println("Result: true");
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			System.out.println("Result: false");
 		}
     }
     
