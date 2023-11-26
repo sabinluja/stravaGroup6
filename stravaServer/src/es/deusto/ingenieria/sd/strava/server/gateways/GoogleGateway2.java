@@ -19,19 +19,20 @@ public class GoogleGateway2 implements IProviderGateway{
 	}
 	
 	public boolean register(String email, String password) {
-		
 		System.out.format("Registerin user: %suser/register/%s/%s ...", BASE_URL, email, password);
-	    HttpClient client = HttpClient.newHttpClient();
+		HttpClient client = HttpClient.newHttpClient();
+		
 	    HttpRequest request = HttpRequest.newBuilder()
 	            .uri(URI.create(BASE_URL + "user/register/" + email + "/" + password))
 	            .build();
-
+	    System.out.println("\n" + request.uri());
 	    try {
 	        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-
+	        System.out.println("Response: " + response.statusCode());
 	        if (response.statusCode() == 200) {                     
 	            return Boolean.parseBoolean(response.body());
 	        } else {
+	        	System.out.println("ERROR");
 	            System.out.format("- Error: %d", response.statusCode());
 	        }
 

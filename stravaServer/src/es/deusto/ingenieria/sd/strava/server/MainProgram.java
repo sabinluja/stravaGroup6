@@ -36,7 +36,7 @@ public class MainProgram {
             }
 
             // 4 y 5
-            IProviderGateway facebookClients = new FacebookGateway(args[4], Integer.parseInt(args[5]));
+            IProviderGateway facebookClients = FacebookGateway.getInstance(args[4], Integer.parseInt(args[5]));
             // IProviderGateway facebookClient = FacebookGateway.getInstance();
 
             //IProviderGateway googleClient = GoogleGateway.getInstance();

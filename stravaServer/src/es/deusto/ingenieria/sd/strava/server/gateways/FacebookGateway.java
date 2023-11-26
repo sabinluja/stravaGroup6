@@ -34,6 +34,14 @@ public class FacebookGateway implements IProviderGateway {
 		return instance;
 	}
 	
+	public static IProviderGateway getInstance(String ip, int port) {
+		if(instance == null) {
+			instance = new FacebookGateway(ip, port);
+		}
+		
+		return instance;
+	}
+	
 	@Override
 	public boolean register(String email, String password) {
 		String message = "register_mandatory"+DELIMITER+email+DELIMITER+password;
