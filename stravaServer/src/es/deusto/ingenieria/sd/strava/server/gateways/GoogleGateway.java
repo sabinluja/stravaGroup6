@@ -1,16 +1,15 @@
 package es.deusto.ingenieria.sd.strava.server.gateways;
 
-import org.springframework.context.annotation.Bean;
-import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
-
 import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-
+import org.springframework.context.annotation.Bean;
+import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 @SpringBootApplication
 @Service
@@ -30,13 +29,29 @@ public class GoogleGateway implements IProviderGateway {
 	
 	// Host and port NOT hard-coded: Defined in application.properties
 	//@Value("${spring.server.url}")
-	private String serverURL = "user-services";
+	private String serverURL = "http://localhost";
 	
 	//@Value("${server.port}")
 	private int serverPort = 8888;
 	
-	private GoogleGateway() {
+	public static void start() {
+		SpringApplication.run(GoogleGateway.class);	
+	}
+	
+	public GoogleGateway() {
 		restTemplate = restTemplate();
+	}
+	
+	@Autowired
+	public void setGateway(GoogleGateway r) {
+		 instance = r;
+	 }
+	public static GoogleGateway getGateway() {
+		return instance;
+	}
+	@Autowired
+	public void setRestTemplate (RestTemplate restTemplate) {
+		this.restTemplate = restTemplate;
 	}
 	
 	public static GoogleGateway getInstance() {
