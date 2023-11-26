@@ -2,28 +2,29 @@
 <classpath>
 	<classpathentry kind="src" output="bin" path="src"/>
 	<classpathentry kind="var" path="JRE_LIB" sourcepath="JRE_SRC"/>
-	<classpathentry kind="lib" path="C:/Users/sabin/OneDrive/Documentos/Universidad/tercero/stravaGroup6Project/stravaServer/lib/commons-codec-1.15.jar"/>
-	<classpathentry kind="con" path="C:/SoftLabs/SD/sd-lab-23-24/stravaWorkspace/stravaServer/bin"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/stravaClient"/>
+	<classpathentry kind="lib" path="C:/Users/sabin/OneDrive/Documentos/Universidad/tercero/stravaGroup6Final/stravaServer/lib/commons-codec-1.15.jar"/>
+	<classpathentry kind="lib" path="C:/Users/sabin/OneDrive/Documentos/Universidad/tercero/stravaGroup6Final/stravaServer/lib/commons-io-2.13.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/sabin/OneDrive/Documentos/Universidad/tercero/stravaGroup6Final/stravaServer/lib/commons-logging-1.2.jar"/>
+	<classpathentry kind="lib" path="C:/Users/sabin/OneDrive/Documentos/Universidad/tercero/stravaGroup6Final/stravaServer/lib/jackson-annotations-2.15.2.jar"/>
+	<classpathentry kind="lib" path="C:/Users/sabin/OneDrive/Documentos/Universidad/tercero/stravaGroup6Final/stravaServer/lib/jackson-core-2.15.2.jar"/>
+	<classpathentry kind="lib" path="C:/Users/sabin/OneDrive/Documentos/Universidad/tercero/stravaGroup6Final/stravaServer/lib/jackson-databind-2.15.2.jar"/>
+	<classpathentry kind="lib" path="C:/Users/sabin/OneDrive/Documentos/Universidad/tercero/stravaGroup6Final/stravaServer/lib/micrometer-commons-1.11.4.jar"/>
+	<classpathentry kind="lib" path="C:/Users/sabin/OneDrive/Documentos/Universidad/tercero/stravaGroup6Final/stravaServer/lib/micrometer-core-1.11.4.jar"/>
+	<classpathentry kind="lib" path="C:/Users/sabin/OneDrive/Documentos/Universidad/tercero/stravaGroup6Final/stravaServer/lib/micrometer-observation-1.11.4.jar"/>
+	<classpathentry kind="lib" path="C:/Users/sabin/OneDrive/Documentos/Universidad/tercero/stravaGroup6Final/stravaServer/lib/slf4j-api-2.0.9.jar"/>
+	<classpathentry kind="lib" path="C:/Users/sabin/OneDrive/Documentos/Universidad/tercero/stravaGroup6Final/stravaServer/lib/slf4j-simple-2.0.9.jar"/>
+	<classpathentry kind="lib" path="C:/Users/sabin/OneDrive/Documentos/Universidad/tercero/stravaGroup6Final/stravaServer/lib/spring-aop-6.0.12.jar"/>
+	<classpathentry kind="lib" path="C:/Users/sabin/OneDrive/Documentos/Universidad/tercero/stravaGroup6Final/stravaServer/lib/spring-beans-6.0.12.jar"/>
+	<classpathentry kind="lib" path="C:/Users/sabin/OneDrive/Documentos/Universidad/tercero/stravaGroup6Final/stravaServer/lib/spring-boot-3.1.4.jar"/>
+	<classpathentry kind="lib" path="C:/Users/sabin/OneDrive/Documentos/Universidad/tercero/stravaGroup6Final/stravaServer/lib/spring-boot-autoconfigure-3.1.4.jar"/>
+	<classpathentry kind="lib" path="C:/Users/sabin/OneDrive/Documentos/Universidad/tercero/stravaGroup6Final/stravaServer/lib/spring-boot-starter-3.1.4.jar"/>
+	<classpathentry kind="lib" path="C:/Users/sabin/OneDrive/Documentos/Universidad/tercero/stravaGroup6Final/stravaServer/lib/spring-context-6.0.11.jar"/>
+	<classpathentry kind="lib" path="C:/Users/sabin/OneDrive/Documentos/Universidad/tercero/stravaGroup6Final/stravaServer/lib/spring-core-6.0.11.jar"/>
+	<classpathentry kind="lib" path="C:/Users/sabin/OneDrive/Documentos/Universidad/tercero/stravaGroup6Final/stravaServer/lib/spring-expression-6.0.11.jar"/>
+	<classpathentry kind="lib" path="C:/Users/sabin/OneDrive/Documentos/Universidad/tercero/stravaGroup6Final/stravaServer/lib/spring-web-6.0.11.jar"/>
+	<classpathentry kind="con" path="C:/Users/sabin/OneDrive/Documentos/Universidad/tercero/stravaGroup6Final/stravaServer/bin"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/FacebookExternalService"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/GoogleExternalService"/>
-	<classpathentry kind="lib" path="lib/commons-io-2.13.0.jar"/>
-	<classpathentry kind="lib" path="lib/commons-logging-1.2.jar"/>
-	<classpathentry kind="lib" path="lib/jackson-annotations-2.15.2.jar"/>
-	<classpathentry kind="lib" path="lib/jackson-core-2.15.2.jar"/>
-	<classpathentry kind="lib" path="lib/jackson-databind-2.15.2.jar"/>
-	<classpathentry kind="lib" path="lib/micrometer-commons-1.11.4.jar"/>
-	<classpathentry kind="lib" path="lib/micrometer-core-1.11.4.jar"/>
-	<classpathentry kind="lib" path="lib/micrometer-observation-1.11.4.jar"/>
-	<classpathentry kind="lib" path="lib/slf4j-api-2.0.9.jar"/>
-	<classpathentry kind="lib" path="lib/slf4j-simple-2.0.9.jar"/>
-	<classpathentry kind="lib" path="lib/spring-aop-6.0.12.jar"/>
-	<classpathentry kind="lib" path="lib/spring-beans-6.0.12.jar"/>
-	<classpathentry kind="lib" path="lib/spring-boot-3.1.4.jar"/>
-	<classpathentry kind="lib" path="lib/spring-boot-autoconfigure-3.1.4.jar"/>
-	<classpathentry kind="lib" path="lib/spring-boot-starter-3.1.4.jar"/>
-	<classpathentry kind="lib" path="lib/spring-context-6.0.11.jar"/>
-	<classpathentry kind="lib" path="lib/spring-core-6.0.11.jar"/>
-	<classpathentry kind="lib" path="lib/spring-expression-6.0.11.jar"/>
-	<classpathentry kind="lib" path="lib/spring-web-6.0.11.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/stravaClient"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

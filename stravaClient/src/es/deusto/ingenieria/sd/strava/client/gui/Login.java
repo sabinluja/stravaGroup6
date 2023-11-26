@@ -35,6 +35,7 @@ public class Login extends JFrame {
         usernameField.setText("sabin.luja@opendeusto.es");
         JLabel passwordLabel = new JLabel("Password:");
         passwordField = new JPasswordField();
+        
         JButton loginButton = new JButton("Login");
         getContentPane().add(loginButton, BorderLayout.SOUTH);
 

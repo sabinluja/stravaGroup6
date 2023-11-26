@@ -1,15 +1,11 @@
 package es.deusto.ingenieria.sd.strava.client;
 
-import java.util.List;
-
-import es.deusto.ingenieria.sd.strava.server.data.dto.UserDTO;
-import es.deusto.ingenieria.sd.strava.server.data.dto.ChallengeDTO;
-import es.deusto.ingenieria.sd.strava.server.data.dto.SessionDTO;
 import es.deusto.ingenieria.sd.strava.client.controller.UserController;
 import es.deusto.ingenieria.sd.strava.client.controller.ChallengeController;
 import es.deusto.ingenieria.sd.strava.client.controller.SessionController;
 import es.deusto.ingenieria.sd.strava.client.gui.UserWindow;
 import es.deusto.ingenieria.sd.strava.client.gui.ChallengeWindow;
+import es.deusto.ingenieria.sd.strava.client.gui.Register;
 import es.deusto.ingenieria.sd.strava.client.gui.SessionWindow;
 import es.deusto.ingenieria.sd.strava.client.remote.ServiceLocator;
 
@@ -32,7 +28,6 @@ public class MainProgram {
 		ChallengeWindow challengeWindow = new ChallengeWindow(challengeController,userController);
 		SessionWindow sessionWindow = new SessionWindow(sessionController,userController);
 		UserWindow userWindow = new UserWindow(userController, challengeController, sessionController);			
-		
 	}
 
 	public ChallengeController getChallengeController() {
