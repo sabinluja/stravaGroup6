@@ -33,7 +33,7 @@ public class CreateSession extends JFrame {
         sportComboBox = new JComboBox<>(sports);
         JLabel distanceLabel = new JLabel("Distance:");
         distanceField = new JTextField();
-        JLabel startDateLabel = new JLabel("Start Date:");
+        JLabel startDateLabel = new JLabel("Start Date (YYYY-MM-DD):");
         startDateField = new JTextField();
         JLabel startTimeLabel = new JLabel("Start Time (in seconds):");
         startTimeField = new JTextField();
@@ -58,10 +58,32 @@ public class CreateSession extends JFrame {
         getContentPane().add(panel);
         
         JButton saveButton = new JButton("Save Data");
+        saveButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                processData();
+            }
+        });
         getContentPane().add(saveButton, BorderLayout.SOUTH);
 
         // Make the JFrame visible
         setVisible(true);
+    }
+    
+    private void processData() {
+        // Get data from text fields and combo box
+    	title = titleField.getText();       
+        startDate = startDateField.getText();
+        sport = (String) sportComboBox.getSelectedItem();       
+        distance = (float) Double.parseDouble(distanceField.getText());
+        startTime = Long.parseLong(startTimeField.getText());      
+        duration = Integer.parseInt(durationField.getText());
+
+        // Indicate that data has been processed
+        dataProcessed = true;
+
+        // Close the window after processing data (adjust as needed)
+        dispose();
     }
 
     // Methods to get processed data

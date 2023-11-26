@@ -34,8 +34,8 @@ public class Register extends JFrame {
         birthDateField = new JTextField();
         JLabel weightLabel = new JLabel("Weight:");
         weightField = new JTextField();
-        // JLabel heightLabel = new JLabel("Height:");
-        // heightField = new JTextField();
+        JLabel heightLabel = new JLabel("Height:");
+        heightField = new JTextField();
         JLabel maxHeartLabel = new JLabel("Maximum heartrate freq:");
         maxHeartField = new JTextField();
         JLabel restHeartLabel = new JLabel("Maximum heartrate freq (rest): ");
@@ -71,8 +71,8 @@ public class Register extends JFrame {
         panel.add(birthDateField);
         panel.add(weightLabel);
         panel.add(weightField);
-        // panel.add(heightLabel);
-        // panel.add(heightField);
+        panel.add(heightLabel);
+        panel.add(heightField);
         panel.add(maxHeartLabel);
         panel.add(maxHeartField);
         panel.add(restHeartLabel);
@@ -95,7 +95,7 @@ public class Register extends JFrame {
 
         // Convertir datos opcionales
         weight = parseTextField(weightField.getText());
-        // height = parseTextField(heightField.getText());
+        height = parseTextField(heightField.getText());
         maxHeart = parseTextField(maxHeartField.getText());
         restHeart = parseTextField(restHeartField.getText());
 

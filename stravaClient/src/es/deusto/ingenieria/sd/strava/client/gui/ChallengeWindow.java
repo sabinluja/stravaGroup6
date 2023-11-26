@@ -70,13 +70,13 @@ public class ChallengeWindow extends JFrame {
         
         getContentPane().add(acceptChallenge);
         
-        JButton getAcceptedChallenges = new JButton("Get Accepted Challenge");
+        JButton getAcceptedChallenges = new JButton("Get Accepted Challenges");
         getAcceptedChallenges.setBounds(60, 130, 180, 30);
         getAcceptedChallenges.setBackground(Color.WHITE);
         
         getContentPane().add(getAcceptedChallenges);
         
-        JButton getActiveChallenges = new JButton("Get Active Challenge");
+        JButton getActiveChallenges = new JButton("Get Active Challenges");
         getActiveChallenges.setBounds(60, 170, 180, 30);
         getActiveChallenges.setBackground(Color.WHITE);
         

@@ -59,10 +59,32 @@ public class CreateChallenge extends JFrame {
         getContentPane().add(panel);
         
         JButton saveButton = new JButton("Save Data");
+        saveButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                processData();
+            }
+        });
         getContentPane().add(saveButton, BorderLayout.SOUTH);
 
         // Make the JFrame visible
         setVisible(true);
+    }
+    
+    private void processData() {
+        // Get data from text fields and combo box
+        name = nameField.getText();       
+        startDate = startDateField.getText();
+        endDate = endDateField.getText();       
+        targetDistance = (float) Double.parseDouble(targetDistanceField.getText());
+        targetTime = Long.parseLong(targetTimeField.getText());      
+        sport = (String) sportComboBox.getSelectedItem();
+
+        // Indicate that data has been processed
+        dataProcessed = true;
+
+        // Close the window after processing data (adjust as needed)
+        dispose();
     }
 
     // Methods to get processed data

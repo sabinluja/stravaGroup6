@@ -134,16 +134,15 @@ public class UserWindow extends JFrame {
          this.setVisible(true);
      }
 
-
     private void handleCard(String card) {
         CardLayout cardLayout = (CardLayout) cards.getLayout();
         cardLayout.show(cards, card);
     }
 
-
     private void handleRegister(UserController controller) {
     	Thread waitDataRegister = new Thread(() -> {
 	        Register r = new Register();
+	        
 	        while (!r.datosProcesados()) {
 	            try {
 	                TimeUnit.SECONDS.sleep(2);
