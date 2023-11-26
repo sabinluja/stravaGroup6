@@ -4,12 +4,15 @@ import java.rmi.Naming;
 import java.rmi.Remote;
 
 import es.deusto.ingenieria.sd.strava.server.gateways.FacebookGateway;
+import es.deusto.ingenieria.sd.strava.server.gateways.GoogleGateway;
 import es.deusto.ingenieria.sd.strava.server.gateways.IProviderGateway;
 import es.deusto.ingenieria.sd.strava.server.remote.IRemoteFacade;
 import es.deusto.ingenieria.sd.strava.server.remote.RemoteFacade;
 
+
 public class MainProgram {
 
+	
 	public static void main(String[] args) {	
 
 
@@ -29,12 +32,18 @@ public class MainProgram {
 				System.exit(1);
 			}
 			
-			IProviderGateway facebookClient = FacebookGateway.getInstance();
+			// 4 y 5
+			IProviderGateway facebookClients = new FacebookGateway(args[4], Integer.parseInt(args[5]));
+			// IProviderGateway facebookClient = FacebookGateway.getInstance();
+			
+			IProviderGateway googleClient = GoogleGateway.getInstance();
+			googleClient.register("hola", "hola");
 			
 		} catch (Exception ex) {
 			System.err.println(" # Strava Server Exception: " + ex.getMessage());
 			ex.printStackTrace();
 		}
 	}
+	
 
 }

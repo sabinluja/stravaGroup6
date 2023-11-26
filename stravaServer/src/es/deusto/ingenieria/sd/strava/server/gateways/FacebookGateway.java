@@ -15,12 +15,12 @@ public class FacebookGateway implements IProviderGateway {
 	private int serverPort;
 	private static String DELIMITER = "#";
 	
-	private FacebookGateway() {
+	public FacebookGateway(String ip, int port) {
 		try {		
-			//String URL = "//127.0.0.1:1099/CurrencyExchange";
-			//this.currencyConvService = (ICurrencyExchange) Naming.lookup(URL);
-			this.serverIP = "0.0.0.0";
-			this.serverPort = 35600;
+			//this.serverIP = "0.0.0.0";
+			//this.serverPort = 35600;
+			this.serverIP = ip;
+			this.serverPort = port;
 		} catch (Exception ex) {
 			System.err.println("# Error locating external service: " + ex);
 		}
@@ -28,7 +28,7 @@ public class FacebookGateway implements IProviderGateway {
 	
 	public static IProviderGateway getInstance() {
 		if(instance == null) {
-			instance = new FacebookGateway();
+			instance = new FacebookGateway("",0);
 		}
 		
 		return instance;
@@ -110,7 +110,7 @@ public class FacebookGateway implements IProviderGateway {
 
 	@Override
 	public boolean validateEmail(String email) {
-		String message = "validate_email"+DELIMITER+email;
+		String message = "validate_password"+DELIMITER+email;
 		String response = null;
 		StringTokenizer tokenizer = null;
 			
