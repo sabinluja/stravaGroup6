@@ -9,6 +9,9 @@
 	<property name="rmiregistry.IP" value="127.0.0.1"/> 
 	<property name="rmiregistry.port" value="1099"/> 
 	<property name="server.name" value="strava"/>
+	<property name="connection.URL" value="http://127.0.0.1:8888/"/>
+	<property name="facebook.port" value="35600"/>
+	<property name="facebook.ip" value="0.0.0.0"/>
 
 	<path id="classpath">
         <fileset dir="${lib.dir}">
@@ -41,6 +44,9 @@
         	<arg value="${rmiregistry.IP}"/> 
 	 		<arg value="${rmiregistry.port}"/> 
 			<arg value="${server.name}"/> 
+			<arg value="${connection.url}"/>
+			<arg value="${facebook.ip}"/> 
+			<arg value="${facebook.port}"/>
         </java>
     </target>
 </project>

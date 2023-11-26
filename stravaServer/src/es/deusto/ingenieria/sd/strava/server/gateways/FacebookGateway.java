@@ -28,7 +28,7 @@ public class FacebookGateway implements IProviderGateway {
 	
 	public static IProviderGateway getInstance() {
 		if(instance == null) {
-			instance = new FacebookGateway("",0);
+			instance = new FacebookGateway("0.0.0.0", 35600);
 		}
 		
 		return instance;
