@@ -20,7 +20,6 @@ import es.deusto.ingenieria.sd.strava.client.controller.UserController;
 public class ChallengeWindow extends JFrame {
     private static final long serialVersionUID = 1L;
     Object result;
-    String name;
 
     public ChallengeWindow(ChallengeController controller, UserController uc) { // Change constructor parameter
         // Obtain the methods of the controller using reflection
@@ -127,7 +126,8 @@ public class ChallengeWindow extends JFrame {
 	                    }
 	                }
 	
-	                name = ac.getName();
+	                String name = ac.getName();
+	                System.out.println(uc.getToken());
 	                result = controller.acceptChallenge(uc.getToken()+"", name);
 	                System.out.println(result);
                 

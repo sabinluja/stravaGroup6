@@ -45,7 +45,6 @@ public class Register extends JFrame {
         providerCmbx.addItem("Google");
         providerCmbx.addItem("Facebook");
         providerCmbx.setSelectedIndex(0);
-        
         JLabel providerLabel = new JLabel("Provider");
         
         JButton processButton = new JButton("Process data");
