@@ -2,14 +2,13 @@ package es.deusto.ingenieria.sd.strava.GoogleExternalService.service;
 
 import es.deusto.ingenieria.sd.strava.GoogleExternalService.dao.UserRepository;
 import es.deusto.ingenieria.sd.strava.GoogleExternalService.model.User;
-import es.deusto.ingenieria.sd.strava.server.gateways.IProviderGateway;
 
 import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 
 @Service
-public class GoogleService implements IProviderGateway {
+public class GoogleService{
 
 	private UserRepository userRepository;
     
@@ -17,7 +16,6 @@ public class GoogleService implements IProviderGateway {
         this.userRepository = userRepository;
     }
     
-    @Override
     public boolean register(String email, String password) {
     	User user = new User(email, password);
     	Optional<User> result = userRepository.findByEmail(user.getEmail());
@@ -31,7 +29,6 @@ public class GoogleService implements IProviderGateway {
 		return false;
     }
 
-    @Override
     public boolean validatePassword(String email, String password) {
     	Optional<User> result = userRepository.findByEmail(email);
     	if (result == null) {
@@ -45,10 +42,9 @@ public class GoogleService implements IProviderGateway {
     	}	
     }
 
-    @Override
     public boolean validateEmail(String email) { //if the email is already registered return false
     	Optional<User> result = userRepository.findByEmail(email);
-    	if (result == null) {
+    	if (result.toString().equals("Optional.empty")) {
     		return true;
     	} else {
     		return false;

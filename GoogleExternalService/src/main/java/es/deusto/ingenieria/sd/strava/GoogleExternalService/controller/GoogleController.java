@@ -13,6 +13,9 @@ public class GoogleController {
 
     private GoogleService googleService;
 
+    public GoogleController(GoogleService googleService) {
+        this.googleService = googleService;
+    }
 
     @GetMapping("/user/register/{email}/{password}")
     public boolean register(@PathVariable(value="email") String email, @PathVariable(value="password") String password) {
