@@ -1,10 +1,14 @@
 package es.deusto.ingenieria.sd.strava.server.jpa.dao;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import es.deusto.ingenieria.sd.strava.server.data.domain.User;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.Persistence;
+import jakarta.persistence.Query;
 
 public class UserDAO implements IUserDAO{
 
@@ -65,4 +69,29 @@ public class UserDAO implements IUserDAO{
             em.close();
         }
     }
+
+    @Override
+    public List<User> getAllUsers() {
+        EntityManager em = emf.createEntityManager();
+        EntityTransaction tx = em.getTransaction();
+        List<User> users = new ArrayList<User>();
+
+        try {
+            tx.begin();
+            
+            Query q = em.createQuery("SELECT u FROM User u");            
+            users = (List<User>) q.getResultList();
+            
+            tx.commit();
+        } catch (Exception ex) {
+            System.out.println("   $ Error retrieving all users: " + ex.getMessage());
+        } finally {
+            if (tx != null && tx.isActive()) {
+                tx.rollback();
+            }
+            em.close();
+        }
+        return users;
+    }
+
 }
