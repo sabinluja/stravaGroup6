@@ -1,12 +1,23 @@
 package es.deusto.ingenieria.sd.strava.server.data.domain;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "sessionTable")
 public class Session {
+	@Id
 	private String title;
 	private String sports;	
 	private float distance;
 	private String startDate;
 	private long startTime;
 	private int duration;
+	@ManyToOne
+    @JoinColumn(name = "id")
 	private User user;
 	
 	

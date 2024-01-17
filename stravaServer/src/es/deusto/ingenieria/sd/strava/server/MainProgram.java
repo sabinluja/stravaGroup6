@@ -39,11 +39,11 @@ public class MainProgram {
             IProviderGateway facebookClients = FacebookGateway.getInstance(args[4], Integer.parseInt(args[5]));
             // IProviderGateway facebookClient = FacebookGateway.getInstance();
 
-            //IProviderGateway googleClient = GoogleGateway.getInstance();
+            IProviderGateway googleClient = GoogleGateway.getInstance();
             //System.out.println("URL: " + "http://127.0.0.1:8888/");
-            //IProviderGateway googleClient = new GoogleGateway2("http://127.0.0.1:8888/");
-            //SwingUtilities.invokeLater(() -> new GoogleGateway2("http://127.0.0.1:8888/"));
-            //googleClient.register("hola", "hola");
+            //IProviderGateway googleClient = new GoogleGateway("http://127.0.0.1:8888/");
+            SwingUtilities.invokeLater(() -> new GoogleGateway2("http://127.0.0.1:8888/"));
+            googleClient.register("hola", "hola");
 
         } catch (Exception ex) {
             System.err.println(" # Strava Server Exception: " + ex.getMessage());

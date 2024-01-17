@@ -1,12 +1,23 @@
 package es.deusto.ingenieria.sd.strava.server.data.domain;
 
-public class Challenge {	
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "challengeTable")
+public class Challenge {
+	@Id
 	private String name;
 	private String startDate;
 	private String endDate;
 	private long targetTime;
 	private float targetDistance;
 	private String sports;
+	@ManyToOne
+    @JoinColumn(name = "id")
 	private User user;
 	
 	

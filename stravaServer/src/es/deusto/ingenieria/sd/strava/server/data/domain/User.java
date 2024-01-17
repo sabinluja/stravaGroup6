@@ -3,6 +3,10 @@ package es.deusto.ingenieria.sd.strava.server.data.domain;
 import java.util.ArrayList;
 import java.util.List;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+@Entity
+@Table(name = "userTable")
 public class User {
 	private String name;
 	private String email;
