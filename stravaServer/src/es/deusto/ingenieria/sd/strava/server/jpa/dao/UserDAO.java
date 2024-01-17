@@ -4,11 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import es.deusto.ingenieria.sd.strava.server.data.domain.User;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.EntityTransaction;
-import jakarta.persistence.Persistence;
-import jakarta.persistence.Query;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
+import javax.persistence.Persistence;
+import javax.persistence.Query;
 
 public class UserDAO implements IUserDAO{
 
