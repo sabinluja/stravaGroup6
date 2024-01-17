@@ -1,4 +1,4 @@
-package es.deusto.ingenieria.sd.strava.server.data.dao;
+package es.deusto.ingenieria.sd.strava.server.jpa.dao;
 
 import es.deusto.ingenieria.sd.strava.server.data.domain.User;
 
