@@ -6,7 +6,6 @@ import es.deusto.ingenieria.sd.strava.server.gateways.IProviderGateway;
 import es.deusto.ingenieria.sd.strava.server.jpa.dao.UserDAO;
 
 public class UserAppService {
-    private UserDAO userDAO = UserDAO.getInstance();
     public UserAppService() {
     }
 
@@ -21,7 +20,7 @@ public class UserAppService {
             boolean registration = externalService.register(email, password);
 
             if (!emailExists && registration) {
-            	userDAO.store(registerGoogleMandatory);
+            	UserDAO.getInstance().store(registerGoogleMandatory);
                 return true;
             } else {
                 return false;
@@ -43,7 +42,7 @@ public class UserAppService {
             boolean registration = externalService.register(email, password);
 
             if (emailExists && registration) {
-            	userDAO.store(registerGoogleMandatory);
+            	UserDAO.getInstance().store(registerGoogleMandatory);
                 return true;
             } else {
                 return false;
@@ -57,7 +56,7 @@ public class UserAppService {
     public User login(String email, String password) {
         User user = new User();
 
-        for (User u : userDAO.findAll()) {
+        for (User u : UserDAO.getInstance().findAll()) {
             if (u.getEmail().equals(email)) {
                 user.setName(u.getName());
                 user.setEmail(u.getEmail());

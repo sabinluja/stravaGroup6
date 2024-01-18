@@ -9,7 +9,6 @@ import es.deusto.ingenieria.sd.strava.server.jpa.dao.SessionDAO;
 
 public class SessionAppService {
 	
-	private SessionDAO sessionDAO = SessionDAO.getInstance();
 	
 	public SessionAppService() {}
 
@@ -24,8 +23,9 @@ public class SessionAppService {
 			newSession.setStartDate(startDate);
 			newSession.setStartTime(startTime);
 			newSession.setDuration(duration);
+			newSession.setUser(user);
             user.addSession(newSession);
-            sessionDAO.store(newSession);
+            SessionDAO.getInstance().store(newSession);
             return true; // The session has been correctly created
         }
         return false; // The session has not been created

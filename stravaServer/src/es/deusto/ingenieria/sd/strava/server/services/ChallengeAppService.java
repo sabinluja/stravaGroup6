@@ -6,16 +6,13 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 import es.deusto.ingenieria.sd.strava.server.data.domain.Challenge;
 import es.deusto.ingenieria.sd.strava.server.data.domain.User;
 import es.deusto.ingenieria.sd.strava.server.jpa.dao.ChallengeDAO;
 
 public class ChallengeAppService {
-	
-	private ChallengeDAO challengeDAO = ChallengeDAO.getInstance();
-	
+		
 	public ChallengeAppService() {
 	}
 
@@ -26,7 +23,7 @@ public class ChallengeAppService {
 
 		if (user != null) {
             user.addChallenge(newChallenge);
-            challengeDAO.store(newChallenge);
+            ChallengeDAO.getInstance().store(newChallenge);
 
             return true; // The challenge has been correctly created
         }
@@ -34,7 +31,7 @@ public class ChallengeAppService {
 	}
 	
 	public List<Challenge> getChallenges() {
-		return challengeDAO.findAll();
+		return ChallengeDAO.getInstance().findAll();
 	}
 	
 	public boolean acceptChallenge(User user, String challengeName) {
@@ -61,7 +58,7 @@ public class ChallengeAppService {
 
 	            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
-	            for (Challenge challenge : challengeDAO.findAll()) {
+	            for (Challenge challenge : ChallengeDAO.getInstance().findAll()) {
 	                // Parse start date and end date in "yyyy-MM-dd" format
 	                Date startDate = dateFormat.parse(challenge.getStartDate());
 	                Date endDate = dateFormat.parse(challenge.getEndDate());
