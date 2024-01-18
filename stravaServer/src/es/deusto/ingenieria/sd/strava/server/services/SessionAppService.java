@@ -5,8 +5,11 @@ import java.util.List;
 
 import es.deusto.ingenieria.sd.strava.server.data.domain.Session;
 import es.deusto.ingenieria.sd.strava.server.data.domain.User;
+import es.deusto.ingenieria.sd.strava.server.jpa.dao.SessionDAO;
 
 public class SessionAppService {
+	
+	private SessionDAO sessionDAO = SessionDAO.getInstance();
 	
 	public SessionAppService() {}
 
@@ -22,9 +25,10 @@ public class SessionAppService {
 			newSession.setStartTime(startTime);
 			newSession.setDuration(duration);
             user.addSession(newSession);
-            return true; // The challenge has been correctly created
+            sessionDAO.store(newSession);
+            return true; // The session has been correctly created
         }
-        return false; // The challenge has not been created
+        return false; // The session has not been created
 	}
 	
 	public List<Session> getSessions(User user) {

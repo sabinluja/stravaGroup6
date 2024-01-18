@@ -49,4 +49,37 @@
 			<arg value="${facebook.port}"/>
         </java>
     </target>
+	
+	<target name="5.enhance-classes" depends="1.build" description="Adds JDO code to the persisten compiled classes">
+	    	<taskdef name="enhancer" classpathref="classpath" classname="org.datanucleus.enhancer.EnhancerTask"/>
+	   		<enhancer classpathref="classpath" persistenceUnit="strava" api="JPA" failonerror="true">
+	            <sysproperty key="log4j.configuration" value="file:${resources.dir}/log4j.properties"/>
+	            <fileset dir="${bin.dir}">
+	                <include name="**/domain/*.class"/>
+	            </fileset>
+	   		</enhancer>
+	</target>
+
+
+	<target name="6.create-db-schema" depends="5.enhance-classes" description="Creates DB Schema on the DB Server">
+	        <taskdef name="schematool" classpathref="classpath" classname="org.datanucleus.store.schema.SchemaToolTask"/>
+	    	<schematool classpathref="classpath" persistenceUnit="strava" mode="create" api="JPA" failonerror="true">
+	            <sysproperty key="log4j.configuration" value="file:${resources.dir}/log4j.properties"/>
+	            <fileset dir="${bin.dir}">
+	                <include name="**/*.class"/>
+	            </fileset>
+	        </schematool>
+	</target>
+
+
+	<target name="7.delete-db-schema" depends="5.enhance-classes" description="Drops DB sechema from the DB Server">
+			<taskdef name="schematool" classpathref="classpath" classname="org.datanucleus.store.schema.SchemaToolTask"/>
+	    	<schematool classpathref="classpath" persistenceUnit="strava" mode="delete" api="JPA" failonerror="true">            
+	    	   	<sysproperty key="log4j.configuration" value="file:${resources.dir}/log4j.properties"/>
+	    	 	<fileset dir="${bin.dir}">
+	           		<include name="**/*.class"/>
+	            </fileset>
+	        </schematool>
+	</target>
+	
 </project>

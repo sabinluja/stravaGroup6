@@ -1,19 +1,20 @@
 package es.deusto.ingenieria.sd.strava.server.data.domain;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.OneToMany;
+
 
 @Entity
-@Table(name = "userTable")
 public class User {
-	@Id
 	private String name;
+	@Id
 	private String email;
 	private String password;
 	private String birthDate;
@@ -22,29 +23,17 @@ public class User {
 	private int maxHeartRate;
 	private int restHeartRate;
 	private String provider;
-	private List<Session> sessionList = new ArrayList<Session>();
-	private List<Challenge> challengeList = new ArrayList<Challenge>();
-	private List<Challenge> acceptedChallengeList = new ArrayList<Challenge>();
-		
+	
+	@OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
+	private Set<Session> sessionList = new HashSet<>();
+	
+	@OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
+	private Set<Challenge> challengeList = new HashSet<>();
+	
+	@OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
+	private Set<Challenge> acceptedChallengeList = new HashSet<>();
 	
 	// Constructor, getters and setters
-	
-	public User(String name, String email, String password, String birthDate, float weight, int height,
-			int maxHeartRate, int restHeartRate, String provider, List<Session> sessionList, List<Challenge> challengeList, List<Challenge> acceptedChallengeList) {
-		super();
-		this.name = name;
-		this.email = email;
-		this.password = password;
-		this.birthDate = birthDate;
-		this.weight = weight;
-		this.height = height;
-		this.maxHeartRate = maxHeartRate;
-		this.restHeartRate = restHeartRate;
-		this.provider = provider;
-		this.sessionList = sessionList;
-		this.challengeList = challengeList;
-		this.acceptedChallengeList = acceptedChallengeList;
-	}
 	
 	public User(String name, String email, String birthDate, float weight, int height,
 			int maxHeartRate, int restHeartRate, String provider) {
@@ -139,27 +128,27 @@ public class User {
 		this.provider = provider;
 	}
 
-	public List<Session> getSessionList() {
+	public Set<Session> getSessionList() {
 		return sessionList;
 	}
 
-	public void setSessionList(List<Session> sessionList) {
+	public void setSessionList(Set<Session> sessionList) {
 		this.sessionList = sessionList;
 	}
 
-	public List<Challenge> getChallengeList() {
+	public Set<Challenge> getChallengeList() {
 		return challengeList;
 	}
 
-	public void setChallengeList(List<Challenge> challengeList) {
+	public void setChallengeList(Set<Challenge> challengeList) {
 		this.challengeList = challengeList;
 	}
 	
-	public List<Challenge> getAcceptedChallengeList() {
+	public Set<Challenge> getAcceptedChallengeList() {
 		return acceptedChallengeList;
 	}
 
-	public void setAcceptedChallengeList(List<Challenge> acceptedChallengeList) {
+	public void setAcceptedChallengeList(Set<Challenge> acceptedChallengeList) {
 		this.acceptedChallengeList = acceptedChallengeList;
 	}
 	

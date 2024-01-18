@@ -1,13 +1,17 @@
 package es.deusto.ingenieria.sd.strava.server.data.domain;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+
 @Entity
-@Table(name = "challengeTable")
 public class Challenge {
 	@Id
 	private String name;
@@ -16,9 +20,8 @@ public class Challenge {
 	private long targetTime;
 	private float targetDistance;
 	private String sports;
-	@ManyToOne
-    @JoinColumn(name = "id")
-	private User user;
+	@ManyToMany(mappedBy = "challenge", fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
+	private Set<User> user = new HashSet<>();
 	
 	
 	// Constructor, getters and setters

@@ -14,7 +14,7 @@ public class DAOTest_Users  {
 		createUserTest(userDAO);
 		getAllUsersTest(userDAO);
 		updateUserTest(userDAO);
-		deleteUserTest(userDAO);
+		deleteUserTest(userDAO); 
 	}
 		
 	protected static void createUserTest(IUserDAO userDAO) {		

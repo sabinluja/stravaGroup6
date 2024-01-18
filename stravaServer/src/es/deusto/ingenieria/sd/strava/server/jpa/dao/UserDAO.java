@@ -119,7 +119,7 @@ public class UserDAO extends DataAccessObjectBase implements IDataAccessObject<U
 			
 			tx.commit();
 		} catch (Exception ex) {
-			System.out.println("  $ Error querying an User by Id: " + ex.getMessage());
+			System.out.println("  $ Error querying an User by email: " + ex.getMessage());
 		} finally {
 			if (tx != null && tx.isActive()) {
 				tx.rollback();
