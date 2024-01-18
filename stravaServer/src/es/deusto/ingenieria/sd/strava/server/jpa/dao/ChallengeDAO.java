@@ -1,64 +1,135 @@
 package es.deusto.ingenieria.sd.strava.server.jpa.dao;
 
-import es.deusto.ingenieria.sd.strava.server.data.domain.Challenge;
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
-import javax.persistence.Persistence;
+import javax.persistence.Query;
 
-public class ChallengeDAO {
+import es.deusto.ingenieria.sd.strava.server.data.domain.Challenge;
 
-    private EntityManagerFactory emf;
 
-    public ChallengeDAO(){
-        emf = Persistence.createEntityManagerFactory("Strava");
-    }
+//This class implements Singleton and DAO patterns
+public class ChallengeDAO extends DataAccessObjectBase implements IDataAccessObject<Challenge> {
 
-    public void create(Challenge challenge) {
-        storeObject(challenge);
-    }
+	private static ChallengeDAO instance;	
+	
+	private ChallengeDAO() { }
+	
+	public static ChallengeDAO getInstance() {
+		if (instance == null) {
+			instance = new ChallengeDAO();
+		}		
+		
+		return instance;
+	}
+	
+	@Override
+	public void store(Challenge object) {
+		Challenge storedObject = instance.find(String.valueOf(object.getName()));
 
-    public Challenge read(String name) {
-        EntityManager em = emf.createEntityManager();
-        return em.find(Challenge.class, name);
-    }
+		EntityManager em = emf.createEntityManager();
+		EntityTransaction tx = em.getTransaction();
 
-    public void update(Challenge challenge) {
-        storeObject(challenge);
-    }
+		try {
+			tx.begin();
+			
+			if (storedObject != null) {
+				em.merge(object);
+			} else {
+				em.persist(object);			
+			}
+			
+			tx.commit();
+		} catch (Exception ex) {
+			System.out.println("  $ Error storing Challenge: " + ex.getMessage());
+		} finally {
+			if (tx != null && tx.isActive()) {
+				tx.rollback();
+			}
 
-    public void delete(Challenge challenge) {
-        EntityManager em = emf.createEntityManager();
-        EntityTransaction tx = em.getTransaction();
-        try {
-            tx.begin();
-            em.remove(challenge);
-            tx.commit();
-        } catch (Exception ex) {
-            System.out.println("   $ DAO: Error deleting an object: " + ex.getMessage());
-        } finally {
-            if (tx != null && tx.isActive()) {
-                tx.rollback();
-            }
-            em.close();
-        }
-    }
+			em.close();
+		}
+	}
 
-    private void storeObject(Object object) {
-        EntityManager em = emf.createEntityManager();
-        EntityTransaction tx = em.getTransaction();
-        try {
-            tx.begin();
-            System.out.println("   * DAO: Storing an object: " + object);
-            em.persist(object);
-            tx.commit();
-        } catch (Exception ex) {
-            System.out.println("   $ DAO: Error storing an object: " + ex.getMessage());
-        } finally {
-            if (tx != null && tx.isActive()) {
-                tx.rollback();
-            }
-            em.close();
-        }
-    }
+	@Override
+	public void delete(Challenge object) {
+		EntityManager em = emf.createEntityManager();
+		EntityTransaction tx = em.getTransaction();
+
+		try {
+			tx.begin();
+			
+			Challenge storedObject = (Challenge) em.find(Challenge.class, 
+													 String.valueOf(object.getName()));
+			em.remove(storedObject);
+			
+			tx.commit();
+		} catch (Exception ex) {
+			System.out.println("  $ Error removing an Challenge: " + ex.getMessage());
+		} finally {
+			if (tx != null && tx.isActive()) {
+				tx.rollback();
+			}
+
+			em.close();
+		}
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Challenge> findAll() {				
+		EntityManager em = emf.createEntityManager();
+		EntityTransaction tx = em.getTransaction();
+
+		List<Challenge> Challenges = new ArrayList<>();
+		
+		try {
+			tx.begin();
+			
+			Query q = em.createQuery("SELECT a FROM Challenge a");
+			Challenges = (List<Challenge>) q.getResultList();
+			
+			tx.commit();
+		} catch (Exception ex) {
+			System.out.println("  $ Error retrieving all the Challenges: " + ex.getMessage());
+		} finally {
+			if (tx != null && tx.isActive()) {
+				tx.rollback();
+			}
+
+			em.close();
+		}
+
+		return Challenges;
+	}
+
+	@Override
+	public Challenge find(String param) {
+		EntityManager em = emf.createEntityManager();
+		EntityTransaction tx = em.getTransaction();
+		
+		Challenge result = null; 
+
+		try {
+			tx.begin();
+						
+			result = (Challenge) em.find(Challenge.class, param);
+			
+			tx.commit();
+		} catch (Exception ex) {
+			System.out.println("  $ Error querying an Challenge by Id: " + ex.getMessage());
+		} finally {
+			if (tx != null && tx.isActive()) {
+				tx.rollback();
+			}
+
+			em.close();
+		}
+
+		return result;
+	}
+
+
 }

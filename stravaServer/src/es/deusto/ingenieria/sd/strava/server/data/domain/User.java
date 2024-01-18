@@ -3,11 +3,16 @@ package es.deusto.ingenieria.sd.strava.server.data.domain;
 import java.util.ArrayList;
 import java.util.List;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
 @Entity
 @Table(name = "userTable")
 public class User {
+	@Id
 	private String name;
 	private String email;
 	private String password;
