@@ -86,13 +86,7 @@ public class Challenge {
 		this.sports = sports;
 	}
 	
-	public User getUser() {
-		return user;
-	}
 
-	public void setUser(User user) {
-		this.user = user;
-	}
 
 	
 	// Methods: (toString)

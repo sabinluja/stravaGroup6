@@ -80,7 +80,7 @@ public class ChallengeAppService {
 	}
 
 	
-	public Set<Challenge> getAcceptedChallenges(User user) {      
-        return user.getAcceptedChallengeList(); // The list with the accepted challenges of that concrete user
+	public List<Challenge> getAcceptedChallenges(User user) {      
+        return new ArrayList<>(user.getAcceptedChallengeList()); // The list with the accepted challenges of that concrete user
 	}
 }
