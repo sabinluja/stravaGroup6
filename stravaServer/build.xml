@@ -18,7 +18,8 @@
             <include name="**/*.jar"/>
         </fileset>
         <pathelement location="${bin.dir}"/>
-    </path>
+        <pathelement location="${resources.dir}"/>
+	</path>
 	
 	<target name="1.build" description="Builds the project">
 		<delete dir="${bin.dir}"/>

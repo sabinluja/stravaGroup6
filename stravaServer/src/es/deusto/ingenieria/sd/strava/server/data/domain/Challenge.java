@@ -81,6 +81,10 @@ public class Challenge {
 	public String getSports() {
 		return sports;
 	}
+	
+	public void addUser(User u) {
+		user.add(u);
+	}
 
 	public void setSports(String sports) {
 		this.sports = sports;

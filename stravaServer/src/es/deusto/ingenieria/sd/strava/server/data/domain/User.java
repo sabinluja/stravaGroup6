@@ -181,7 +181,7 @@ public class User {
 
 	public void addChallenge(Challenge challenge) {
 		if (challenge != null && !this.challengeList.contains(challenge)) {
-			challenge.setUser(this);
+			challenge.addUser(this);
 			this.challengeList.add(challenge);
 		}
 	}
