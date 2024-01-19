@@ -13,7 +13,7 @@ public class LocalDataBaseTest {
 
 	public static void main(String[] args) {		
 		//Initialize DB
-		es.deusto.ingenieria.sd.strava.server.MainProgram.initDB();
+		//es.deusto.ingenieria.sd.strava.server.MainProgram.initDB();
 		
 		List<Challenge> challenges = null;
 		List<Session> Sessions = null;
