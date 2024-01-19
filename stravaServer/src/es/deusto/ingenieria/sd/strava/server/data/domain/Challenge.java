@@ -3,12 +3,11 @@ package es.deusto.ingenieria.sd.strava.server.data.domain;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
 
 
 @Entity
@@ -20,7 +19,7 @@ public class Challenge {
 	private long targetTime;
 	private float targetDistance;
 	private String sports;
-	@OneToMany
+	@ManyToMany(targetEntity=User.class, fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.DETACH, CascadeType.PERSIST})
 	private Set<User> user = new HashSet<>();
 
 	
