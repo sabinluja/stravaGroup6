@@ -53,7 +53,7 @@
     </target>
 	
 	<target name="5.enhance-classes" depends="1.build" description="Adds JDO code to the persisten compiled classes">
-	    	<taskdef name="enhancer" classpathref="classpath" classname="org.datanucleus.enhancer.tools.EnhancerTask"/>
+	    	<taskdef name="enhancer" classpathref="classpath" classname="org.datanucleus.enhancer.EnhancerTask"/>
 	   		<enhancer classpathref="classpath" persistenceUnit="strava" api="JPA" failonerror="true">
 	            <sysproperty key="log4j.configuration" value="file:${resources.dir}/log4j.properties"/>
 	            <fileset dir="${bin.dir}">
