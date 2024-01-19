@@ -84,7 +84,7 @@ public class Challenge {
 	}
 	
 	public void addUser(User u) {
-		user.add(u);
+		this.user = u;
 	}
 
 	public void setSports(String sports) {
