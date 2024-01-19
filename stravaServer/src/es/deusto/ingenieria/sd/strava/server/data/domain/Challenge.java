@@ -19,7 +19,7 @@ public class Challenge {
 	private long targetTime;
 	private float targetDistance;
 	private String sports;
-	@ManyToMany(mappedBy = "email", fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
+	@ManyToMany
 	private Set<User> user = new HashSet<>();
 	
 	
