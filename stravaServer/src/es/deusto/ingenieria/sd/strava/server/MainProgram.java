@@ -107,6 +107,7 @@ public class MainProgram {
         ChallengeDAO.getInstance().store(challenge3);
         ChallengeDAO.getInstance().store(challenge4);
         ChallengeDAO.getInstance().store(challenge5);
+        
 
         // SESSIONS
         
@@ -193,38 +194,39 @@ public class MainProgram {
         user1.addChallenge(challenge4);
         user1.addAcceptedChallenge(challenge1);
         user1.addSession(session1);
-        user1.addSession(session4);
+        session1.setUser(user1);
 
         user2.addChallenge(challenge2);
         user2.addChallenge(challenge1);
         user2.addAcceptedChallenge(challenge2);
         user2.addSession(session2);
-        user2.addSession(session1);
+        session2.setUser(user2);
 
         user3.addChallenge(challenge3);
         user3.addChallenge(challenge5);
         user3.addAcceptedChallenge(challenge3);
         user3.addSession(session3);
-        user3.addSession(session5);
+        session3.setUser(user3);
 
         user4.addChallenge(challenge4);
         user4.addChallenge(challenge2);
         user4.addAcceptedChallenge(challenge4);
         user4.addSession(session4);
-        user4.addSession(session2);
+        session4.setUser(user4);
 
         user5.addChallenge(challenge5);
         user5.addChallenge(challenge3);
         user5.addAcceptedChallenge(challenge5);
         user5.addSession(session5);
-        user5.addSession(session3);
+        session5.setUser(user5);
         
         UserDAO.getInstance().store(user1);
         UserDAO.getInstance().store(user2);
         UserDAO.getInstance().store(user3);
         UserDAO.getInstance().store(user4);
         UserDAO.getInstance().store(user5);
-
+        
+        
 	} catch (Exception ex) {
 		System.out.println("\t$ Error storing data:" + ex.getMessage());
 	}	

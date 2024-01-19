@@ -55,19 +55,8 @@ public class UserAppService {
     }
 
     public User login(String email, String password) {
-        User user = new User();
-
-        for (User u : UserDAO.getInstance().findAll()) {
-            if (u.getEmail().equals(email)) {
-                user.setName(u.getName());
-                user.setEmail(u.getEmail());
-                user.setBirthDate(u.getBirthDate());
-                user.setSessionList(u.getSessionList());
-                user.setAcceptedChallengeList(u.getAcceptedChallengeList());
-                user.setChallengeList(u.getChallengeList());
-                user.setProvider(u.getProvider());
-            }
-        }
+        
+        User user = UserDAO.getInstance().find(email);
         
         System.out.println(user.getProvider());
         IProviderGateway externalService = GatewayFactory.getInstance().createGateway(user.getProvider());
