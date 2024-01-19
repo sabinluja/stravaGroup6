@@ -9,6 +9,7 @@ import java.util.List;
 
 import es.deusto.ingenieria.sd.strava.server.data.domain.Challenge;
 import es.deusto.ingenieria.sd.strava.server.data.domain.User;
+import es.deusto.ingenieria.sd.strava.server.gateways.MailSender;
 import es.deusto.ingenieria.sd.strava.server.jpa.dao.ChallengeDAO;
 
 public class ChallengeAppService {
@@ -24,6 +25,7 @@ public class ChallengeAppService {
 		if (user != null) {
             user.addChallenge(newChallenge);
             ChallengeDAO.getInstance().store(newChallenge);
+            new MailSender(user.getEmail()).sendMessage("Challenge with the name "+newChallenge.getName()+" was created.");
 
             return true; // The challenge has been correctly created
         }
