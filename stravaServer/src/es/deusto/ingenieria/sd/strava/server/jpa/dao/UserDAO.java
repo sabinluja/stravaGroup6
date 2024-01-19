@@ -27,7 +27,7 @@ public class UserDAO extends DataAccessObjectBase implements IDataAccessObject<U
 	
 	@Override
 	public void store(User object) {
-		User storedObject = instance.find(String.valueOf(object.getName()));
+		User storedObject = instance.find(String.valueOf(object.getEmail()));
 
 		EntityManager em = emf.createEntityManager();
 		EntityTransaction tx = em.getTransaction();
@@ -43,7 +43,8 @@ public class UserDAO extends DataAccessObjectBase implements IDataAccessObject<U
 			
 			tx.commit();
 		} catch (Exception ex) {
-			System.out.println("  $ Error storing User: " + ex.getMessage());
+			System.out.println("  $ Error storing User: " + ex.getStackTrace() + "    " + ex.getLocalizedMessage() + "    " + ex.getMessage() + "    " + ex.hashCode() + "    " + ex.getCause() + "    " + ex.getClass());
+			ex.printStackTrace();
 		} finally {
 			if (tx != null && tx.isActive()) {
 				tx.rollback();
