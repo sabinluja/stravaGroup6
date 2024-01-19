@@ -1,7 +1,6 @@
 package es.deusto.ingenieria.sd.strava.server.data.domain;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
