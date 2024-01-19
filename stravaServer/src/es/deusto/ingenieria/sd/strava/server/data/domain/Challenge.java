@@ -8,6 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 
 
 @Entity
@@ -19,12 +20,7 @@ public class Challenge {
 	private long targetTime;
 	private float targetDistance;
 	private String sports;
-	@ManyToMany
-	@JoinTable(
-	    name = "name",
-	    joinColumns = @JoinColumn(name = "name"),
-	    inverseJoinColumns = @JoinColumn(name = "email")
-	)
+	@OneToMany
 	private Set<User> user = new HashSet<>();
 
 	
