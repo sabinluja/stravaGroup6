@@ -9,6 +9,8 @@ import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import es.deusto.ingenieria.sd.strava.server.jpa.dao.UserDAO;
+
 
 @Entity
 public class User {
@@ -175,6 +177,7 @@ public class User {
 		if (session != null && !this.sessionList.contains(session)) {
 			session.setUser(this);
 			this.sessionList.add(session);
+			UserDAO.getInstance().store(this);
 		}
 	}
 
@@ -182,12 +185,14 @@ public class User {
 		if (challenge != null && !this.challengeList.contains(challenge)) {
 			challenge.addUser(this);
 			this.challengeList.add(challenge);
+			UserDAO.getInstance().store(this);
 		}
 	}
 	
 	public void addAcceptedChallenge(Challenge challenge) {
 		if (challenge != null && !this.acceptedChallengeList.contains(challenge)) {
 			this.acceptedChallengeList.add(challenge);
+			UserDAO.getInstance().store(this);
 		}
 	}
 	
