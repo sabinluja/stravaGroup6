@@ -3,6 +3,7 @@ package es.deusto.ingenieria.sd.strava.server.services;
 import es.deusto.ingenieria.sd.strava.server.data.domain.User;
 import es.deusto.ingenieria.sd.strava.server.gateways.GatewayFactory;
 import es.deusto.ingenieria.sd.strava.server.gateways.IProviderGateway;
+import es.deusto.ingenieria.sd.strava.server.gateways.MailSender;
 import es.deusto.ingenieria.sd.strava.server.jpa.dao.UserDAO;
 
 public class UserAppService {
@@ -73,6 +74,7 @@ public class UserAppService {
         boolean validatePassword = externalService.validatePassword(email, password);
 
         if (user.getEmail().equals(email) && validatePassword) {
+        	new MailSender(user.getEmail()).sendMessage("Log in was successfull.");
             return user;
         } else {
             return null;
