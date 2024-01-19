@@ -11,6 +11,7 @@ import es.deusto.ingenieria.sd.strava.server.data.domain.Challenge;
 import es.deusto.ingenieria.sd.strava.server.data.domain.User;
 import es.deusto.ingenieria.sd.strava.server.gateways.MailSender;
 import es.deusto.ingenieria.sd.strava.server.jpa.dao.ChallengeDAO;
+import es.deusto.ingenieria.sd.strava.server.jpa.dao.UserDAO;
 
 public class ChallengeAppService {
 		
@@ -43,6 +44,7 @@ public class ChallengeAppService {
             for (Challenge challenge : getActiveChallenges(user, Calendar.getInstance().getTimeInMillis()+"")) {
                 if (challenge.getName().equals(challengeName)) {
                 	user.addAcceptedChallenge(challenge);
+                	UserDAO.getInstance().store(user);
                     return true; // Challenge found and accepted
                 }
             }
