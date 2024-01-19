@@ -29,12 +29,16 @@ public class MainProgram {
         //args[1] = RMIRegistry Port
         //args[2] = Service Name
         String name = "//" + args[0] + ":" + args[1] + "/" + args[2];
+        String google_url = args[3];
+        String facebook_ip = args[4];
+        int facebook_port = Integer.parseInt(args[5]);
+        System.out.println(google_url + "   " + facebook_ip + "   " + facebook_port);
         
         initDB();
 
         //Bind remote facade instance to a sirvice name using RMIRegistry
         try {
-            IRemoteFacade remoteFacade = new RemoteFacade();
+            IRemoteFacade remoteFacade = new RemoteFacade(google_url, facebook_ip, facebook_port);
             Naming.rebind(name, (Remote) remoteFacade);
             System.out.println(" * Strava Server '" + name + "' started!!");
 
@@ -44,14 +48,14 @@ public class MainProgram {
             }
 
             // 4 y 5
-            IProviderGateway facebookClients = FacebookGateway.getInstance(args[4], Integer.parseInt(args[5]));
+            //IProviderGateway facebookClients = FacebookGateway.getInstance(args[4], Integer.parseInt(args[5]));
             // IProviderGateway facebookClient = FacebookGateway.getInstance();
 
-            IProviderGateway googleClient = GoogleGateway.getInstance();
+            //IProviderGateway googleClient = GoogleGateway.getInstance();
             //System.out.println("URL: " + "http://127.0.0.1:8888/");
             //IProviderGateway googleClient = new GoogleGateway("http://127.0.0.1:8888/");
-            SwingUtilities.invokeLater(() -> new GoogleGateway2("http://127.0.0.1:8888/"));
-            googleClient.register("hola", "hola");
+            //SwingUtilities.invokeLater(() -> new GoogleGateway2("http://127.0.0.1:8888/"));
+            //googleClient.register("hola", "hola");
 
         } catch (Exception ex) {
             System.err.println(" # Strava Server Exception: " + ex.getMessage());

@@ -26,14 +26,25 @@ public class GoogleGateway implements IProviderGateway {
 	RestTemplate restTemplate() {
 		return new RestTemplate();
 	}
-	
+
 	// Host and port NOT hard-coded: Defined in application.properties
 	//@Value("${spring.server.url}")
-	private String serverURL = "http://localhost";
+	//private String serverURL = "http://localhost";
+	private String serverURL;
 	
 	//@Value("${server.port}")
-	private int serverPort = 8888;
-	
+	//private int serverPort = 8888;
+	private int serverPort;	
+
+	public void setServerURL(String serverURL) {
+		this.serverURL = serverURL;
+	}
+
+	public void setServerPort(int serverPort) {
+		this.serverPort = serverPort;
+	}
+
+
 	public static void start() {
 		SpringApplication.run(GoogleGateway.class);	
 	}

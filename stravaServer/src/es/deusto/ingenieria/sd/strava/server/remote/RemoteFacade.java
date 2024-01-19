@@ -25,8 +25,17 @@ public class RemoteFacade extends UnicastRemoteObject implements IRemoteFacade {
     private ChallengeAppService challengeService = new ChallengeAppService();
     private UserAppService userService = new UserAppService();
     private SessionAppService sessionService = new SessionAppService();
+    private String google_url;
+    private String facebook_ip;
+    private int facebook_port;
     
-    public RemoteFacade() throws RemoteException {super();}
+    
+    public RemoteFacade(String google_url, String facebook_ip, int facebook_port) throws RemoteException {
+    	super();
+    	this.google_url = google_url;
+    	this.facebook_ip = facebook_ip;
+    	this.facebook_port = facebook_port;
+    }
     
 	@SuppressWarnings("unlikely-arg-type")
 	public boolean createChallenge(String token, String name, String startDate,
@@ -107,13 +116,13 @@ public class RemoteFacade extends UnicastRemoteObject implements IRemoteFacade {
     public boolean register(String email, String name, String birthDate, String password, String provider) {
         // Implementation based on UserAppService 
     	
-        return userService.register(email, name, birthDate, password, provider);
+        return userService.register(email, name, birthDate, password, provider, this.google_url, this.facebook_ip, this.facebook_port);
     }
     
     public boolean register(String email, String name, String birthDate, String password, String provider,
                                   float weight, int height, int maxHeartRate, int restHeartRate) {
         // Implementation based on UserAppService
-        return userService.register(email, name, birthDate, password, provider, weight, height, maxHeartRate, restHeartRate);
+        return userService.register(email, name, birthDate, password, provider, weight, height, maxHeartRate, restHeartRate, this.google_url, this.facebook_ip, this.facebook_port);
     }
     
     public boolean createSession(String token, String title, String sport, float distance,
@@ -144,7 +153,7 @@ public class RemoteFacade extends UnicastRemoteObject implements IRemoteFacade {
         // Implementation based on LoginAppService
     	
     	System.out.println(" * RemoteFacade login(): " + email + " / " + password);
-    	User user = userService.login(email, password);
+    	User user = userService.login(email, password, this.google_url, this.facebook_ip, this.facebook_port);
 		
 		//If login() success user is stored in the Server State
 		if (user != null) {

@@ -15,32 +15,39 @@ public class FacebookGateway implements IProviderGateway {
 	private int serverPort;
 	private static String DELIMITER = "#";
 	
-	public FacebookGateway(String ip, int port) {
+	private FacebookGateway() {
 		try {		
-			//this.serverIP = "0.0.0.0";
-			//this.serverPort = 35600;
-			this.serverIP = ip;
-			this.serverPort = port;
 		} catch (Exception ex) {
 			System.err.println("# Error locating external service: " + ex);
 		}
 	}
 	
+	
+	public String getServerIP() {
+		return serverIP;
+	}
+
+	public void setServerIP(String serverIP) {
+		this.serverIP = serverIP;
+	}
+
+	public int getServerPort() {
+		return serverPort;
+	}
+
+	public void setServerPort(int serverPort) {
+		this.serverPort = serverPort;
+	}
+	
+
 	public static IProviderGateway getInstance() {
 		if(instance == null) {
-			instance = new FacebookGateway("0.0.0.0", 35600);
+			instance = new FacebookGateway();
 		}
 		
 		return instance;
 	}
 	
-	public static IProviderGateway getInstance(String ip, int port) {
-		if(instance == null) {
-			instance = new FacebookGateway(ip, port);
-		}
-		
-		return instance;
-	}
 	
 	@Override
 	public boolean register(String email, String password) {
