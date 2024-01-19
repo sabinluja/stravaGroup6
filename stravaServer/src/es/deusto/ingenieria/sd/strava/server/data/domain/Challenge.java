@@ -3,10 +3,10 @@ package es.deusto.ingenieria.sd.strava.server.data.domain;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 
 
@@ -20,7 +20,13 @@ public class Challenge {
 	private float targetDistance;
 	private String sports;
 	@ManyToMany
+	@JoinTable(
+	    name = "name",
+	    joinColumns = @JoinColumn(name = "name"),
+	    inverseJoinColumns = @JoinColumn(name = "email")
+	)
 	private Set<User> user = new HashSet<>();
+
 	
 	
 	// Constructor, getters and setters
