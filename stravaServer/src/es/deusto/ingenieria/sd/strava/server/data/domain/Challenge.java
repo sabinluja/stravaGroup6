@@ -19,7 +19,7 @@ public class Challenge {
 	private long targetTime;
 	private float targetDistance;
 	private String sports;
-	@ManyToMany(targetEntity=User.class, fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.DETACH, CascadeType.PERSIST})
+	@ManyToMany(targetEntity = User.class, fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.DETACH, CascadeType.PERSIST})
 	private Set<User> user = new HashSet<>();
 
 	
