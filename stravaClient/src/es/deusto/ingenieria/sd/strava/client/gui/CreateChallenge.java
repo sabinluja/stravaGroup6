@@ -82,6 +82,8 @@ public class CreateChallenge extends JFrame {
 
         // Indicate that data has been processed
         dataProcessed = true;
+        
+        JOptionPane.showMessageDialog(null, "Challenge successfully created", "Challenge", JOptionPane.INFORMATION_MESSAGE);
 
         // Close the window after processing data (adjust as needed)
         dispose();
