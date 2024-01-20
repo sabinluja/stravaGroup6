@@ -73,14 +73,14 @@ public class SessionWindow extends JFrame {
 	            	duration = s.getDuration();
 	                
 	                result = controller.createSession(token, title, sport, distance, startDate, startTime, duration);
-	                System.out.println(result);
 	                
 	                if (result.toString().equals("true")) {
+		                System.out.println("Creating session...");
 	        	    	JOptionPane.showMessageDialog(null, "Session successfully created", "Session", JOptionPane.INFORMATION_MESSAGE);
 	        	    } else {
 	        	    	JOptionPane.showMessageDialog(null, "Session has not been created", "Session", JOptionPane.INFORMATION_MESSAGE);
 	        	    }
-	                
+	                	                
             	}); createSessionT.start();
             }
         });
@@ -95,6 +95,8 @@ public class SessionWindow extends JFrame {
                 try {
                     token = uc.getToken()+"";
                     result = controller.getSessions(token);
+                    
+                    System.out.println("Receiving sessions from the server...");
 
                     showSessionsDialog((List<SessionDTO>) result);
                 } catch (RemoteException e2) {

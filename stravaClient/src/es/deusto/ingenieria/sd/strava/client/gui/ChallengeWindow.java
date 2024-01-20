@@ -106,9 +106,9 @@ public class ChallengeWindow extends JFrame {
 	        	    float targetDistance = c.getTargetDistance();
 	        	    long targetTime = c.getTargetTime();
 	        	    result = controller.createChallenge(uc.getToken()+"", name, startDate, endDate, targetDistance, targetTime, sport);
-	        	    System.out.println(result);
 	        	    
 	        	    if (result.toString().equals("true")) {
+	        	    	System.out.println("Creating challenge...");
 	        	    	JOptionPane.showMessageDialog(null, "Challenge successfully created", "Challenge", JOptionPane.INFORMATION_MESSAGE);
 	        	    } else {
 	        	    	JOptionPane.showMessageDialog(null, "Challenge has not been created", "Challenge", JOptionPane.INFORMATION_MESSAGE);
@@ -122,6 +122,7 @@ public class ChallengeWindow extends JFrame {
             @SuppressWarnings("unchecked")
 			public void actionPerformed(ActionEvent e2) {
             	result = controller.getChallenges(); 
+            	System.out.println("Receiving challenges from the server...");
             	
             	showChallengesDialog((List<ChallengeDTO>) result);
             }
@@ -140,11 +141,10 @@ public class ChallengeWindow extends JFrame {
 	                }
 	
 	                String name = ac.getName();
-	                System.out.println(uc.getToken());
 	                result = controller.acceptChallenge(uc.getToken()+"", name);
-	                System.out.println(result);
 	                
 	                if (result.toString().equals("true")) {
+	                	System.out.println("Accepting challenge...");
 	        	    	JOptionPane.showMessageDialog(null, "Challenge successfully accepted", "Challenge", JOptionPane.INFORMATION_MESSAGE);
 	        	    } else {
 	        	    	JOptionPane.showMessageDialog(null, "Challenge has not been accepted", "Challenge", JOptionPane.INFORMATION_MESSAGE);
@@ -158,7 +158,8 @@ public class ChallengeWindow extends JFrame {
             @SuppressWarnings("unchecked")
 			public void actionPerformed(ActionEvent e4) {
             	result = controller.getAcceptedChallenges(uc.getToken()+"",Calendar.getInstance().getTimeInMillis()+"");
-
+            	System.out.println("Receiving accepted challenges from the server...");
+            	
             	showAcceptedChallengesDialog((List<ChallengeDTO>) result);
             }
         });
@@ -167,7 +168,8 @@ public class ChallengeWindow extends JFrame {
             @SuppressWarnings("unchecked")
 			public void actionPerformed(ActionEvent e5) {
             	result = controller.getActiveChallenges(uc.getToken()+"",Calendar.getInstance().getTimeInMillis()+"");
-
+            	System.out.println("Receiving active challenges from the server...");
+            	
             	showActiveChallengesDialog((List<ChallengeDTO>) result);
             }
         });
@@ -182,7 +184,7 @@ public class ChallengeWindow extends JFrame {
     
     private void showChallengesDialog(List<ChallengeDTO> challenges) {
         JDialog dialog = new JDialog(this, "Challenge List", true);
-        dialog.setSize(800, 150);
+        dialog.setSize(800, 200);
 
         JTextArea challengesTextArea = new JTextArea();
         challengesTextArea.setEditable(false);
