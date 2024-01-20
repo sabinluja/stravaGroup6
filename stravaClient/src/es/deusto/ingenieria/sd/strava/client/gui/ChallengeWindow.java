@@ -12,10 +12,14 @@ import java.util.Vector;
 import java.util.concurrent.TimeUnit;
 
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 
 import es.deusto.ingenieria.sd.strava.client.controller.ChallengeController;
 import es.deusto.ingenieria.sd.strava.client.controller.UserController;
+import es.deusto.ingenieria.sd.strava.server.data.dto.ChallengeDTO;
 
 public class ChallengeWindow extends JFrame {
     private static final long serialVersionUID = 1L;
@@ -108,9 +112,11 @@ public class ChallengeWindow extends JFrame {
         });
     	
     	getChallenges.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e2) {
+            @SuppressWarnings("unchecked")
+			public void actionPerformed(ActionEvent e2) {
             	result = controller.getChallenges(); 
-            	System.out.println(result);
+            	
+            	showChallengesDialog((List<ChallengeDTO>) result);
             }
         });
 	   
@@ -136,16 +142,20 @@ public class ChallengeWindow extends JFrame {
         });
         
         getAcceptedChallenges.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e4) {
+            @SuppressWarnings("unchecked")
+			public void actionPerformed(ActionEvent e4) {
             	result = controller.getAcceptedChallenges(uc.getToken()+"",Calendar.getInstance().getTimeInMillis()+"");
-            	System.out.println(result);
+
+            	showAcceptedChallengesDialog((List<ChallengeDTO>) result);
             }
         });
         
         getActiveChallenges.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e5) {
+            @SuppressWarnings("unchecked")
+			public void actionPerformed(ActionEvent e5) {
             	result = controller.getActiveChallenges(uc.getToken()+"",Calendar.getInstance().getTimeInMillis()+"");
-            	System.out.println(result);
+
+            	showActiveChallengesDialog((List<ChallengeDTO>) result);
             }
         });
         	
@@ -155,5 +165,59 @@ public class ChallengeWindow extends JFrame {
         this.setSize(300, 280);
         this.setLocationRelativeTo(null);
         this.setVisible(false);
+    }
+    
+    private void showChallengesDialog(List<ChallengeDTO> challenges) {
+        JDialog dialog = new JDialog(this, "Challenge List", true);
+        dialog.setSize(800, 150);
+
+        JTextArea challengesTextArea = new JTextArea();
+        challengesTextArea.setEditable(false);
+
+        for (ChallengeDTO challenge : challenges) {
+            challengesTextArea.append(challenge.toString() + "\n");
+        }
+
+        JScrollPane scrollPane = new JScrollPane(challengesTextArea);
+        dialog.add(scrollPane);
+
+        dialog.setLocationRelativeTo(this);
+        dialog.setVisible(true);
+    }
+    
+    private void showAcceptedChallengesDialog(List<ChallengeDTO> acceptedChallenges) {
+        JDialog dialog = new JDialog(this, "Accepted Challenge List", true);
+        dialog.setSize(400, 300);
+
+        JTextArea acceptedChallengesTextArea = new JTextArea();
+        acceptedChallengesTextArea.setEditable(false);
+
+        for (ChallengeDTO challenge : acceptedChallenges) {
+            acceptedChallengesTextArea.append(challenge.toString() + "\n");
+        }
+
+        JScrollPane scrollPane = new JScrollPane(acceptedChallengesTextArea);
+        dialog.add(scrollPane);
+
+        dialog.setLocationRelativeTo(this);
+        dialog.setVisible(true);
+    }
+    
+    private void showActiveChallengesDialog(List<ChallengeDTO> activeChallenges) {
+        JDialog dialog = new JDialog(this, "Active Challenge List", true);
+        dialog.setSize(400, 300);
+
+        JTextArea activeChallengesTextArea = new JTextArea();
+        activeChallengesTextArea.setEditable(false);
+
+        for (ChallengeDTO challenge : activeChallenges) {
+            activeChallengesTextArea.append(challenge.toString() + "\n");
+        }
+
+        JScrollPane scrollPane = new JScrollPane(activeChallengesTextArea);
+        dialog.add(scrollPane);
+
+        dialog.setLocationRelativeTo(this);
+        dialog.setVisible(true);
     }
 }

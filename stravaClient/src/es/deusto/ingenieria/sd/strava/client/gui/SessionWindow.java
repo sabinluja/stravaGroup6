@@ -1,7 +1,6 @@
 package es.deusto.ingenieria.sd.strava.client.gui;
-import java.awt.BorderLayout;
+
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.lang.reflect.Method;
@@ -13,16 +12,10 @@ import java.util.Vector;
 import java.util.concurrent.TimeUnit;
 
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
-import javax.swing.JList;
 import javax.swing.JScrollPane;
-import javax.swing.JTextPane;
-import javax.swing.ListSelectionModel;
-import javax.swing.border.TitledBorder;
-import javax.swing.text.BadLocationException;
-import javax.swing.text.SimpleAttributeSet;
-import javax.swing.text.StyleConstants;
-import javax.swing.text.StyledDocument;
+import javax.swing.JTextArea;
 
 import es.deusto.ingenieria.sd.strava.client.controller.SessionController;
 import es.deusto.ingenieria.sd.strava.client.controller.UserController;
@@ -89,16 +82,16 @@ public class SessionWindow extends JFrame {
         getSessions.setBounds(75, 40, 130, 23);
         
         getSessions.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-            	try {
-            		token = uc.getToken()+"";
-    				result = controller.getSessions(token);	
-    				System.out.println(result);
-    				
-    			} catch (RemoteException e2) {
-    				// TODO Auto-generated catch block
-    				e2.printStackTrace();
-    			}
+            @SuppressWarnings("unchecked")
+			public void actionPerformed(ActionEvent e) {
+                try {
+                    token = uc.getToken()+"";
+                    result = controller.getSessions(token);
+
+                    showSessionsDialog((List<SessionDTO>) result);
+                } catch (RemoteException e2) {
+                    e2.printStackTrace();
+                }
             }
         });
         
@@ -122,5 +115,23 @@ public class SessionWindow extends JFrame {
         this.setSize(300, 150);
         this.setLocationRelativeTo(null);
         this.setVisible(false);
+    }
+    
+    private void showSessionsDialog(List<SessionDTO> sessions) {
+        JDialog dialog = new JDialog(this, "Session List", true);
+        dialog.setSize(400, 300);
+
+        JTextArea sessionsTextArea = new JTextArea();
+        sessionsTextArea.setEditable(false);
+
+        for (SessionDTO session : sessions) {
+            sessionsTextArea.append(session.toString() + "\n");
+        }
+
+        JScrollPane scrollPane = new JScrollPane(sessionsTextArea);
+        dialog.add(scrollPane);
+
+        dialog.setLocationRelativeTo(this);
+        dialog.setVisible(true);
     }
 }
