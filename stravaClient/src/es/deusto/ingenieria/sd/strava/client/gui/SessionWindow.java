@@ -14,6 +14,7 @@ import java.util.concurrent.TimeUnit;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
@@ -73,6 +74,13 @@ public class SessionWindow extends JFrame {
 	                
 	                result = controller.createSession(token, title, sport, distance, startDate, startTime, duration);
 	                System.out.println(result);
+	                
+	                if (result.toString().equals("true")) {
+	        	    	JOptionPane.showMessageDialog(null, "Session successfully created", "Session", JOptionPane.INFORMATION_MESSAGE);
+	        	    } else {
+	        	    	JOptionPane.showMessageDialog(null, "Session has not been created", "Session", JOptionPane.INFORMATION_MESSAGE);
+	        	    }
+	                
             	}); createSessionT.start();
             }
         });
@@ -119,7 +127,7 @@ public class SessionWindow extends JFrame {
     
     private void showSessionsDialog(List<SessionDTO> sessions) {
         JDialog dialog = new JDialog(this, "Session List", true);
-        dialog.setSize(400, 300);
+        dialog.setSize(800, 150);
 
         JTextArea sessionsTextArea = new JTextArea();
         sessionsTextArea.setEditable(false);

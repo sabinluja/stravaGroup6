@@ -14,6 +14,7 @@ import java.util.concurrent.TimeUnit;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
@@ -106,6 +107,12 @@ public class ChallengeWindow extends JFrame {
 	        	    long targetTime = c.getTargetTime();
 	        	    result = controller.createChallenge(uc.getToken()+"", name, startDate, endDate, targetDistance, targetTime, sport);
 	        	    System.out.println(result);
+	        	    
+	        	    if (result.toString().equals("true")) {
+	        	    	JOptionPane.showMessageDialog(null, "Challenge successfully created", "Challenge", JOptionPane.INFORMATION_MESSAGE);
+	        	    } else {
+	        	    	JOptionPane.showMessageDialog(null, "Challenge has not been created", "Challenge", JOptionPane.INFORMATION_MESSAGE);
+	        	    }
         	    
             	}); createT.start();
             }
@@ -136,6 +143,12 @@ public class ChallengeWindow extends JFrame {
 	                System.out.println(uc.getToken());
 	                result = controller.acceptChallenge(uc.getToken()+"", name);
 	                System.out.println(result);
+	                
+	                if (result.toString().equals("true")) {
+	        	    	JOptionPane.showMessageDialog(null, "Challenge successfully accepted", "Challenge", JOptionPane.INFORMATION_MESSAGE);
+	        	    } else {
+	        	    	JOptionPane.showMessageDialog(null, "Challenge has not been accepted", "Challenge", JOptionPane.INFORMATION_MESSAGE);
+	        	    }
                 
             	}); acceptChallengeT.start();
             }
@@ -187,7 +200,7 @@ public class ChallengeWindow extends JFrame {
     
     private void showAcceptedChallengesDialog(List<ChallengeDTO> acceptedChallenges) {
         JDialog dialog = new JDialog(this, "Accepted Challenge List", true);
-        dialog.setSize(400, 300);
+        dialog.setSize(800, 150);
 
         JTextArea acceptedChallengesTextArea = new JTextArea();
         acceptedChallengesTextArea.setEditable(false);
@@ -205,7 +218,7 @@ public class ChallengeWindow extends JFrame {
     
     private void showActiveChallengesDialog(List<ChallengeDTO> activeChallenges) {
         JDialog dialog = new JDialog(this, "Active Challenge List", true);
-        dialog.setSize(400, 300);
+        dialog.setSize(800, 150);
 
         JTextArea activeChallengesTextArea = new JTextArea();
         activeChallengesTextArea.setEditable(false);

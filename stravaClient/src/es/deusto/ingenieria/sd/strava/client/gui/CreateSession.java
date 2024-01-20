@@ -82,8 +82,6 @@ public class CreateSession extends JFrame {
         // Indicate that data has been processed
         dataProcessed = true;
         
-        JOptionPane.showMessageDialog(null, "Session successfully created", "Session", JOptionPane.INFORMATION_MESSAGE);
-
         // Close the window after processing data (adjust as needed)
         dispose();
     }
