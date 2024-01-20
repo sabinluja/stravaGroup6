@@ -56,7 +56,7 @@ public class acceptChallenge extends JFrame {
         dataProcessed = true;
         
         JOptionPane.showMessageDialog(null, "Challenge successfully accepted", "Session", JOptionPane.INFORMATION_MESSAGE);
-
+  
         // Close the window after processing data (adjust as needed)
         dispose();
     }

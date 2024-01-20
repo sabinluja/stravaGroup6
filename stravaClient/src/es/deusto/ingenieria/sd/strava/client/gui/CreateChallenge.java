@@ -70,7 +70,7 @@ public class CreateChallenge extends JFrame {
         // Make the JFrame visible
         setVisible(true);
     }
-    
+     
     private void processData() {
         // Get data from text fields and combo box
         name = nameField.getText();       
