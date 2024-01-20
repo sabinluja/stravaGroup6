@@ -216,7 +216,7 @@ public class ChallengeWindow extends JFrame {
 
         dialog.setLocationRelativeTo(this);
         dialog.setVisible(true);
-    }
+    } 
     
     private void showActiveChallengesDialog(List<ChallengeDTO> activeChallenges) {
         JDialog dialog = new JDialog(this, "Active Challenge List", true);
