@@ -3,15 +3,10 @@ package es.deusto.ingenieria.sd.strava.server;
 import java.rmi.Naming;
 import java.rmi.Remote;
 
-import javax.swing.SwingUtilities;
 
 import es.deusto.ingenieria.sd.strava.server.data.domain.Challenge;
 import es.deusto.ingenieria.sd.strava.server.data.domain.Session;
 import es.deusto.ingenieria.sd.strava.server.data.domain.User;
-import es.deusto.ingenieria.sd.strava.server.gateways.FacebookGateway;
-import es.deusto.ingenieria.sd.strava.server.gateways.GoogleGateway;
-import es.deusto.ingenieria.sd.strava.server.gateways.GoogleGateway2;
-import es.deusto.ingenieria.sd.strava.server.gateways.IProviderGateway;
 import es.deusto.ingenieria.sd.strava.server.jpa.dao.ChallengeDAO;
 import es.deusto.ingenieria.sd.strava.server.jpa.dao.SessionDAO;
 import es.deusto.ingenieria.sd.strava.server.jpa.dao.UserDAO;
