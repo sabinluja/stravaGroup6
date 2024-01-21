@@ -2,9 +2,9 @@
 <classpath>
 	<classpathentry kind="src" output="bin" path="src"/>
 	<classpathentry kind="var" path="JRE_LIB" sourcepath="JRE_SRC"/>
-	<classpathentry kind="lib" path="C:/Users/sabin/OneDrive/Documentos/Universidad/tercero/stravaGroup6Final/stravaClient/lib/commons-codec-1.15.jar"/>
-	<classpathentry kind="lib" path="C:/Users/sabin/OneDrive/Documentos/Universidad/tercero/stravaGroup6Final/stravaClient/lib/strava.jar"/>
 	<classpathentry kind="con" path="C:/Users/sabin/OneDrive/Documentos/Universidad/tercero/stravaGroup6Final/stravaClient/bin"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/stravaServer"/>
+	<classpathentry kind="lib" path="lib/commons-codec-1.15.jar"/>
+	<classpathentry kind="lib" path="lib/strava.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

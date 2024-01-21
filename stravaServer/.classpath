@@ -4,7 +4,6 @@
 	<classpathentry kind="var" path="JRE_LIB" sourcepath="JRE_SRC"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/FacebookExternalService"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/GoogleExternalService"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/stravaClient"/>
 	<classpathentry kind="lib" path="resources"/>
 	<classpathentry kind="lib" path="lib/commons-codec-1.15.jar"/>
 	<classpathentry kind="lib" path="lib/commons-io-2.13.0.jar"/>
